@@ -11,4 +11,15 @@ public partial class Pages_Connexion : System.Web.UI.Page
     {
 
     }
+
+    protected void connexion(object sender, EventArgs e)
+    {
+        string nomUtil =  tbEmail.Value;
+        string motPasse = tbPassword.Text;
+
+        if (nomUtil == "admin" && motPasse == "admin")
+        {
+            Response.RedirectToRoute("AccueilRoute");
+        }
+    }
 }
