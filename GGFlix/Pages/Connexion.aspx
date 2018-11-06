@@ -1,17 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Connexion.aspx.cs" Inherits="Pages_Connexion" MasterPageFile="/Fragments/PageMaitre.master" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" Title="Connexion"%>
 
-<!DOCTYPE html>
+<asp:Content runat="server" ContentPlaceHolderID="Head"></asp:Content>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title> 
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            Connexion!
-        </div>
-    </form>
-</body>
-</html>
- 
+<asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+    test
+</asp:Content>
