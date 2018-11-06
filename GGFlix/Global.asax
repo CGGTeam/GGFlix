@@ -37,6 +37,7 @@
 
     void RegisterRoutes(RouteCollection routes)
     {
-        routes.MapPageRoute("ConnexionRoute", "/", "Pages/Connexion.aspx");
+        routes.MapPageRoute("ConnexionRoute", "", "~/Pages/Connexion.aspx");
+        routes.MapPageRoute("AccueilRoute", "accueil", "~/Pages/Accueil.aspx");
     }
 </script>
