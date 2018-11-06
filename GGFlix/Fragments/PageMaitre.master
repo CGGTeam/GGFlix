@@ -5,10 +5,37 @@
 <html>
 <head runat="server">
     <title>Master Page</title>
+    
+    <script type="text/javascript" src="~/Static/js/bootstrap/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="~/Static/css/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="~/Static/css/pageMaitre.css"/>
+    
+
     <asp:ContentPlaceHolder id="Head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">
+            <img class="brand-icon" src="~/Static/img/CD-512.png"/>
+            GGFlix
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/mesDVD">Mes DVDs</a>
+                    <a class="nav-link" href="/catalogue">Notre catalogue</a>
+                    <a class="nav-link" href="/personnaliser">Personnaliser</a>
+                    <a class="nav-link" href="/messagerie">Envoyer un message</a>
+                    <a class="nav-link" href="/deconnexion">Déconnexion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <form id="frmPrincipal" runat="server">
     <div>
         <asp:ContentPlaceHolder id="ContenuPrincipal" runat="server">
