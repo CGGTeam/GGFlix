@@ -26,3 +26,6 @@ Pour mettre la version locale à jour, il faut simplement (dans le menu "Sync"),
 Parfois, s'il y a des changements faits sur un fichier en local et que le même fichier a été modifié sur le serveur, il faut gérer le conflit.
 
 Pour ce faire, il suffit de cliquer sur le bouton `Merge` puis manuellement choisir quels changements il faut garder et lesquels il faut laisser tomber.
+
+## En cas d'urgence
+https://ohshitgit.com
