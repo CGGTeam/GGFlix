@@ -1,3 +1,5 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AffichageDVDEnMain.aspx.cs" Inherits="AffichageDVDEnMain" Culture="fr-FR" %>
+
 <html>
 <head>
     <title>DVD Express</title>
@@ -11,7 +13,7 @@
 <body>
 <div class="container" style="margin-bottom: 30px;">
         <a href="/">
-            <img class="navbar navbar-expand-lg navbar-dark nav-bg rounded" src="block.jpg" height="40%" width="100%">
+            <img class="navbar navbar-expand-lg navbar-dark nav-bg rounded" src="/Static/img/block.jpg" height="40%" width="100%">
         </a>
 </div>
 <div align="center">
@@ -30,7 +32,7 @@
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
 		        <div class="col-xs-2 col-md-2">
-		            <img class="img-responsive" src="dvd.jpg" alt="prewiew">
+		            <img class="img-responsive" src="/Static/img/dvd.jpg" alt="prewiew">
 		        </div>
 		        <div class="col-xs-4 col-md-6">
 		            <h4 class="product-name"><strong>Film 1</strong></h4><h4><small>Par Raphael</small></h4>
@@ -47,7 +49,7 @@
 		    <hr>
 		    <div class="row" style="margin-left: 15%">
 		        <div class="col-xs-2 col-md-2">
-		            <img class="img-responsive" src="dvd.jpg" alt="prewiew">
+		            <img class="img-responsive" src="/Static/img/dvd.jpg" alt="prewiew">
 		        </div>
 		        <div class="col-xs-4 col-md-6">
 		            <h4 class="product-name"><strong>Film 2</strong></h4><h4><small>Par Benoit</small></h4>
