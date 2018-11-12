@@ -1,17 +1,87 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DVDAutreUtil.aspx.cs" Inherits="DVDAutreUtil" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+<html>
+<head>
+    <title>DVD Express</title>
+    
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
+<div class="container" style="margin-bottom: 30px;">
+        <a href="/">
+            <img class="navbar navbar-expand-lg navbar-dark nav-bg rounded" src="/Static/img/block.jpg" height="40%" width="100%">
+        </a>
+</div>
+    <br />
+    <div align="center">
+            <label for="example-number-input" class="col-2 col-form-label">DVD de l'utilisateur : </label>
+    <br />
+        <select>
+            <option value="0"></option>
+            <option value="1">Utilisateur 1</option>
+            <option value="2">Utilisateur 2</option>
+        </select>
+    </div>
+            <br />
+<div align="center">
+			<a href="page1" class="btn btn-success">Page 1</a>
+			<a href="page1" class="btn btn-success">Page 2</a>
+			<a href="page1" class="btn btn-success">Page 3</a>
+			<a href="page1" class="btn btn-success">Page 4</a>
+			<a href="page1" class="btn btn-success">Page 5</a>
+			<div class="form-group row">
+				<label for="example-number-input" class="col-2 col-form-label">Nombre de titres par page</label>
+					<input class="form-control" type="number" value="10" id="example-number-input" style="width: 7.5%">
+			</div>
+		</div><br/><br/>
 
-        </div>
-    </form>
+	<div class="card">
+		<div class="card-body">
+		    <div class="row" style="margin-left: 15%">
+		        <div class="col-xs-2 col-md-2">
+		            <img class="img-responsive" src="/Static/img/dvd.jpg" alt="prewiew">
+		        </div>
+		        <div class="col-xs-4 col-md-6">
+		            <h4 class="product-name"><strong>Film 1</strong></h4><h4><small>Par Raphael</small></h4>
+		        </div>
+		         <div class="col-xs-6 col-md-4 row">
+                        <div class="col-xs-6 col-md-6 text-right" style="padding-top: 5px">
+                        	<br/>
+                            <a href="" class="btn btn-info">Affichage des données détaillées</a><br/>
+							<a href="" class="btn btn-warning">Envoi un courriel à celui qui l'a en main</a>
+							<a href="" class="btn btn-danger">S'approprier ce DVD</a>
+                        </div>
+		        </div>
+		    </div>
+		    <hr>
+		    <div class="row" style="margin-left: 15%">
+		        <div class="col-xs-2 col-md-2">
+		            <img class="img-responsive" src="/Static/img/dvd.jpg" alt="prewiew">
+		        </div>
+		        <div class="col-xs-4 col-md-6">
+		            <h4 class="product-name"><strong>Film 2</strong></h4><h4><small>Par Benoit</small></h4>
+		        </div>
+		        <div class="col-xs-6 col-md-4 row">
+                        <div class="col-xs-6 col-md-6 text-right" style="padding-top: 5px">
+                        	<br/>
+                            <a href="" class="btn btn-info">Affichage des données détaillées</a><br/>
+							<a href="" class="btn btn-warning">Envoi un courriel à celui qui l'a en main</a>
+							<a href="" class="btn btn-danger">S'approprier ce DVD</a>
+                        </div>
+		        </div>
+		    </div>
+		    <hr>
+		    <div align="center">
+			    <a href="/Pages/affichageDVDEnMain.aspx" class="btn btn-success">Afficher les DVDs en main</a>
+			    <a href="" class="btn btn-success">Afficher les DVDs de tous les utilisateurs</a>
+			</div>
+		</div>
+	</div>
+	<br/>
 </body>
 </html>
