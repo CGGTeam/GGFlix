@@ -1,0 +1,23 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Imports.master.cs" Inherits="Fragments_Imports" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Master Page</title>
+    
+    <script type="text/javascript" src="/Static/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/Static/js/bootstrap/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/Static/css/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/Static/css/pageMaitre.css"/>
+    
+
+    <asp:ContentPlaceHolder id="Head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+<asp:ContentPlaceHolder id="Contenu" runat="server">
+</asp:ContentPlaceHolder>
+</body>
+</html>

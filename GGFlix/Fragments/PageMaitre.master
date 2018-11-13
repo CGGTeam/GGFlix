@@ -1,22 +1,11 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="PageMaitre.master.cs" Inherits="Fragments_MasterPage" %>
+﻿<%@ Master Language="C#" MasterPageFile="Imports.master" AutoEventWireup="true" CodeFile="PageMaitre.master.cs" Inherits="Fragments_MasterPage" %>
 
-<!DOCTYPE html>
+<asp:Content ContentPlaceHolderID="Head" runat="server">
+    <asp:ContentPlaceHolder ID="Head" runat="server">
 
-<html>
-<head runat="server">
-    <title>Master Page</title>
-    
-    <script type="text/javascript" src="/Static/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="/Static/js/bootstrap/bootstrap.min.js"></script>
-    
-    <link rel="stylesheet" type="text/css" href="/Static/css/bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/Static/css/pageMaitre.css"/>
-    
-
-    <asp:ContentPlaceHolder id="Head" runat="server">
     </asp:ContentPlaceHolder>
-</head>
-<body>
+</asp:Content>
+<asp:Content ContentPlaceHolderID="Contenu" runat="server">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/">
             <img class="brand-icon" src="/Static/img/CD-512.png"/>
@@ -49,10 +38,8 @@
         </div>
     </nav>
     <form id="frmPrincipal" runat="server">
-    <div>
-        <asp:ContentPlaceHolder id="ContenuPrincipal" runat="server">
+        <asp:ContentPlaceHolder ID="ContenuPrincipal" runat="server">
+
         </asp:ContentPlaceHolder>
-    </div>
     </form>
-</body>
-</html>
+</asp:Content>
