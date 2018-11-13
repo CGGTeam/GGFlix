@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/Imports.master" Inherits="Pages_Connexion" CodeFile="Connexion.aspx.cs" Title="Connexion"%>
 
 <asp:Content runat="server" ContentPlaceHolderID="Head">
-    <link rel="stylesheet" href="/Static/css/connexion.css"/>
+    <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="Contenu">

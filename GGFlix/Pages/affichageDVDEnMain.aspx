@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="AffichageDVDEnMain.aspx.cs" Inherits="AffichageDVDEnMain" Culture="fr-FR" %>
 <asp:Content runat="server" ContentPlaceHolderID="Head">
-    <link rel="stylesheet" href="/Static/css/connexion.css"/>
+    <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
 
