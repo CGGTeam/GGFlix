@@ -1,9 +1,20 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="ModificationDVD.aspx.cs" Inherits="Pages_ModificationDVD" %>
 
+
 <asp:Content runat="server" ContentPlaceHolderID="Head">
-    <link rel="stylesheet" href="/Static/css/connexion.css"/>
+    <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+
+<head>
+    <title>DVD Express</title>
+    
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+</head>
 	<div class="card">
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
@@ -79,4 +90,6 @@
 		<a href="" class="btn btn-success">Modifier le DVD</a>
           <a href="/Pages/DVDTousLesUtilisateurs.aspx" class="btn btn-success">Afficher les DVDs de tous les utilisateurs</a>
 	</div>
+</body>
+
 </asp:Content>
