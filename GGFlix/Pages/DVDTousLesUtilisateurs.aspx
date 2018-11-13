@@ -57,8 +57,8 @@
                     </a>
 		        </div>
 		        <div class="col-xs-4 col-md-6">
-		            <h4 class="product-name pb-5"><strong>Across the universe</strong></h4><h4><small>Par Perro</small></h4>
-                     <h4><small >Réservé par : Francis Perreault</small></h4>
+		            <h4 class="product-name pb-5"><strong>Across the universe</strong></h4><h4><small>Par <a href="/Utilisateur/4">Perro</a></small></h4>
+                     <h4><small >Réservé par : <a href="/Utilisateur/3">Francis Perreault</a></small></h4>
 		        </div>		 
                 <div class="col-xs-6 col-md-4 btn-group-vertical" style="padding-top: 5px;">
                     <br/>
@@ -76,8 +76,8 @@
                     </a>
 		        </div>
 		        <div class="col-xs-4 col-md-6">
-		            <h4 class="product-name"><strong>Danny Ocean 13</strong></h4><h4><small>Par Niko</small></h4>
-                     <h4><small >Réservé par : Landry DeRonald</small></h4>
+		            <h4 class="product-name"><strong>Danny Ocean 13</strong></h4><h4><small><a href="/Utilisateur/2">Par Niko</a></small></h4>
+                     <h4><small >Réservé par : <a href="/Utilisateur/1">Landry DeRonald</a></small></h4>
 		        </div>		        
                     <div class="col-xs-6 col-md-4 btn-group-vertical" style="padding-top: 5px;">
                         <br/>
