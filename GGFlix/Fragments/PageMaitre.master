@@ -23,7 +23,7 @@
                     <a class="nav-link" href="/Catalogue/1">Notre catalogue</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/Personnaliser">Personnaliser</a>
+                    <a class="nav-link" href="/MonCompte">Personnaliser</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/Messagerie">Envoyer un message</a>
