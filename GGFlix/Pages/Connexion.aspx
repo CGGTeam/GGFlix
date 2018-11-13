@@ -12,7 +12,9 @@
                            ImageUrl="/Static/img/CD-512-dark.png"
                            Width="100"
                            Height="100"/>
-                <h1>Bienvenue chez GGFlix!</h1><br /><br/>
+                
+                <h1 class="font-weight-normal">Bienvenue chez GGFlix!</h1>
+                <br /><br/>
                 <div class="jumbotron col-11 col-sm-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="form-group">
                         <h2 class="text-center">Connexion</h2>

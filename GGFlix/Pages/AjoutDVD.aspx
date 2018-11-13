@@ -4,10 +4,10 @@
     <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
-    <div class="vertical-center">
+    <div class="mt-3">
         <div class="container">
             <div class="row flex-column h-100 justify-content-center align-items-center">
-                <div class="jumbotron col-11 col-sm-12 col-md-9 col-lg-7 col-xl-6 text-center">
+                <div class="col text-center">
                     <div class="form-group ">
                         <asp:Label ID="lblTypeAjout" Text="Mode d'ajout : " runat="server" />
                             <asp:DropDownList ID="typeAjout" AutoPostBack="true" runat="server" OnSelectedIndexChanged="afficheDIV">
@@ -15,7 +15,7 @@
                                 <asp:ListItem Value="1" Text="Complet" />
                             </asp:DropDownList>
                         </div>
-                    <div id="divAbrege" runat="server" class="form-group ">
+                    <div id="divAbrege" runat="server" class="form-group jumbotron">
                         <asp:Label ID="Label1" runat="server" Text="Film #1 : " />
                         <asp:TextBox ID="tb1" runat="server"></asp:TextBox>
                         <br />
@@ -52,12 +52,12 @@
                      </div>
                     <div id="divComplet" runat="server" class="form-group" visible="false">
                         	<div class="card">
-		<div class="card-body">
+		<div class="jumbotron">
 		    <div class="row" style="margin-left: 15%">
-		        <div class="col-xs-2 col-md-3">
+		        <div class="col">
 		            <img class="img-responsive" src="/Static/img/dvd.jpg" alt="prewiew">
 		        </div>
-		        <div class="col-xs-4 col-md-4">
+		        <div class="col">
 		            <h4 class="product-name"><small><asp:Label id="lblnomDVD" AssociatedControlId="nomDVD" Text="Nom du DVD" runat="server"/>
                         <asp:TextBox id="nomDVD" runat="server" /></small></h4>
 		            <h4><small><asp:Label id="lblAnneeSortie" AssociatedControlId="AnneeSortie" Text="Année de sortie" runat="server"/>
@@ -69,7 +69,7 @@
                     <h4><small><asp:Label id="lblDureeFilm" AssociatedControlId="DureeFilm" Text="Durée du film" runat="server"/><asp:TextBox id="DureeFilm" runat="server" /></small></h4>
                     <h4><small><asp:Label id="lblDVDOriginal" AssociatedControlId="DVDOriginal" Text="Est-ce un dvd original" runat="server"/><asp:CheckBox id="DVDOriginal" runat="server" /></small></h4>
 		        </div>
-		         <div class="col-xs-6 col-md-4">
+		         <div class="col">
                 	<h4><small><asp:Label id="lblNomProducteur" AssociatedControlId="NomProducteur" Text="Nom du producteur" runat="server"/><asp:TextBox id="NomProducteur" runat="server" /></small></h4>
 		            <h4><small><asp:Label id="lblNomRealisateur" AssociatedControlId="NomRealisateur" Text="Nom du réalisateur" runat="server"/><asp:TextBox id="NomRealisateur" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblNomActeurs" AssociatedControlId="NomActeurs" Text="Nom des trois princiaux acteurs/actrices" runat="server"/><asp:DropDownList id="NomActeurs" runat="server" /></small></h4>

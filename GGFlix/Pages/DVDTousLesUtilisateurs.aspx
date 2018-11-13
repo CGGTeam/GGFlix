@@ -1,17 +1,10 @@
-﻿<%@ Page Language="C#"  MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="DVDTousLesUtilisateurs.aspx.cs" Inherits="DVDTousLesUtilisateurs" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/Fragments/PageMaitre.master"
+    AutoEventWireup="true" CodeFile="DVDTousLesUtilisateurs.aspx.cs"
+    Inherits="DVDTousLesUtilisateurs"
+    Title="Catalogue"%>
 
 
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
-<head>
-    <title>DVD Express</title>
-    
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
-</head>
-<body>
 <div class="container" style="margin-bottom: 30px;">
         <a href="/">
             <img class="navbar navbar-expand-lg navbar-dark nav-bg rounded" src="/Static/img/banner.jpg" height="40%" width="100%">
@@ -76,7 +69,7 @@
                     </a>
 		        </div>
 		        <div class="col-xs-4 col-md-6">
-		            <h4 class="product-name"><strong>Danny Ocean 13</strong></h4><h4><small><a href="/Utilisateur/2">Par Niko</a></small></h4>
+		            <h4 class="product-name"><strong>Danny Ocean 13</strong></h4><h4><small>Par <a href="/Utilisateur/2">Niko</a></small></h4>
                      <h4><small >Réservé par : <a href="/Utilisateur/1">Landry DeRonald</a></small></h4>
 		        </div>		        
                     <div class="col-xs-6 col-md-4 btn-group-vertical" style="padding-top: 5px;">
@@ -93,5 +86,4 @@
 			</div>
 		</div>
 	<br/>
-</body>
 </asp:Content>

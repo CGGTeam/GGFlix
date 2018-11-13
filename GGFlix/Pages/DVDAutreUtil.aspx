@@ -1,12 +1,7 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master"  AutoEventWireup="true" CodeFile="DVDAutreUtil.aspx.cs" Inherits="DVDAutreUtil" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master"  
+    AutoEventWireup="true" CodeFile="DVDAutreUtil.aspx.cs" Inherits="DVDAutreUtil"
+    Title="DVDs d'un utilisateur"%>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
-    <title>DVD Express</title>
-    
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
 <div class="container" style="margin-bottom: 30px;">
         <a href="/">
             <img class="navbar navbar-expand-lg navbar-dark nav-bg rounded" src="/Static/img/banner.jpg" height="40%" width="100%">

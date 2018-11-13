@@ -45,5 +45,6 @@
         routes.MapPageRoute("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx");
         routes.MapPageRoute("MessagerieRoute", "Messagerie", "~/Pages/EnvoiCourriel.aspx");
         routes.MapPageRoute("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx");
+        routes.MapPageRoute("MonCompte", "MonCompte", "~/Pages/PersonnalisationEnv.aspx");
     }
 </script>

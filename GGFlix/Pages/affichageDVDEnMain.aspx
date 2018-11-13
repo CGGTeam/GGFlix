@@ -35,7 +35,7 @@
 		                </a>
 		            </div>
 		            <div class="col-xs-4 col-md-6">
-		                <h4 class="product-name"><strong>Film 1</strong></h4><h4><small>Par <a href="/Utilisateur/5">Par Raphael</a></small></h4>
+		                <h4 class="product-name"><strong>Film 1</strong></h4><h4><small>Par <a href="/Utilisateur/5">Raphael</a></small></h4>
 		            </div>
 		             <div class="col-xs-6 col-md-4 row">
                             <div class="col-xs-6 col-md-6 text-right" style="padding-top: 5px">
