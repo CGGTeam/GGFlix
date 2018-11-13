@@ -50,7 +50,7 @@
 	</div>
 	<br/>
 	 <div align="center">
-		<a href="" class="btn btn-success">Afficher liste de DVD</a>
+		<a href="/Catalogue/1" class="btn btn-success">Afficher liste de DVD</a>
 	</div>
 </body>
 </html>

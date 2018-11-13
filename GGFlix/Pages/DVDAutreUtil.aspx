@@ -29,11 +29,11 @@
     </div>
             <br />
 <div align="center">
-			<a href="page1" class="btn btn-success">Page 1</a>
-			<a href="page1" class="btn btn-success">Page 2</a>
-			<a href="page1" class="btn btn-success">Page 3</a>
-			<a href="page1" class="btn btn-success">Page 4</a>
-			<a href="page1" class="btn btn-success">Page 5</a>
+			<a href="1" class="btn btn-success">Page 1</a>
+			<a href="2" class="btn btn-success">Page 2</a>
+			<a href="3" class="btn btn-success">Page 3</a>
+			<a href="4" class="btn btn-success">Page 4</a>
+			<a href="5" class="btn btn-success">Page 5</a>
 			<div class="form-group row">
 				<label for="example-number-input" class="col-2 col-form-label">Nombre de titres par page</label>
 					<input class="form-control" type="number" value="10" id="example-number-input" style="width: 7.5%">
@@ -52,8 +52,8 @@
 		         <div class="col-xs-6 col-md-4 row">
                         <div class="col-xs-6 col-md-6 text-right" style="padding-top: 5px">
                         	<br/>
-                            <a href="" class="btn btn-info">Affichage des données détaillées</a><br/>
-							<a href="" class="btn btn-warning">Envoi un courriel à celui qui l'a en main</a>
+                            <a href="/DVD/1" class="btn btn-info">Affichage des données détaillées</a><br/>
+							<a href="/Messagerie" class="btn btn-warning">Envoi un courriel à celui qui l'a en main</a>
 							<a href="" class="btn btn-danger">S'approprier ce DVD</a>
                         </div>
 		        </div>
@@ -69,16 +69,16 @@
 		        <div class="col-xs-6 col-md-4 row">
                         <div class="col-xs-6 col-md-6 text-right" style="padding-top: 5px">
                         	<br/>
-                            <a href="" class="btn btn-info">Affichage des données détaillées</a><br/>
-							<a href="" class="btn btn-warning">Envoi un courriel à celui qui l'a en main</a>
+                            <a href="/DVD/2" class="btn btn-info">Affichage des données détaillées</a><br/>
+							<a href="/Messagerie" class="btn btn-warning">Envoi un courriel à celui qui l'a en main</a>
 							<a href="" class="btn btn-danger">S'approprier ce DVD</a>
                         </div>
 		        </div>
 		    </div>
 		    <hr>
 		    <div align="center">
-			    <a href="/Pages/affichageDVDEnMain.aspx" class="btn btn-success">Afficher les DVDs en main</a>
-			    <a href="" class="btn btn-success">Afficher les DVDs de tous les utilisateurs</a>
+			    <a href="/MesDVD" class="btn btn-success">Afficher les DVDs en main</a>
+			    <a href="/Catalogue/1" class="btn btn-success">Afficher les DVDs de tous les utilisateurs</a>
 			</div>
 		</div>
 	</div>
