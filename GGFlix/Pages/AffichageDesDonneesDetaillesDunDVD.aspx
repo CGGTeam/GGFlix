@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="AffichageDesDonneesDetaillesDunDVD.aspx.cs" Inherits="AffichageDesDonneesDetaillesDunDVD" Culture="fr-FR" %>
 <asp:Content runat="server" ContentPlaceHolderID="Head">
-    <link rel="stylesheet" href="/Static/css/connexion.css"/>
+    <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
 
@@ -50,7 +50,7 @@
 	</div>
 	<br/>
 	 <div align="center">
-		<a href="" class="btn btn-success">Afficher liste de DVD</a>
+		<a href="/Catalogue/1" class="btn btn-success">Afficher liste de DVD</a>
 	</div>
 </body>
 </html>

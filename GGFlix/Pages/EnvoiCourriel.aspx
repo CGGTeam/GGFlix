@@ -2,7 +2,7 @@
 
 
 <asp:Content runat="server" ContentPlaceHolderID="Head">
-    <link rel="stylesheet" href="/Static/css/connexion.css"/>
+    <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
