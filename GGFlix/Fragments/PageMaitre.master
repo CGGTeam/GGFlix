@@ -20,19 +20,19 @@
                     <a class="nav-link" href="/mesDVD">Mes DVDs</a>
                 </li>=-->
                 <li class="nav-item active">
-                    <a class="nav-link" href="/catalogue">Notre catalogue</a>
+                    <a class="nav-link" href="/Catalogue">Notre catalogue</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/personnaliser">Personnaliser</a>
+                    <a class="nav-link" href="/Personnaliser">Personnaliser</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/Pages/EnvoiCourriel.aspx">Envoyer un message</a>
+                    <a class="nav-link" href="/Messagerie">Envoyer un message</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/Pages/AjoutDVD.aspx">Ajouter un DVD</a>
+                    <a class="nav-link" href="/DVD/Ajouter">Ajouter un DVD</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/Pages/Connexion.aspx">Déconnexion</a>
+                    <a class="nav-link" href="/">Déconnexion</a>
                 </li>
             </ul>
         </div>
