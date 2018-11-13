@@ -37,13 +37,13 @@
                     <a class="nav-link" href="/personnaliser">Personnaliser</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/messagerie">Envoyer un message</a>
+                    <a class="nav-link" href="/Pages/EnvoiCourriel.aspx">Envoyer un message</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/Pages/AjoutDVD.aspx">Ajouter un DVD</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/deconnexion">Déconnexion</a>
+                    <a class="nav-link" href="/Pages/Connexion.aspx">Déconnexion</a>
                 </li>
             </ul>
         </div>
