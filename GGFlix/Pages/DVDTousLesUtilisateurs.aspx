@@ -20,11 +20,11 @@
     <br /> 
             <br />
 <div align="center">
-			<a href="page1" class="btn btn-success">Page 1</a>
-			<a href="page1" class="btn btn-success">Page 2</a>
-			<a href="page1" class="btn btn-success">Page 3</a>
-			<a href="page1" class="btn btn-success">Page 4</a>
-			<a href="page1" class="btn btn-success">Page 5</a>
+			<a href="1" class="btn btn-success">Page 1</a>
+			<a href="2" class="btn btn-success">Page 2</a>
+			<a href="3" class="btn btn-success">Page 3</a>
+			<a href="4" class="btn btn-success">Page 4</a>
+			<a href="5" class="btn btn-success">Page 5</a>
 			<div class="form-group row">
                 <div class="col-md-4">
                     <label>Rechercher DVD:</label>
@@ -35,7 +35,7 @@
                     <label for="example-number-input" class="col-2 col-form-label">Nombre de titres par page</label>
 				<input class="form-control" type="number" value="10" id="example-number-input" style="width: 12%">
                     </div>
-                <div align="col-md-4 ">
+                <div class="col-md-4 ">
                  <label for="" class="col-2">Trier par : </label>            
 			
                 <select>
