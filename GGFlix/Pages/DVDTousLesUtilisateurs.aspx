@@ -1,7 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DVDTousLesUtilisateurs.aspx.cs" Inherits="DVDTousLesUtilisateurs" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="DVDTousLesUtilisateurs.aspx.cs" Inherits="DVDTousLesUtilisateurs" %>
 
 
-<html>
+<asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
 <head>
     <title>DVD Express</title>
     
@@ -32,11 +32,11 @@
                     <input type="image" src="/Static/img/loupe.png" width="20px" height="20px" />
                 </div>
                 <div class="col-md-4">
-                    <label for="example-number-input" class="col-2 col-form-label">Nombre de titres par page</label>
-				<input class="form-control" type="number" value="10" id="example-number-input" style="width: 12%">
+                    <label for="example-number-input" class="col-form-label">Nombre de titres par page</label>
+				<input class="form-control" type="number" value="10" id="example-number-input" style="width: 20%">
                     </div>
-                <div align="col-md-4 ">
-                 <label for="" class="col-2">Trier par : </label>            
+                <div>
+                 <label for="" class="">Trier par : </label>            
 			
                 <select>
                     <option value="0"></option>
@@ -50,7 +50,7 @@
 
 	<div class="card">
 		<div class="card-body">
-		    <div class="row" style="margin-left: 15%">
+		    <div class="row" style="margin-left: 15%;margin-right: 15%">
 		        <div class="col-xs-2 col-md-2">
 		            <img class="img-responsive" src="/Static/img/181201.jpg" alt="prewiew">
 		        </div>
@@ -58,16 +58,16 @@
 		            <h4 class="product-name pb-5"><strong>Across the universe</strong></h4><h4><small>Par Perro</small></h4>
                      <h4><small >Réservé par : Francis Perreault</small></h4>
 		        </div>		 
-                <div class="col-xs-6 col-md-6 btn-group-vertical" style="padding-top: 5px; width:25%;">
+                <div class="col-xs-6 col-md-4 btn-group-vertical" style="padding-top: 5px;">
                     <br/>
-                    <a href="" class="btn btn-info btn-primary">Affichage des données détaillées</a><br/>
-					<a href="" class="btn btn-warning btn-primary">Envoi un courriel à celui qui l'a en main</a><br/>
+                    <a href="/Pages/AffichageDesDonneesDetaillesDunDVD.aspx" class="btn btn-info btn-primary">Affichage des données détaillées</a><br/>
+					<a href="/Pages/EnvoiCourriel.aspx" class="btn btn-warning btn-primary">Envoi un courriel à celui qui l'a en main</a><br/>
 					<a href="" class="btn btn-danger btn-primary">S'approprier ce DVD</a>
                 </div>
 		
 		    </div>
 		    <hr>
-		    <div class="row" style="margin-left: 15%">
+		    <div class="row" style="margin-left: 15%;margin-right: 15%">
 		        <div class="col-xs-2 col-md-2">
 		            <img class="img-responsive" src="/Static/img/181003.jpg" alt="prewiew">
 		        </div>
@@ -75,20 +75,20 @@
 		            <h4 class="product-name"><strong>Danny Ocean 13</strong></h4><h4><small>Par Niko</small></h4>
                      <h4><small >Réservé par : Landry DeRonald</small></h4>
 		        </div>		        
-                    <div class="col-xs-6 col-md-6 btn-group-vertical" style="padding-top: 5px; width:25%;">
+                    <div class="col-xs-6 col-md-4 btn-group-vertical" style="padding-top: 5px;">
                         <br/>
-                        <a href="" class="btn btn-info btn-primary">Affichage des données détaillées</a><br/>
-					    <a href="" class="btn btn-warning btn-primary">Envoi un courriel à celui qui l'a en main</a><br/>
-					    <a href="" class="btn btn-danger btn-primary">S'approprier ce DVD</a>
+                        <a href="/Pages/AffichageDesDonneesDetaillesDunDVD.aspx" class="btn btn-info btn-block btn-primary">Affichage des données détaillées</a><br/>
+					    <a href="/Pages/EnvoiCourriel.aspx" class="btn btn-warning btn-block btn-primary">Envoi un courriel à celui qui l'a en main</a><br/>
+					    <a href="" class="btn btn-danger btn-block btn-primary">S'approprier ce DVD</a>
                     </div>
 		        
 		    </div>
 		    <hr>
 		    <div align="center">
 			    <a href="/Pages/affichageDVDEnMain.aspx" class="btn btn-success">Afficher les DVDs en main</a>
-			    <a href="" class="btn btn-success">Afficher les DVDs d'un autre utilisateur</a>
+			    <a href="/Pages/DVDAutreUtil.aspx" class="btn btn-success">Afficher les DVDs d'un autre utilisateur</a>
 			</div>
 		</div>
 	<br/>
 </body>
-</html>
+</asp:Content>
