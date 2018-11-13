@@ -29,10 +29,13 @@
                     <a class="nav-link" href="/Messagerie">Envoyer un message</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/DVD/Ajouter">Ajouter un DVD</a>
+                    <a class="nav-link" href="/DVDAjout/Ajouter">Ajouter un DVD</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Déconnexion</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/GestionUtilisateur">Gestion utilisateur</a>
                 </li>
             </ul>
         </div>

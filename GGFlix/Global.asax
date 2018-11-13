@@ -42,7 +42,8 @@
         routes.MapPageRoute("DVDRoute", "DVD/{id}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx");
         routes.MapPageRoute("UtilRoute", "Utilisateur/{id}", "~/Pages/DVDAutreUtil.aspx");
         routes.MapPageRoute("MesDVDSRoute", "MesDVD", "~/Pages/affichageDVDEnMain.aspx");
-        routes.MapPageRoute("AjoutDVDRoute", "DVD/Ajouter", "~/Pages/AjoutDVD.aspx");
+        routes.MapPageRoute("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx");
         routes.MapPageRoute("MessagerieRoute", "Messagerie", "~/Pages/EnvoiCourriel.aspx");
+        routes.MapPageRoute("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx");
     }
 </script>
