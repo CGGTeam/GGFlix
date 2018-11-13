@@ -1,7 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AffichageDesDonneesDetaillesDunDVD.aspx.cs" Inherits="AffichageDesDonneesDetaillesDunDVD" Culture="fr-FR" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="AffichageDesDonneesDetaillesDunDVD.aspx.cs" Inherits="AffichageDesDonneesDetaillesDunDVD" Culture="fr-FR" %>
+<asp:Content runat="server" ContentPlaceHolderID="Head">
+    <link rel="stylesheet" href="/Static/css/connexion.css"/>
+</asp:Content>
+<asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
 
-
-<html>
 <head>
     <title>DVD Express</title>
     
@@ -12,12 +14,6 @@
 
 </head>
 <body>
-    <form id="frmDVDDetaille" runat="server">
-	<div class="container" style="margin-bottom: 30px;">
-	        <a href="/">
-	            <img class="navbar navbar-expand-lg navbar-dark nav-bg rounded" src="/Static/img/block.jpg" height="40%" width="100%">
-	        </a>
-	</div>
 	<div class="card">
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
@@ -39,15 +35,15 @@
 		         <div class="col-xs-6 col-md-4">
                 	<h4><small><asp:Label id="lblNomProducteur" AssociatedControlId="NomProducteur" Text="Nom du producteur" runat="server"/><asp:TextBox id="NomProducteur" runat="server" /></small></h4>
 		            <h4><small><asp:Label id="lblNomRealisateur" AssociatedControlId="NomRealisateur" Text="Nom du réalisateur" runat="server"/><asp:TextBox id="NomRealisateur" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblNomActeurs" AssociatedControlId="NomActeurs" Text="Nom des trois princiaux acteurs/actrices" runat="server"/><asp:DropDownList id="NomActeurs" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblResume" AssociatedControlId="Resume" Text="Résumé du film" runat="server"/><asp:TextBox id="Resume" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblSousTitre" AssociatedControlId="SousTitre" Text="Sous-Titres" runat="server"/><asp:DropDownList id="SousTitre" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblTitreFrancais" AssociatedControlId="TitreFrancais" Text="Titre-français" runat="server"/><asp:DropDownList id="TitreFrancais" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblTitreOriginal" AssociatedControlId="TitreOriginal" Text="Titre original" runat="server"/><asp:DropDownList id="TitreOriginal" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblProprietaire" AssociatedControlId="Proprietaire" Text="Utilisateur ayant acheté le DVD (propriétaire)" runat="server"/><asp:DropDownList id="Proprietaire" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblEmprunteur" AssociatedControlId="Emprunteur" Text="Utilisateur ayant le DVD en main (emprunteur)" runat="server"/><asp:DropDownList id="Emprunteur" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblVersionEtendue" AssociatedControlId="VersionEtendue" Text="Version étendue ?" runat="server"/><asp:CheckBox id="VersionEtendue" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblVisibleTous" AssociatedControlId="VisibleTous" Text="Visible à tous ?" runat="server"/><asp:CheckBox id="VisibleTous" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblNomActeurs" AssociatedControlId="NomActeurs" Text="Nom des trois princiaux acteurs/actrices" runat="server"/><asp:DropDownList id="NomActeurs" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblResume" AssociatedControlId="Resume" Text="Résumé du film" runat="server"/><asp:TextBox id="Resume" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblSousTitre" AssociatedControlId="SousTitre" Text="Sous-Titres" runat="server"/><asp:DropDownList id="SousTitre" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblTitreFrancais" AssociatedControlId="TitreFrancais" Text="Titre-français" runat="server"/><asp:DropDownList id="TitreFrancais" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblTitreOriginal" AssociatedControlId="TitreOriginal" Text="Titre original" runat="server"/><asp:DropDownList id="TitreOriginal" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblProprietaire" AssociatedControlId="Proprietaire" Text="Utilisateur ayant acheté le DVD (propriétaire)" runat="server"/><asp:DropDownList id="Proprietaire" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblEmprunteur" AssociatedControlId="Emprunteur" Text="Utilisateur ayant le DVD en main (emprunteur)" runat="server"/><asp:DropDownList id="Emprunteur" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblVersionEtendue" AssociatedControlId="VersionEtendue" Text="Version étendue ?" runat="server"/><asp:CheckBox id="VersionEtendue" runat="server" /></small></h4>
+                <h4><small><asp:Label id="lblVisibleTous" AssociatedControlId="VisibleTous" Text="Visible à tous ?" runat="server"/><asp:CheckBox id="VisibleTous" runat="server" /></small></h4>
 		        </div>
 		    </div>
 		</div>
@@ -56,7 +52,6 @@
 	 <div align="center">
 		<a href="" class="btn btn-success">Afficher liste de DVD</a>
 	</div>
-	<br/>
-    </form>
 </body>
 </html>
+</asp:Content>

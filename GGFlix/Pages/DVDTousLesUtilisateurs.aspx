@@ -20,11 +20,11 @@
     <br /> 
             <br />
 <div align="center">
-			<a href="page1" class="btn btn-success">Page 1</a>
-			<a href="page1" class="btn btn-success">Page 2</a>
-			<a href="page1" class="btn btn-success">Page 3</a>
-			<a href="page1" class="btn btn-success">Page 4</a>
-			<a href="page1" class="btn btn-success">Page 5</a>
+			<a href="1" class="btn btn-success">Page 1</a>
+			<a href="2" class="btn btn-success">Page 2</a>
+			<a href="3" class="btn btn-success">Page 3</a>
+			<a href="4" class="btn btn-success">Page 4</a>
+			<a href="5" class="btn btn-success">Page 5</a>
 			<div class="form-group row">
                 <div class="col-md-4">
                     <label>Rechercher DVD:</label>

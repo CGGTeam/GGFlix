@@ -38,6 +38,9 @@
     void RegisterRoutes(RouteCollection routes)
     {
         routes.MapPageRoute("ConnexionRoute", "", "~/Pages/Connexion.aspx");
-        routes.MapPageRoute("AccueilRoute", "accueil", "~/Pages/Accueil.aspx");
+        routes.MapPageRoute("CatalogueRoute", "Catalogue/{page}", "~/Pages/DVDTousLesUtilisateurs.aspx");
+        routes.MapPageRoute("DVDRoute", "DVD/{id}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx");
+        routes.MapPageRoute("UtilRoute", "Utilisateur/{id}", "~/Pages/DVDAutreUtil.aspx");
+        routes.MapPageRoute("MesDVDSRoute", "MesDVD", "~/Pages/affichageDVDEnMain.aspx");
     }
 </script>
