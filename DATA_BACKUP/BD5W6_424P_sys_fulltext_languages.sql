@@ -1,0 +1,53 @@
+CREATE TABLE sys.fulltext_languages
+(
+    lcid int NOT NULL,
+    name nvarchar(128)
+);
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (5124, 'Chinese (Macau SAR)');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (4100, 'Chinese (Singapore)');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (3098, 'Serbian (Cyrillic)');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (3082, 'Spanish');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (3076, 'Chinese (Hong Kong SAR, PRC)');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (2074, 'Serbian (Latin)');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (2070, 'Portuguese');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (2057, 'British English');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (2052, 'Simplified Chinese');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1102, 'Marathi');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1100, 'Malayalam');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1099, 'Kannada');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1098, 'Telugu');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1097, 'Tamil');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1095, 'Gujarati');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1094, 'Punjabi');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1093, 'Bengali (India)');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1086, 'Malay - Malaysia');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1081, 'Hindi');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1066, 'Vietnamese');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1063, 'Lithuanian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1062, 'Latvian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1060, 'Slovenian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1058, 'Ukrainian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1057, 'Indonesian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1056, 'Urdu');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1054, 'Thai');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1053, 'Swedish');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1051, 'Slovak');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1050, 'Croatian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1049, 'Russian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1048, 'Romanian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1046, 'Brazilian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1044, 'Norwegian (Bokmål)');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1043, 'Dutch');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1042, 'Korean');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1041, 'Japanese');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1040, 'Italian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1039, 'Icelandic');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1037, 'Hebrew');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1036, 'French');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1033, 'English');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1031, 'German');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1028, 'Traditional Chinese');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1027, 'Catalan');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1026, 'Bulgarian');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (1025, 'Arabic');
+INSERT INTO sys.fulltext_languages (lcid, name) VALUES (0, 'Neutral');

@@ -1,0 +1,75 @@
+CREATE TABLE sys.syscurconfigs
+(
+    value int NOT NULL,
+    config smallint,
+    comment nvarchar(255) NOT NULL,
+    status smallint
+);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 101, 'Maximum recovery interval in minutes', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 102, 'Allow updates to system tables', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 103, 'Number of user connections allowed', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 106, 'Number of locks for all users', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 107, 'Number of open database objects', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 109, 'Default fill factor percentage', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 114, 'Disallow returning results from triggers', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (1, 115, 'Allow triggers to be invoked within triggers', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (1, 116, 'Allow recursion for server level triggers', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (1, 117, 'Allow remote access', 0);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 124, 'default language', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 400, 'Allow cross db ownership chaining', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 503, 'Maximum worker threads', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (4096, 505, 'Network packet size', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 518, 'show advanced options', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 542, 'Create DTC transaction for remote procedures', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 544, 'c2 audit mode', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (1033, 1126, 'default full-text language', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (2049, 1127, 'two digit year cutoff', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1505, 'Memory for index create sorts (kBytes)', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1517, 'Priority boost', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (20, 1519, 'remote login timeout', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (600, 1520, 'remote query timeout', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (-1, 1531, 'cursor threshold', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1532, 'set working set size', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1534, 'user options', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1535, 'affinity mask', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (65536, 1536, 'Maximum size of a text field in replication.', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1537, 'Tape retention period in days', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (5, 1538, 'cost threshold for parallelism', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1539, 'maximum degree of parallelism', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (1024, 1540, 'minimum memory per query (kBytes)', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (-1, 1541, 'maximum time to wait for query memory (s)', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (16, 1543, 'Minimum size of server memory (MB)', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (2147483647, 1544, 'Maximum size of server memory (MB)', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1545, 'Maximum estimated cost allowed by query governor', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1546, 'User mode scheduler uses lightweight pooling', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1547, 'scan for startup stored procedures', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1548, 'AWE enabled in the server', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1549, 'affinity64 mask', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1550, 'affinity I/O mask', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1551, 'affinity64 I/O mask', 2);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1555, 'Transform noise words for full-text query', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1556, 'Use precomputed rank for full-text query', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (60, 1557, 'DB connection timeout for full-text protocol handler (s)', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1562, 'CLR user code execution enabled in the server', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (4, 1563, 'Maximum  crawl ranges allowed in full-text indexing', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1564, 'Number of reserved full-text notifications buffers', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (100, 1565, 'Max number of full-text notifications buffers', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1566, 'Number of reserved full-text crawl buffers', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (100, 1567, 'Max number of full-text crawl buffers', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (1, 1568, 'Enable or disable the default trace', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1569, 'Blocked process reporting threshold', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1570, 'Recovery policy for DTC transactions with unknown outcome', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1576, 'Dedicated Admin Connections are allowed from remote clients', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1579, 'Enable compression of backups by default', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (2, 1580, 'Sets the FILESTREAM access level', 1);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1581, 'When this option is set, plan cache size is further reduced for single-use adhoc OLTP workload.', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1582, 'Default hash bucket count for the access check result security cache', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 1583, 'Default quota for the access check result security cache', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 16384, 'Enable or disable Agent XPs', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 16385, 'Enable or disable SQL Mail XPs', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 16386, 'Enable or disable Database Mail XPs', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (1, 16387, 'Enable or disable SMO and DMO XPs', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 16388, 'Enable or disable Ole Automation Procedures', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 16390, 'Enable or disable command shell', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 16391, 'Enable or disable Ad Hoc Distributed Queries', 3);
+INSERT INTO sys.syscurconfigs (value, config, comment, status) VALUES (0, 16392, 'Enable or disable Replication XPs', 3);

@@ -1,0 +1,28 @@
+CREATE TABLE sys.http_endpoints
+(
+    name sysname NOT NULL,
+    endpoint_id int NOT NULL,
+    principal_id int,
+    protocol tinyint NOT NULL,
+    protocol_desc nvarchar(60),
+    type tinyint NOT NULL,
+    type_desc nvarchar(60),
+    state tinyint,
+    state_desc nvarchar(60),
+    is_admin_endpoint bit NOT NULL,
+    site nvarchar(128),
+    url_path nvarchar(4000),
+    is_clear_port_enabled bit NOT NULL,
+    clear_port int NOT NULL,
+    is_ssl_port_enabled bit NOT NULL,
+    ssl_port int NOT NULL,
+    is_anonymous_enabled bit NOT NULL,
+    is_basic_auth_enabled bit NOT NULL,
+    is_digest_auth_enabled bit NOT NULL,
+    is_kerberos_auth_enabled bit NOT NULL,
+    is_ntlm_auth_enabled bit NOT NULL,
+    is_integrated_auth_enabled bit NOT NULL,
+    authorization_realm nvarchar(128),
+    default_logon_domain nvarchar(128),
+    is_compression_enabled bit NOT NULL
+);

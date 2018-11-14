@@ -1,0 +1,10 @@
+CREATE TABLE INFORMATION_SCHEMA.COLUMN_DOMAIN_USAGE
+(
+    DOMAIN_CATALOG nvarchar(128),
+    DOMAIN_SCHEMA nvarchar(128),
+    DOMAIN_NAME sysname NOT NULL,
+    TABLE_CATALOG nvarchar(128),
+    TABLE_SCHEMA nvarchar(128),
+    TABLE_NAME sysname NOT NULL,
+    COLUMN_NAME sysname
+);

@@ -1,0 +1,26 @@
+CREATE TABLE INFORMATION_SCHEMA.ROUTINE_COLUMNS
+(
+    TABLE_CATALOG nvarchar(128),
+    TABLE_SCHEMA nvarchar(128),
+    TABLE_NAME sysname NOT NULL,
+    COLUMN_NAME sysname,
+    ORDINAL_POSITION int NOT NULL,
+    COLUMN_DEFAULT nvarchar(4000),
+    IS_NULLABLE varchar(3),
+    DATA_TYPE nvarchar(128),
+    CHARACTER_MAXIMUM_LENGTH int,
+    CHARACTER_OCTET_LENGTH int,
+    NUMERIC_PRECISION tinyint,
+    NUMERIC_PRECISION_RADIX smallint,
+    NUMERIC_SCALE int,
+    DATETIME_PRECISION smallint,
+    CHARACTER_SET_CATALOG sysname,
+    CHARACTER_SET_SCHEMA sysname,
+    CHARACTER_SET_NAME sysname,
+    COLLATION_CATALOG sysname,
+    COLLATION_SCHEMA sysname,
+    COLLATION_NAME sysname,
+    DOMAIN_CATALOG sysname,
+    DOMAIN_SCHEMA sysname,
+    DOMAIN_NAME sysname
+);

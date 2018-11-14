@@ -1,0 +1,26 @@
+CREATE TABLE sys.xml_schema_elements
+(
+    xml_component_id int NOT NULL,
+    xml_collection_id int NOT NULL,
+    xml_namespace_id int NOT NULL,
+    is_qualified bit NOT NULL,
+    name nvarchar(4000),
+    symbol_space char(1) NOT NULL,
+    symbol_space_desc nvarchar(60),
+    kind char(1) NOT NULL,
+    kind_desc nvarchar(60),
+    derivation char(1) NOT NULL,
+    derivation_desc nvarchar(60),
+    base_xml_component_id int,
+    scoping_xml_component_id int,
+    is_default_fixed bit NOT NULL,
+    is_abstract bit NOT NULL,
+    is_nillable bit NOT NULL,
+    must_be_qualified bit NOT NULL,
+    is_extension_blocked bit NOT NULL,
+    is_restriction_blocked bit NOT NULL,
+    is_substitution_blocked bit NOT NULL,
+    is_final_extension bit NOT NULL,
+    is_final_restriction bit NOT NULL,
+    default_value nvarchar(4000)
+);

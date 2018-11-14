@@ -1,0 +1,11 @@
+CREATE TABLE INFORMATION_SCHEMA.COLUMN_PRIVILEGES
+(
+    GRANTOR nvarchar(128),
+    GRANTEE nvarchar(128),
+    TABLE_CATALOG nvarchar(128),
+    TABLE_SCHEMA nvarchar(128),
+    TABLE_NAME sysname NOT NULL,
+    COLUMN_NAME sysname,
+    PRIVILEGE_TYPE varchar(10),
+    IS_GRANTABLE varchar(3)
+);

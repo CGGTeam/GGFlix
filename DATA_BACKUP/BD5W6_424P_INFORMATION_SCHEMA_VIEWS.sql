@@ -1,0 +1,9 @@
+CREATE TABLE INFORMATION_SCHEMA.VIEWS
+(
+    TABLE_CATALOG nvarchar(128),
+    TABLE_SCHEMA nvarchar(128),
+    TABLE_NAME sysname NOT NULL,
+    VIEW_DEFINITION nvarchar(4000),
+    CHECK_OPTION varchar(7),
+    IS_UPDATABLE varchar(2) NOT NULL
+);
