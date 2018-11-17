@@ -16,16 +16,18 @@ namespace LibrairieBD.Sql
             this.aDataContext = aDataContext;
         }
 
-        public IEnumerable<T> SelectAllInTable<T>()
+        public IList<T> SelectAllInTable<T>()
         {
             SqlCommand command = GenerateSelectAllFor<T>();
-           
-            IDataReader dataReader = aDataContext.ExecuteReader(command);
 
             List<T> allInTable = new List<T>();
-            while (dataReader.Read())
+
+            using (IDataReader dataReader = aDataContext.ExecuteReader(command))
             {
-                allInTable.Add(ConvertRowToEntity<T>(dataReader));
+                while (dataReader.Read())
+                {
+                    allInTable.Add(ConvertRowToEntity<T>(dataReader));
+                }
             }
 
             return allInTable;
@@ -56,9 +58,10 @@ namespace LibrairieBD.Sql
             {
                 ColumnMapping mappedColumn = (ColumnMapping)prop.GetCustomAttribute(typeof(ColumnMapping));
 
-                object[] paramValue = { row[mappedColumn.ColumnName] };
+                var paramVal = row[mappedColumn.ColumnName];
+                object[] parameters = { paramVal is DBNull ? null : paramVal };
 
-                prop.SetMethod.Invoke(entity, paramValue);
+                prop.SetMethod.Invoke(entity, parameters);
             }
 
             return entity;
@@ -82,7 +85,7 @@ namespace LibrairieBD.Sql
             return ((TableMapping)mappingAttr).TableName;
         }
 
-        public IEnumerable<T> SelectWhere<T>(string @where)
+        public IList<T> SelectWhere<T>(string @where)
         {
             throw new NotImplementedException();
         }

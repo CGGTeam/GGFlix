@@ -6,7 +6,7 @@ namespace LibrairieBD.Sql
 {
     public interface IDbAdapter
     {
-        IEnumerable<T> SelectAllInTable<T>();
-        IEnumerable<T> SelectWhere<T>(string where);
+        IList<T> SelectAllInTable<T>();
+        IList<T> SelectWhere<T>(string where);
     }
 }

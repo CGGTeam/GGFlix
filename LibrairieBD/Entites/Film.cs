@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LibrairieBD;
 
-namespace GGFlix_Test.Entites
+namespace LibrairieBD.Entites
 {
     public class Film
     {
@@ -16,11 +13,11 @@ namespace GGFlix_Test.Entites
         [ColumnMapping] public int NoUtilisateurMAJ { get; set; }
         [ColumnMapping] public string Resume { get; set; }
         [ColumnMapping] public int DureeMinutes { get; set; }
-        [ColumnMapping] public bool FilmOriginal { get; set; }
+        [ColumnMapping] public bool? FilmOriginal { get; set; }
         [ColumnMapping] public string ImagePochette { get; set; }
         [ColumnMapping] public string TitreFrancais { get; set; }
         [ColumnMapping] public string TitreOriginal { get; set; }
-        [ColumnMapping] public string VersionEtendue { get; set; }
+        [ColumnMapping] public bool? VersionEtendue { get; set; }
         [ColumnMapping] public int NoRealisateur { get; set; }
         [ColumnMapping] public int NoProducteur { get; set; }
         [ColumnMapping] public string XTra { get; set; }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GGFlix_Test;
-using GGFlix_Test.Entites;
+using LibrairieBD.Entites;
 using LibrairieBD.Sql;
 
 namespace LibrairieBD.Dao
@@ -16,7 +16,7 @@ namespace LibrairieBD.Dao
             this.adapter = adapter;
         }
 
-        public IEnumerable<Film> FindAll()
+        public IList<Film> FindAll()
         {
             return adapter.SelectAllInTable<Film>();
         }

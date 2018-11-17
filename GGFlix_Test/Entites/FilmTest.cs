@@ -1,6 +1,6 @@
 using System.Reflection;
-using GGFlix_Test.Entites;
 using LibrairieBD;
+using LibrairieBD.Entites;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GGFlix_Test

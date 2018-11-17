@@ -8,33 +8,32 @@ namespace LibrairieBD.Sql
 {
     public class SqlDataContext: ISqlDataContext
     {
-        private readonly string connectionString;
+        private readonly SqlConnection connection;
 
         public SqlDataContext(string connectionString)
         {
-            this.connectionString = connectionString;
+            this.connection = new SqlConnection(connectionString);
         }
 
         public IDataReader ExecuteReader(SqlCommand command)
         {
             SqlDataReader reader;
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                command.Connection = connection;
-                reader = command.ExecuteReader();
-            }
-          
+            connection.Open();
+
+            command.Connection = connection;
+            reader = command.ExecuteReader();
+
+
             return reader;
         }
 
         public void ExecuteNonQuery(SqlCommand command)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                command.Connection = connection;
-                command.ExecuteNonQuery();
-            }
+            connection.Open();
+
+            command.Connection = connection;
+            command.ExecuteNonQuery();
         }
 
         private SqlConnection CreateConnection(string connectionString)

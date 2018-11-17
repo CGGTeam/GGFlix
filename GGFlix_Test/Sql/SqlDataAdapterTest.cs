@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
-using GGFlix_Test.Entites;
 using LibrairieBD;
 using LibrairieBD.Sql;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

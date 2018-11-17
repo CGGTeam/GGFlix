@@ -6,6 +6,6 @@ namespace GGFlix_Test
 {
     interface IDao<T, ID>
     {
-        IEnumerable<T> FindAll();
+        IList<T> FindAll();
     }
 }
