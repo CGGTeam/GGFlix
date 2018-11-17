@@ -1,7 +1,6 @@
 using System.Reflection;
 using GGFlix_Test.Entites;
 using LibrairieBD;
-using LibrairieBD.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GGFlix_Test
@@ -24,7 +23,7 @@ namespace GGFlix_Test
             string expectedColName = colName;
             ColumnMapping colMapping = GetColumMappingForProp(colName);
 
-            return expectedColName == colMapping.RowName;
+            return expectedColName == colMapping.ColumnName;
         }
 
         [TestMethod]

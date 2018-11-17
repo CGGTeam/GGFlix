@@ -1,5 +1,5 @@
 using System.Reflection;
-using LibrairieBD.Utils;
+using GGFlix_Test.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GGFlix_Test
@@ -17,7 +17,7 @@ namespace GGFlix_Test
 
         private ColumnMapping getColumMappingForProp(string propName)
         {
-            return (ColumnMapping)typeof(RowMapExample).GetProperty(propName).GetCustomAttribute(typeof(ColumnMapping));
+            return (ColumnMapping)typeof(ColumnMappingExample).GetProperty(propName).GetCustomAttribute(typeof(ColumnMapping));
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace GGFlix_Test
             string nameBasedOnProp = "id";
             ColumnMapping idMapping = IdMapping;
 
-            Assert.AreEqual(nameBasedOnProp, idMapping.RowName);
+            Assert.AreEqual(nameBasedOnProp, idMapping.ColumnName);
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace GGFlix_Test
             string nameBasedOnProp = "nom";
             ColumnMapping nomMapping = NomMapping;
 
-            Assert.AreEqual(nameBasedOnProp, nomMapping.RowName);
+            Assert.AreEqual(nameBasedOnProp, nomMapping.ColumnName);
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace GGFlix_Test
         {
             string nameOverride = "ID_CUST";
 
-            Assert.AreEqual(nameOverride, CustomerMapping.RowName);
+            Assert.AreEqual(nameOverride, CustomerMapping.ColumnName);
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace GGFlix_Test
         {
             string nameOverride = "ID_CLIENT";
 
-            Assert.AreEqual(nameOverride, ClientMapping.RowName);
+            Assert.AreEqual(nameOverride, ClientMapping.ColumnName);
         }
     }
 }

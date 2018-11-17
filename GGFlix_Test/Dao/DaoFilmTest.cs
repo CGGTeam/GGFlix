@@ -4,7 +4,6 @@ using GGFlix_Test.Entites;
 using LibrairieBD;
 using LibrairieBD.Dao;
 using LibrairieBD.Sql;
-using LibrairieBD.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

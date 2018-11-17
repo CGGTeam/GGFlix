@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LibrairieBD;
 
-namespace LibrairieBD.Utils
+namespace GGFlix_Test.Utils
 {
-    public class RowMapExample
+    public class ColumnMappingExample
     {
         [ColumnMapping]
         public string id

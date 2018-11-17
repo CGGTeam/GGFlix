@@ -5,13 +5,13 @@ using System.Runtime.CompilerServices;
 using System.Web;
 
 
-[System.AttributeUsage(System.AttributeTargets.Property)]
-public class ColumnMapping : System.Attribute
+[AttributeUsage(AttributeTargets.Property)]
+public class ColumnMapping : Attribute
 {
-    public string RowName { get; }
+    public string ColumnName { get; }
 
-    public ColumnMapping([CallerMemberName] string rowName = "")
+    public ColumnMapping([CallerMemberName] string columnName = "")
     {
-        this.RowName = rowName;
+        this.ColumnName = columnName;
     }
 }
