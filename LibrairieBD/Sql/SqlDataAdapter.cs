@@ -56,9 +56,9 @@ namespace LibrairieBD.Sql
 
             foreach (PropertyInfo prop in properties)
             {
-                ColumnMapping mappedColumn = (ColumnMapping)prop.GetCustomAttribute(typeof(ColumnMapping));
+                string mappedColumn = entity.GetMappingForProp(prop);
 
-                var paramVal = row[mappedColumn.ColumnName];
+                var paramVal = row[mappedColumn];
                 object[] parameters = { paramVal is DBNull ? null : paramVal };
 
                 prop.SetMethod.Invoke(entity, parameters);
@@ -69,13 +69,13 @@ namespace LibrairieBD.Sql
 
         private SqlCommand GenerateSelectAllFor<T>()
         {
-            string tableName = getTableMapping<T>();
+            string tableName = GetTableMapping<T>();
             string selectQuery = $"SELECT * FROM {tableName}";
 
             return new SqlCommand(selectQuery);
         }
 
-        private string getTableMapping<T>()
+        private string GetTableMapping<T>()
         {
             Type entityType = typeof(T);
             Attribute mappingAttr = entityType.GetCustomAttribute(typeof(TableMapping));
@@ -91,7 +91,14 @@ namespace LibrairieBD.Sql
 
             dataContext.ExecuteNonQuery(insertCommand);
 
+            if (entity.GetId() == null) entity.SetId(GetLastId());
+
             return entity;
+        }
+
+        private object GetLastId()
+        {
+            return dataContext.ExecuteScalar(new SqlCommand("SELECT SCOPE_IDENTITY() AS[SCOPE_IDENTITY]"));
         }
 
         private SqlCommand GenerateInsert<T>(T entity)
@@ -104,10 +111,10 @@ namespace LibrairieBD.Sql
             for (var i = 0; i < properties.Length; i++)
             {
                 PropertyInfo prop = properties[i];
-                ColumnMapping mappedColumn = (ColumnMapping)prop.GetCustomAttribute(typeof(ColumnMapping));
+                string mappedColumn = entity.GetMappingForProp(prop);
 
-                columns += mappedColumn.ColumnName;
-                values += $"@{mappedColumn.ColumnName}";
+                columns += mappedColumn;
+                values += $"@{mappedColumn}";
 
                 if (i < properties.Length - 1)
                 {
@@ -120,15 +127,15 @@ namespace LibrairieBD.Sql
                 command.Parameters.Add(param);
             }
 
-            command.CommandText = $"INSERT INTO {getTableMapping<T>()} ({columns}) VALUE ({values})";
+            command.CommandText = $"INSERT INTO {GetTableMapping<T>()} ({columns}) VALUE ({values})";
             return command;
         }
 
         public T UpdateRow<T>(T entity)
         {
-            SqlCommand insertCommand = GenerateUpdate<T>(entity);
+            SqlCommand updateCommand = GenerateUpdate<T>(entity);
 
-            dataContext.ExecuteNonQuery(insertCommand);
+            dataContext.ExecuteNonQuery(updateCommand);
 
             return entity;
         }
@@ -143,21 +150,21 @@ namespace LibrairieBD.Sql
             for (var i = 0; i < properties.Length; i++)
             {
                 PropertyInfo prop = properties[i];
-                ColumnMapping mappedColumn = (ColumnMapping)prop.GetCustomAttribute(typeof(ColumnMapping));
+                string mappedColumn = entity.GetMappingForProp(prop);
 
                 if (prop.GetCustomAttribute(typeof(Id)) != null)
                 {
-                    idCol = mappedColumn.ColumnName;
+                    idCol = mappedColumn;
+                    mappedColumn = "Id";
                 }
                 else
                 {
-                    setStatements.Add($"{mappedColumn.ColumnName} = @{mappedColumn.ColumnName}");
+                    setStatements.Add($"{mappedColumn} = @{mappedColumn}");
                 }
-
-                command.Parameters.Add(ParamFromProp(entity, prop, mappedColumn.ColumnName));
+                command.Parameters.Add(ParamFromProp(entity, prop, $"@{mappedColumn}"));
             }
 
-            string commandText = $"UPDATE {getTableMapping<T>()} ";
+            string commandText = $"UPDATE {GetTableMapping<T>()} ";
             if (setStatements.Count > 0) commandText += "SET ";
             for (var i = 0; i < setStatements.Count; i++)
                 commandText += $"{setStatements[i]} {(i < setStatements.Count - 1 ? ", " : "")}";
@@ -167,9 +174,37 @@ namespace LibrairieBD.Sql
             return command;
         }
 
-        private static SqlParameter ParamFromProp<T>(T entity, PropertyInfo prop, string colName)
+        public bool DeleteRow<T>(T entity)
         {
-            return new SqlParameter {ParameterName = $"@{colName}", Value = prop.GetMethod.Invoke(entity, new object[0])};
+            SqlCommand deleteCommand = GenerateDelete<T>(entity);
+
+            return dataContext.ExecuteNonQuery(deleteCommand) > 0;
+        }
+
+        private SqlCommand GenerateDelete<T>(T entity)
+        {
+            SqlCommand command = new SqlCommand();
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            string idCol = "";
+
+            foreach (PropertyInfo prop in properties)
+            {
+                if (prop.GetCustomAttribute(typeof(Id)) != null)
+                {
+                    string mappedColumn = entity.GetMappingForProp(prop);
+
+                    idCol = mappedColumn;
+                    command.Parameters.Add(ParamFromProp(entity, prop, "@Id"));
+                }
+            }
+
+            command.CommandText = $"DELETE FROM {GetTableMapping<T>()} WHERE {idCol} = @Id";
+            return command;
+        }
+
+        private static SqlParameter ParamFromProp<T>(T entity, PropertyInfo prop, string paramName)
+        {
+            return new SqlParameter {ParameterName = $"{paramName}", Value = prop.GetMethod.Invoke(entity, new object[0])};
         }
 
         public IList<T> SelectWhere<T>(string where)

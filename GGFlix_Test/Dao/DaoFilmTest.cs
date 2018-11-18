@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using GGFlix_Test.Utils;
@@ -50,6 +51,25 @@ namespace GGFlix_Test
             daoFilm.Save(film);
 
             adapter.Verify(ad => ad.InsertInto<Film>(film), Times.Once);
+        }
+
+        [TestMethod]
+        public void GivenAnEntityWithAnId_WhenDelete_ThenDeleteRow()
+        {
+            Film film = GenerateFilm(true);
+
+            daoFilm.Delete(film);
+
+            adapter.Verify(ad => ad.DeleteRow(film), Times.Once);
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void GivenAnEntityWithNoId_WhenDelete_ThenException()
+        {
+            Film film = GenerateFilm(false);
+
+            daoFilm.Delete(film);
         }
 
         public Film GenerateFilm(bool withId = false)

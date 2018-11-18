@@ -177,6 +177,20 @@ namespace GGFlix_Test
         }
 
         [TestMethod]
+        public void GivenAnEntityWithNoId_WhenInsertInto_ShouldSetId()
+        {
+            AnotherExampleEntity anEntity = new AnotherExampleEntity { AnotherProperty = "anotherValue" };
+            string expectedId = "3";
+            _contextMock.Setup(
+                ctxt => ctxt.ExecuteScalar(It.IsAny<SqlCommand>())
+            ).Returns(expectedId);
+
+            anEntity = dataAdapter.InsertInto(anEntity);
+
+            Assert.AreEqual(anEntity.Property, expectedId);
+        }
+
+        [TestMethod]
         public void GivenAnEntity_WhenUpdateRow_ShouldFormValidUpdateQuery()
         {
             SqlParameter[] expectedParameters =
@@ -220,11 +234,80 @@ namespace GGFlix_Test
             );
         }
 
+        [TestMethod]
+        public void GivenAnEntity_WhenDeleteRow_ShouldFormValidDeleteQuery()
+        {
+            SqlParameter[] expectedParameters =
+            {
+                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"},
+            };
+            ExampleEntity anEntity = new ExampleEntity { Property = "value"};
+            string validDeleteQuery = "DELETE FROM Entities " +
+                                      "WHERE Property = @Id";
+
+            dataAdapter.DeleteRow(anEntity);
+
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validDeleteQuery))
+            );
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
+            );
+        }
+
+        [TestMethod]
+        public void GivenAnotherEntity_WhenDeleteRow_ShouldFormValidDeleteQuery()
+        {
+            SqlParameter[] expectedParameters =
+            {
+                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"},
+            };
+            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = "value", AnotherProperty = "anotherValue" };
+            string validDeleteQuery = "DELETE FROM OtherEntities " +
+                                      "WHERE Property = @Id";
+
+            dataAdapter.DeleteRow(anEntity);
+
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validDeleteQuery))
+            );
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
+            );
+        }
+
+        [TestMethod]
+        public void GivenAnEntityThatDoesntExist_WhenDeleteRow_ReturnFalse()
+        {
+            ExampleEntity anEntity = new ExampleEntity { Property = "value" };
+
+           _contextMock.Setup(
+                context => context.ExecuteNonQuery(It.IsAny<SqlCommand>())
+            ).Returns(0);
+
+            bool returnVal = dataAdapter.DeleteRow(anEntity);
+
+            Assert.IsFalse(returnVal);
+        }
+
+        [TestMethod]
+        public void GivenAnEntityThatExists_WhenDeleteRow_ReturnFalse()
+        {
+            ExampleEntity anEntity = new ExampleEntity { Property = "value" };
+
+            _contextMock.Setup(
+                context => context.ExecuteNonQuery(It.IsAny<SqlCommand>())
+            ).Returns(1);
+
+            bool returnVal = dataAdapter.DeleteRow(anEntity);
+
+            Assert.IsTrue(returnVal);
+        }
+
         private Expression<Func<SqlCommand, bool>> VerifyParamValues(SqlParameter[] expectedParameters)
         {
             return (command) => (command.Parameters.Count == expectedParameters.Length)
                                 && ParamValuesEquivalent(command.Parameters, expectedParameters);
-            
         }
 
         private bool ParamValuesEquivalent(SqlParameterCollection commandParameters, SqlParameter[] expectedParameters)

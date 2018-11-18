@@ -12,28 +12,46 @@ namespace LibrairieBD.Sql
 
         public SqlDataContext(string connectionString)
         {
-            this.connection = new SqlConnection(connectionString);
+            connection = CreateConnection(connectionString);
         }
 
         public IDataReader ExecuteReader(SqlCommand command)
         {
             SqlDataReader reader;
 
-            connection.Open();
+            PrepareCommandForExecute(command);
 
-            command.Connection = connection;
             reader = command.ExecuteReader();
-
 
             return reader;
         }
 
-        public void ExecuteNonQuery(SqlCommand command)
+        public int ExecuteNonQuery(SqlCommand command)
+        {
+            PrepareCommandForExecute(command);
+
+            int affectedRows = command.ExecuteNonQuery();
+            connection.Close();
+
+            return affectedRows;
+        }
+
+        public object ExecuteScalar(SqlCommand command)
+        {
+            PrepareCommandForExecute(command);
+
+            object scalar = command.ExecuteScalar();
+
+            connection.Close();
+
+            return scalar;
+        }
+
+        private void PrepareCommandForExecute(SqlCommand command)
         {
             connection.Open();
 
             command.Connection = connection;
-            command.ExecuteNonQuery();
         }
 
         private SqlConnection CreateConnection(string connectionString)
@@ -50,6 +68,7 @@ namespace LibrairieBD.Sql
     public interface ISqlDataContext
     {
         IDataReader ExecuteReader(SqlCommand command);
-        void ExecuteNonQuery(SqlCommand command);
+        int ExecuteNonQuery(SqlCommand command);
+        object ExecuteScalar(SqlCommand command);
     }
 }
