@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq.Expressions;
 using System.Reflection;
 using LibrairieBD;
 using LibrairieBD.Sql;
@@ -16,9 +17,9 @@ namespace GGFlix_Test
     [TestClass]
     public class SqlDataAdapterTest
     {
-        private static Mock<ISqlDataContext> _contextMock = new Mock<ISqlDataContext>();
+        private static readonly Mock<ISqlDataContext> _contextMock = new Mock<ISqlDataContext>();
 
-        private SqlDataAdapter dataAdapter = new SqlDataAdapter(_contextMock.Object);
+        private readonly SqlDataAdapter dataAdapter = new SqlDataAdapter(_contextMock.Object);
 
         [TestInitialize]
         public void BeforeEach()
@@ -130,6 +131,115 @@ namespace GGFlix_Test
                     Assert.AreEqual(expectedEnumerator.Current.AnotherProperty, actualsEnumerator.Current.AnotherProperty);
                 }
             }
+        }
+
+        [TestMethod]
+        public void GivenAnEntity_WhenInsertInto_ShouldFormValidInsertQuery()
+        {
+            SqlParameter[] expectedParameters =
+            {
+                new SqlParameter("@Property", SqlDbType.VarChar){ Value = "value"},
+            };
+            ExampleEntity anEntity = new ExampleEntity { Property = "value"};
+            string validInsertQuery = "INSERT INTO Entities " +
+                                      "(Property) VALUE (@Property)";
+
+            dataAdapter.InsertInto(anEntity);
+
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
+            );
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
+            );
+        }
+
+        [TestMethod]
+        public void GivenAnotherEntity_WhenInsertInto_ShouldFormValidInsertQuery()
+        {
+            SqlParameter[] expectedParameters =
+            {
+                new SqlParameter("@Property", SqlDbType.VarChar){ Value = "value"}, 
+                new SqlParameter("@AnotherProperty", SqlDbType.VarChar){ Value = "anotherValue"},
+            };
+            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = "value", AnotherProperty = "anotherValue"};
+            string validInsertQuery = "INSERT INTO OtherEntities " +
+                                      "(Property, AnotherProperty) VALUE (@Property, @AnotherProperty)";
+
+            dataAdapter.InsertInto(anEntity);
+
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
+            );
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
+            );
+        }
+
+        [TestMethod]
+        public void GivenAnEntity_WhenUpdateRow_ShouldFormValidUpdateQuery()
+        {
+            SqlParameter[] expectedParameters =
+            {
+                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"}
+            };
+            ExampleEntity anEntity = new ExampleEntity { Property = "value" };
+            string validInsertQuery = "UPDATE Entities " +
+                                      "WHERE Property = @Id";
+
+            dataAdapter.UpdateRow(anEntity);
+
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
+            );
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
+            );
+        }
+
+        [TestMethod]
+        public void GivenAnotherEntity_WhenUpdateRow_ShouldFormValidUpdateQuery()
+        {
+            SqlParameter[] expectedParameters =
+            {
+                new SqlParameter("@AnotherProperty", SqlDbType.VarChar){ Value = "anotherValue"},
+                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"},
+            };
+            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = "value", AnotherProperty = "anotherValue" };
+            string validInsertQuery = "UPDATE OtherEntities SET " +
+                                      "AnotherProperty = @AnotherProperty " +
+                                      "WHERE Property = @Id";
+
+            dataAdapter.UpdateRow(anEntity);
+
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
+            );
+            _contextMock.Verify(
+                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
+            );
+        }
+
+        private Expression<Func<SqlCommand, bool>> VerifyParamValues(SqlParameter[] expectedParameters)
+        {
+            return (command) => (command.Parameters.Count == expectedParameters.Length)
+                                && ParamValuesEquivalent(command.Parameters, expectedParameters);
+            
+        }
+
+        private bool ParamValuesEquivalent(SqlParameterCollection commandParameters, SqlParameter[] expectedParameters)
+        {
+            for (var i = 0; i < commandParameters.Count; i++)
+            {
+                SqlParameter actualParam = commandParameters[i];
+                foreach (var expectedParam in expectedParameters)
+                {
+                    if (actualParam.ParameterName == expectedParam.ParameterName &&
+                        expectedParam.Value != actualParam.Value) return false;
+                }
+            }
+
+            return true;
         }
 
         public IDataReader GenerateADataReader()

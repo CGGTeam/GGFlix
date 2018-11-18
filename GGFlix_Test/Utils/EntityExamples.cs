@@ -8,6 +8,7 @@ namespace GGFlix_Test.Utils
     [TableMapping("Entities")]
     public class ExampleEntity
     {
+        [Id]
         [ColumnMapping]
         public string Property { get; set; }
     }
@@ -15,6 +16,7 @@ namespace GGFlix_Test.Utils
     [TableMapping("OtherEntities")]
     public class AnotherExampleEntity
     {
+        [Id]
         [ColumnMapping]
         public string Property { get; set; }
         [ColumnMapping]

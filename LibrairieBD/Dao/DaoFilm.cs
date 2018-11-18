@@ -20,5 +20,12 @@ namespace LibrairieBD.Dao
         {
             return adapter.SelectAllInTable<Film>();
         }
+
+        public Film Save(Film film)
+        {
+            if (film.NoFilm == null)  return adapter.InsertInto(film);
+
+            return adapter.UpdateRow(film);
+        }
     }
 }

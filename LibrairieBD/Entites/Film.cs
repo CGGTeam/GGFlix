@@ -6,7 +6,7 @@ namespace LibrairieBD.Entites
     {
         [Id]
         [ColumnMapping]
-        public int NoFilm { get; set; }
+        public int? NoFilm { get; set; }
         [ColumnMapping] public int AnneeSortie { get; set; }
         [ColumnMapping] public int Categorie { get; set; }
         [ColumnMapping] public DateTime DateMAJ { get; set; }

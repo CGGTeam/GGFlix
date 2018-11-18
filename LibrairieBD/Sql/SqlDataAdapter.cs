@@ -9,11 +9,11 @@ namespace LibrairieBD.Sql
 {
     public class SqlDataAdapter : IDbAdapter
     {
-        private ISqlDataContext aDataContext;
+        private ISqlDataContext dataContext;
 
-        public SqlDataAdapter(ISqlDataContext aDataContext)
+        public SqlDataAdapter(ISqlDataContext dataContext)
         {
-            this.aDataContext = aDataContext;
+            this.dataContext = dataContext;
         }
 
         public IList<T> SelectAllInTable<T>()
@@ -22,7 +22,7 @@ namespace LibrairieBD.Sql
 
             List<T> allInTable = new List<T>();
 
-            using (IDataReader dataReader = aDataContext.ExecuteReader(command))
+            using (IDataReader dataReader = dataContext.ExecuteReader(command))
             {
                 while (dataReader.Read())
                 {
@@ -85,7 +85,94 @@ namespace LibrairieBD.Sql
             return ((TableMapping)mappingAttr).TableName;
         }
 
-        public IList<T> SelectWhere<T>(string @where)
+        public T InsertInto<T>(T entity)
+        {
+            SqlCommand insertCommand = GenerateInsert<T>(entity);
+
+            dataContext.ExecuteNonQuery(insertCommand);
+
+            return entity;
+        }
+
+        private SqlCommand GenerateInsert<T>(T entity)
+        {
+            SqlCommand command = new SqlCommand();
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            string columns = "";
+            string values = "";
+
+            for (var i = 0; i < properties.Length; i++)
+            {
+                PropertyInfo prop = properties[i];
+                ColumnMapping mappedColumn = (ColumnMapping)prop.GetCustomAttribute(typeof(ColumnMapping));
+
+                columns += mappedColumn.ColumnName;
+                values += $"@{mappedColumn.ColumnName}";
+
+                if (i < properties.Length - 1)
+                {
+                    columns += ", ";
+                    values += ", ";
+                }
+
+                SqlParameter param = command.CreateParameter();
+                param.Value = prop.GetMethod.Invoke(entity, new object[0]);
+                command.Parameters.Add(param);
+            }
+
+            command.CommandText = $"INSERT INTO {getTableMapping<T>()} ({columns}) VALUE ({values})";
+            return command;
+        }
+
+        public T UpdateRow<T>(T entity)
+        {
+            SqlCommand insertCommand = GenerateUpdate<T>(entity);
+
+            dataContext.ExecuteNonQuery(insertCommand);
+
+            return entity;
+        }
+
+        private SqlCommand GenerateUpdate<T>(T entity)
+        {
+            SqlCommand command = new SqlCommand();
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            List<string> setStatements = new List<string>(properties.Length);
+            string idCol = "";
+
+            for (var i = 0; i < properties.Length; i++)
+            {
+                PropertyInfo prop = properties[i];
+                ColumnMapping mappedColumn = (ColumnMapping)prop.GetCustomAttribute(typeof(ColumnMapping));
+
+                if (prop.GetCustomAttribute(typeof(Id)) != null)
+                {
+                    idCol = mappedColumn.ColumnName;
+                }
+                else
+                {
+                    setStatements.Add($"{mappedColumn.ColumnName} = @{mappedColumn.ColumnName}");
+                }
+
+                command.Parameters.Add(ParamFromProp(entity, prop, mappedColumn.ColumnName));
+            }
+
+            string commandText = $"UPDATE {getTableMapping<T>()} ";
+            if (setStatements.Count > 0) commandText += "SET ";
+            for (var i = 0; i < setStatements.Count; i++)
+                commandText += $"{setStatements[i]} {(i < setStatements.Count - 1 ? ", " : "")}";
+            commandText += $"WHERE {idCol} = @Id";
+
+            command.CommandText = commandText;
+            return command;
+        }
+
+        private static SqlParameter ParamFromProp<T>(T entity, PropertyInfo prop, string colName)
+        {
+            return new SqlParameter {ParameterName = $"@{colName}", Value = prop.GetMethod.Invoke(entity, new object[0])};
+        }
+
+        public IList<T> SelectWhere<T>(string where)
         {
             throw new NotImplementedException();
         }
