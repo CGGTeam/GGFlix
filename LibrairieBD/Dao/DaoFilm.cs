@@ -38,7 +38,7 @@ namespace LibrairieBD.Dao
 
         public Film FindById(int id)
         {
-            Expression<Func<Film, bool>> condition = film => film.NoFilm == id;
+            Expression<Func<Film, bool>> condition = film => film.NoFilm.Value == id;
 
             IList<Film> returnedFilms = adapter.SelectWhere(condition);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
@@ -54,6 +55,19 @@ namespace LibrairieBD.Sql
             if (mappingAttr == null) return $"{type.Name}s";
 
             return (mappingAttr).TableName;
+        }
+
+        public static object CastVarToPropType(this PropertyInfo prop, object varToConvert)
+        {
+            var parameter = Expression.Parameter(typeof(object), "input");
+
+            var cast = Expression.TypeAs(Expression.Convert(parameter, prop.PropertyType), typeof(object));
+
+            var lambda = Expression.Lambda<Func<object, object>>(cast, parameter);
+
+            var func = lambda.Compile();
+
+            return func(varToConvert);
         }
     }
 }

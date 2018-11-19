@@ -21,7 +21,7 @@ namespace LibrairieBD.Sql
 
             PrepareCommandForExecute(command);
 
-            reader = command.ExecuteReader();
+            reader = command.ExecuteReader(CommandBehavior.CloseConnection);
 
             return reader;
         }
@@ -41,7 +41,6 @@ namespace LibrairieBD.Sql
             PrepareCommandForExecute(command);
 
             object scalar = command.ExecuteScalar();
-
             connection.Close();
 
             return scalar;

@@ -15,6 +15,7 @@ namespace LibrairieBD.Sql
             { "==", "=" },
             { "AndAlso", "AND" },
             { "OrElse", "OR" },
+            { ".Value", "" },
             { "\"", "\'" },
         };
 

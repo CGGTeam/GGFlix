@@ -79,7 +79,9 @@ namespace LibrairieBD.Sql
                 string mappedColumn = entity.GetMappingForProp(prop);
 
                 var paramVal = row[mappedColumn];
-                object[] parameters = { paramVal is DBNull ? null : paramVal };
+                if (paramVal is DBNull) continue;
+
+                object[] parameters = { prop.CastVarToPropType(paramVal) };
 
                 prop.SetMethod.Invoke(entity, parameters);
             }
@@ -124,11 +126,25 @@ namespace LibrairieBD.Sql
             PropertyInfo[] properties = typeof(T).GetProperties();
             string columns = "";
             string values = "";
+            string idCol = "";
+            string idVal = "";
 
             for (var i = 0; i < properties.Length; i++)
             {
                 PropertyInfo prop = properties[i];
                 string mappedColumn = entity.GetMappingForProp(prop);
+
+                if (prop.GetCustomAttribute(typeof(Id)) != null)
+                {
+                    idCol = mappedColumn;
+
+                    SqlCommand getIdCommand = new SqlCommand($"SELECT MAX({idCol}) FROM {GetTableMapping<T>()}");
+                    int nextId = (int)_dataContext.ExecuteScalar(getIdCommand) + 1;
+                    prop.SetMethod.Invoke(entity, new object[] { nextId });
+                    idVal = prop.GetMethod.Invoke(entity, new object[0]).ToString();
+
+                    continue;
+                }
 
                 columns += mappedColumn;
                 values += $"@{mappedColumn}";
@@ -139,12 +155,15 @@ namespace LibrairieBD.Sql
                     values += ", ";
                 }
 
-                SqlParameter param = command.CreateParameter();
+                SqlParameter param = ParamFromProp<T>(entity, prop, $"@{mappedColumn}");
                 param.Value = prop.GetMethod.Invoke(entity, new object[0]);
                 command.Parameters.Add(param);
             }
 
-            command.CommandText = $"INSERT INTO {GetTableMapping<T>()} ({columns}) VALUE ({values})";
+            if (!string.IsNullOrEmpty(columns)) idCol += ", ";
+            if (!string.IsNullOrEmpty(values)) idVal += ", ";
+
+            command.CommandText = $"INSERT INTO {GetTableMapping<T>()} ({idCol}{columns}) VALUES ({idVal}{values})";
             return command;
         }
 

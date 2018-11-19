@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Text;
+using System.Transactions;
 using LibrairieBD.Dao;
 using LibrairieBD.Entites;
 using LibrairieBD.Sql;
@@ -44,6 +46,39 @@ namespace GGFlix_Test.IntegrationTests
             Film film = daoFilm.FindById(181001);
 
             return;
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestCRUD()
+        {
+            DaoFilm daoFilm = new DaoFilm(adapter);
+            Film film = new Film
+            {
+                AnneeSortie = 2001,
+                Categorie = 1,
+                DateMAJ = new DateTime(2018, 01, 01),
+                DureeMinutes = 34,
+                Resume = "test",
+                FilmOriginal = true,
+                ImagePochette = "test",
+                TitreFrancais = "test",
+                TitreOriginal = "test",
+                VersionEtendue = false,
+                NoProducteur = 1,
+                NoRealisateur =  1,
+                NoUtilisateurMAJ = 1,
+                XTra = "",
+            };
+            bool deleteSucceeded = false;
+            using (TransactionScope scope = new TransactionScope())
+            {
+                film = daoFilm.Save(film);
+                Film addedFilm = daoFilm.FindById(film.NoFilm.Value);
+                deleteSucceeded = daoFilm.Delete(addedFilm);
+            }
+
+            Assert.IsTrue(deleteSucceeded);
         }
     }
 }
