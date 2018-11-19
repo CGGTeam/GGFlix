@@ -34,5 +34,16 @@ namespace GGFlix_Test.IntegrationTests
 
             return;
         }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestSelectById()
+        {
+            DaoFilm daoFilm = new DaoFilm(adapter);
+
+            Film film = daoFilm.FindById(181001);
+
+            return;
+        }
     }
 }

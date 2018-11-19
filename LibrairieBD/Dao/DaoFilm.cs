@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using GGFlix_Test;
 using LibrairieBD.Entites;
@@ -33,6 +34,15 @@ namespace LibrairieBD.Dao
             if (film.NoFilm == null) throw new ArgumentException("Id cannot be null");
 
             return adapter.DeleteRow(film);
+        }
+
+        public Film FindById(int id)
+        {
+            Expression<Func<Film, bool>> condition = film => film.NoFilm == id;
+
+            IList<Film> returnedFilms = adapter.SelectWhere(condition);
+
+            return returnedFilms.Count == 0 ? null : returnedFilms[0];
         }
     }
 }

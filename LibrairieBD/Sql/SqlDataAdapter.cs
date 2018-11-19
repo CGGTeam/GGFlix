@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
@@ -9,20 +11,20 @@ namespace LibrairieBD.Sql
 {
     public class SqlDataAdapter : IDbAdapter
     {
-        private ISqlDataContext dataContext;
+        private readonly ISqlDataContext _dataContext;
 
         public SqlDataAdapter(ISqlDataContext dataContext)
         {
-            this.dataContext = dataContext;
+            this._dataContext = dataContext;
         }
 
         public IList<T> SelectAllInTable<T>()
         {
-            SqlCommand command = GenerateSelectAllFor<T>();
+            SqlCommand command = GenerateSelectForTable<T>();
 
             List<T> allInTable = new List<T>();
 
-            using (IDataReader dataReader = dataContext.ExecuteReader(command))
+            using (IDataReader dataReader = _dataContext.ExecuteReader(command))
             {
                 while (dataReader.Read())
                 {
@@ -31,6 +33,24 @@ namespace LibrairieBD.Sql
             }
 
             return allInTable;
+        }
+
+        public IList<T> SelectWhere<T>(Expression<Func<T, bool>> predicate)
+        {
+            SqlCommand command = GenerateSelectForTable<T>();
+            command.CommandText += $" WHERE {predicate.ToWhereClause()}";
+
+            List<T> allFromSelect = new List<T>();
+
+            using (IDataReader dataReader = _dataContext.ExecuteReader(command))
+            {
+                while (dataReader.Read())
+                {
+                    allFromSelect.Add(ConvertRowToEntity<T>(dataReader));
+                }
+            }
+
+            return allFromSelect;
         }
 
         private T ConvertRowToEntity<T>(IDataReader row)
@@ -67,7 +87,7 @@ namespace LibrairieBD.Sql
             return entity;
         }
 
-        private SqlCommand GenerateSelectAllFor<T>()
+        private SqlCommand GenerateSelectForTable<T>()
         {
             string tableName = GetTableMapping<T>();
             string selectQuery = $"SELECT * FROM {tableName}";
@@ -78,18 +98,15 @@ namespace LibrairieBD.Sql
         private string GetTableMapping<T>()
         {
             Type entityType = typeof(T);
-            Attribute mappingAttr = entityType.GetCustomAttribute(typeof(TableMapping));
 
-            if (mappingAttr == null) return $"{entityType.Name}s";
-
-            return ((TableMapping)mappingAttr).TableName;
+            return entityType.GetTableMapping();
         }
 
         public T InsertInto<T>(T entity)
         {
             SqlCommand insertCommand = GenerateInsert<T>(entity);
 
-            dataContext.ExecuteNonQuery(insertCommand);
+            _dataContext.ExecuteNonQuery(insertCommand);
 
             if (entity.GetId() == null) entity.SetId(GetLastId());
 
@@ -98,7 +115,7 @@ namespace LibrairieBD.Sql
 
         private object GetLastId()
         {
-            return dataContext.ExecuteScalar(new SqlCommand("SELECT SCOPE_IDENTITY() AS[SCOPE_IDENTITY]"));
+            return _dataContext.ExecuteScalar(new SqlCommand("SELECT SCOPE_IDENTITY() AS[SCOPE_IDENTITY]"));
         }
 
         private SqlCommand GenerateInsert<T>(T entity)
@@ -135,7 +152,7 @@ namespace LibrairieBD.Sql
         {
             SqlCommand updateCommand = GenerateUpdate<T>(entity);
 
-            dataContext.ExecuteNonQuery(updateCommand);
+            _dataContext.ExecuteNonQuery(updateCommand);
 
             return entity;
         }
@@ -178,7 +195,7 @@ namespace LibrairieBD.Sql
         {
             SqlCommand deleteCommand = GenerateDelete<T>(entity);
 
-            return dataContext.ExecuteNonQuery(deleteCommand) > 0;
+            return _dataContext.ExecuteNonQuery(deleteCommand) > 0;
         }
 
         private SqlCommand GenerateDelete<T>(T entity)
@@ -205,11 +222,6 @@ namespace LibrairieBD.Sql
         private static SqlParameter ParamFromProp<T>(T entity, PropertyInfo prop, string paramName)
         {
             return new SqlParameter {ParameterName = $"{paramName}", Value = prop.GetMethod.Invoke(entity, new object[0])};
-        }
-
-        public IList<T> SelectWhere<T>(string where)
-        {
-            throw new NotImplementedException();
         }
     }
 }

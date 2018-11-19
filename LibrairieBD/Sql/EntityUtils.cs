@@ -46,5 +46,14 @@ namespace LibrairieBD.Sql
 
             return mapping.ColumnName;
         }
+
+        public static string GetTableMapping(this Type type)
+        {
+            TableMapping mappingAttr = (TableMapping)type.GetCustomAttribute(typeof(TableMapping));
+
+            if (mappingAttr == null) return $"{type.Name}s";
+
+            return (mappingAttr).TableName;
+        }
     }
 }

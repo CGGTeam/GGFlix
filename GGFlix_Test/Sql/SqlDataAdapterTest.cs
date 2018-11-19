@@ -304,6 +304,44 @@ namespace GGFlix_Test
             Assert.IsTrue(returnVal);
         }
 
+        [TestMethod]
+        public void GivenATypeAndAnExpression_WhenSelectWhere_ThenFormsValidSelectQuery()
+        {
+            string validSelectQuery = "SELECT * FROM Entities WHERE (Entities.Property = 'aValue')";
+
+            dataAdapter.SelectWhere<ExampleEntity>(entity => entity.Property == "aValue");
+
+            _contextMock.Verify(
+                context => context.ExecuteReader(It.Is<SqlCommand>(command => command.CommandText == validSelectQuery))
+            );
+        }
+
+        [TestMethod]
+        public void GivenAnotherTypeAndExpression_WhenSelectWhere_ThenFormsValidSelectQuery()
+        {
+            string validSelectQuery = "SELECT * FROM OtherEntities WHERE (OtherEntities.AnotherProperty = 'anotherValue')";
+
+            dataAdapter.SelectWhere<AnotherExampleEntity>(entity => entity.AnotherProperty == "anotherValue");
+
+            _contextMock.Verify(
+                context => context.ExecuteReader(It.Is<SqlCommand>(command => command.CommandText == validSelectQuery))
+            );
+        }
+
+        [TestMethod]
+        public void GivenAnotherTypeAndAMoreComplexExpression_WhenSelectWhere_ThenFormsValidSelectQuery()
+        {
+            string validSelectQuery = "SELECT * FROM OtherEntities WHERE ((OtherEntities.AnotherProperty = 'anotherValue') AND (OtherEntities.Property = 'aValue'))";
+
+            dataAdapter.SelectWhere<AnotherExampleEntity>(
+                entity => entity.AnotherProperty == "anotherValue" && entity.Property == "aValue"
+            );
+
+            _contextMock.Verify(
+                context => context.ExecuteReader(It.Is<SqlCommand>(command => command.CommandText == validSelectQuery))
+            );
+        }
+
         private Expression<Func<SqlCommand, bool>> VerifyParamValues(SqlParameter[] expectedParameters)
         {
             return (command) => (command.Parameters.Count == expectedParameters.Length)
