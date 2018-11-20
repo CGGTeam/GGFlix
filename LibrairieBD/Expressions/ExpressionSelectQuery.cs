@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LibrairieBD.Sql
 {
-    public class ExpressionReadQuery<TEntity>
+    public class ExpressionReadQuery<TEntity>: IExpressionQuery
     {
         public Expression<Func<TEntity, bool>> WhereExpression { get; set; }
         public IList<OrderByExpression<TEntity, object>> OrderByList { get; } = new List<OrderByExpression<TEntity, object>>();
@@ -20,6 +20,11 @@ namespace LibrairieBD.Sql
             commandText += MakeOrderByClause();
 
             return new SqlCommand(commandText);
+        }
+
+        public ExpressionReadQuery(bool isScalar = false)
+        {
+            ExecuteType = isScalar ? ExecuteType.SCALAR : ExecuteType.READER;
         }
 
         private string MakeWhereClause()
@@ -49,5 +54,7 @@ namespace LibrairieBD.Sql
 
             return orderBy;
         }
+
+        public ExecuteType ExecuteType { get; }
     }
 }

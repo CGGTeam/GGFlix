@@ -13,6 +13,6 @@ namespace LibrairieBD.Sql
         T InsertInto<T>(T entity);
         T UpdateRow<T>(T entity);
         bool DeleteRow<T>(T entity);
-        IList<T> ExecuteExpressionQuery<T>(IExpressionQuery query);
+        object ExecuteExpressionQuery<T>(IExpressionQuery query);
     }
 }

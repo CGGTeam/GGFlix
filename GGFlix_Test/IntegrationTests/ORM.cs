@@ -99,7 +99,7 @@ namespace GGFlix_Test.IntegrationTests
             ExpressionReadQuery<Film> query = new ExpressionReadQuery<Film>();
 
             query.OrderByList.Add(new OrderByExpression<Film, object>(film => film.NoFilm));
-            query.OrderByList.Add(new OrderByExpression<Film, object>(film => film.Categorie));
+            query.OrderByList.Add(new OrderByExpression<Film, object>(film => film.Categorie, false));
 
             query.WhereExpression = film => film.Categorie.Value < 1;
 

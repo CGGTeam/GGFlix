@@ -22,6 +22,8 @@ namespace LibrairieBD.Sql
             return command;
         }
 
+        public ExecuteType ExecuteType => ExecuteType.NONQUERY;
+
         public Expression<Func<T, bool>> Where { get; set; }
     }
 }

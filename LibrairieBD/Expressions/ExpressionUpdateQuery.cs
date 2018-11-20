@@ -38,5 +38,7 @@ namespace LibrairieBD.Sql
             command.CommandText = commandText;
             return command;
         }
+
+        public ExecuteType ExecuteType => ExecuteType.NONQUERY;
     }
 }

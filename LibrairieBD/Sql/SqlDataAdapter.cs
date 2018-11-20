@@ -22,14 +22,7 @@ namespace LibrairieBD.Sql
         {
             SqlCommand command = GenerateSelectForTable<T>();
 
-            List<T> allFromSelect;
-
-            using (IDataReader dataReader = _dataContext.ExecuteReader(command))
-            {
-                allFromSelect = dataReader.ToList<T>();
-            }
-
-            return allFromSelect;
+            return ExecuteReader<T>(command);
         }
 
         public IList<T> SelectWhere<T>(Expression<Func<T, bool>> predicate)
@@ -37,14 +30,7 @@ namespace LibrairieBD.Sql
             SqlCommand command = GenerateSelectForTable<T>();
             command.CommandText += $" WHERE {predicate.ToWhereClause()}";
 
-            List<T> allFromSelect;
-
-            using (IDataReader dataReader = _dataContext.ExecuteReader(command))
-            {
-                allFromSelect = dataReader.ToList<T>();
-            }
-
-            return allFromSelect;
+            return ExecuteReader<T>(command);
         }
 
         private SqlCommand GenerateSelectForTable<T>()
@@ -104,10 +90,25 @@ namespace LibrairieBD.Sql
             return _dataContext.ExecuteNonQuery(deleteCommand) > 0;
         }
 
-        public IList<T> ExecuteExpressionQuery<T>(IExpressionQuery query)
+        public object ExecuteExpressionQuery<T>(IExpressionQuery query)
         {
             SqlCommand command = query.MakeCommand();
 
+            switch (query.ExecuteType)
+            {
+                case ExecuteType.NONQUERY:
+                    return _dataContext.ExecuteNonQuery(command);
+                case ExecuteType.READER:
+                    return ExecuteReader<T>(command);
+                case ExecuteType.SCALAR:
+                    return _dataContext.ExecuteScalar(command);
+                default:
+                    throw new NotImplementedException("Unsupported ExecuteType");
+            }
+        }
+
+        private IList<T> ExecuteReader<T>(SqlCommand command)
+        {
             List<T> allFromSelect;
 
             using (IDataReader dataReader = _dataContext.ExecuteReader(command))

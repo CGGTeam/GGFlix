@@ -65,5 +65,7 @@ namespace LibrairieBD
                 $"INSERT INTO {typeof(T).GetTableMapping()} ({idCol}{columns}) VALUES ({idVal}{values})";
             return command;
         }
+
+        public ExecuteType ExecuteType => ExecuteType.NONQUERY;
     }
 }
