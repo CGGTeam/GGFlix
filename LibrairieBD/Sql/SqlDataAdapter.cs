@@ -76,7 +76,7 @@ namespace LibrairieBD.Sql
 
             foreach (PropertyInfo prop in properties)
             {
-                string mappedColumn = entity.GetMappingForProp(prop);
+                string mappedColumn = typeof(T).GetMappingForProp(prop);
 
                 var paramVal = row[mappedColumn];
                 if (paramVal is DBNull) continue;
@@ -132,16 +132,15 @@ namespace LibrairieBD.Sql
             for (var i = 0; i < properties.Length; i++)
             {
                 PropertyInfo prop = properties[i];
-                string mappedColumn = entity.GetMappingForProp(prop);
+                string mappedColumn = typeof(T).GetMappingForProp(prop);
 
                 if (prop.GetCustomAttribute(typeof(Id)) != null)
                 {
                     idCol = mappedColumn;
 
-                    SqlCommand getIdCommand = new SqlCommand($"SELECT MAX({idCol}) FROM {GetTableMapping<T>()}");
-                    int nextId = (int)_dataContext.ExecuteScalar(getIdCommand) + 1;
-                    prop.SetMethod.Invoke(entity, new object[] { nextId });
-                    idVal = prop.GetMethod.Invoke(entity, new object[0]).ToString();
+                    int nextId = CalcNextId<T>();
+                    prop.InvokeSetOn(entity, nextId);
+                    idVal = nextId.ToString();
 
                     continue;
                 }
@@ -156,7 +155,6 @@ namespace LibrairieBD.Sql
                 }
 
                 SqlParameter param = ParamFromProp<T>(entity, prop, $"@{mappedColumn}");
-                param.Value = prop.GetMethod.Invoke(entity, new object[0]);
                 command.Parameters.Add(param);
             }
 
@@ -165,6 +163,14 @@ namespace LibrairieBD.Sql
 
             command.CommandText = $"INSERT INTO {GetTableMapping<T>()} ({idCol}{columns}) VALUES ({idVal}{values})";
             return command;
+        }
+
+        public int CalcNextId<T>()
+        {
+            SqlCommand getIdCommand = new SqlCommand($"SELECT MAX({typeof(T).GetIdCol()}) FROM {GetTableMapping<T>()}");
+            int nextId = (int)_dataContext.ExecuteScalar(getIdCommand) + 1;
+
+            return nextId;
         }
 
         public T UpdateRow<T>(T entity)
@@ -186,7 +192,7 @@ namespace LibrairieBD.Sql
             for (var i = 0; i < properties.Length; i++)
             {
                 PropertyInfo prop = properties[i];
-                string mappedColumn = entity.GetMappingForProp(prop);
+                string mappedColumn = typeof(T).GetMappingForProp(prop);
 
                 if (prop.GetCustomAttribute(typeof(Id)) != null)
                 {
@@ -227,7 +233,7 @@ namespace LibrairieBD.Sql
             {
                 if (prop.GetCustomAttribute(typeof(Id)) != null)
                 {
-                    string mappedColumn = entity.GetMappingForProp(prop);
+                    string mappedColumn = typeof(T).GetMappingForProp(prop);
 
                     idCol = mappedColumn;
                     command.Parameters.Add(ParamFromProp(entity, prop, "@Id"));
@@ -240,7 +246,12 @@ namespace LibrairieBD.Sql
 
         private static SqlParameter ParamFromProp<T>(T entity, PropertyInfo prop, string paramName)
         {
-            return new SqlParameter {ParameterName = $"{paramName}", Value = prop.GetMethod.Invoke(entity, new object[0])};
+            object value = prop.InvokeGetOn(entity);
+
+            if (value != null)
+                return new SqlParameter(paramName, value);
+            else
+                return new SqlParameter(paramName, DBNull.Value);
         }
     }
 }

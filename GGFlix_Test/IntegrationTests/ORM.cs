@@ -55,7 +55,7 @@ namespace GGFlix_Test.IntegrationTests
             DaoFilm daoFilm = new DaoFilm(adapter);
             Film film = new Film
             {
-                AnneeSortie = 2001,
+                AnneeSortie = null,
                 Categorie = 1,
                 DateMAJ = new DateTime(2018, 01, 01),
                 DureeMinutes = 34,
@@ -71,14 +71,18 @@ namespace GGFlix_Test.IntegrationTests
                 XTra = "",
             };
             bool deleteSucceeded = false;
+            Film deletedFilm;
+
             using (TransactionScope scope = new TransactionScope())
             {
                 film = daoFilm.Save(film);
                 Film addedFilm = daoFilm.FindById(film.NoFilm.Value);
                 deleteSucceeded = daoFilm.Delete(addedFilm);
+                deletedFilm = daoFilm.FindById(film.NoFilm.Value);
             }
 
             Assert.IsTrue(deleteSucceeded);
+            Assert.IsNull(deletedFilm);
         }
     }
 }

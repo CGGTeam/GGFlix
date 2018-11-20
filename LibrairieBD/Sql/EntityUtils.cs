@@ -39,7 +39,7 @@ namespace LibrairieBD.Sql
             throw new ArgumentException("Entity has no Id column");
         }
 
-        public static string GetMappingForProp<T>(this T entity, PropertyInfo property)
+        public static string GetMappingForProp(this Type t, PropertyInfo property)
         {
             ColumnMapping mapping = (ColumnMapping)property.GetCustomAttribute(typeof(ColumnMapping));
             
@@ -68,6 +68,29 @@ namespace LibrairieBD.Sql
             var func = lambda.Compile();
 
             return func(varToConvert);
+        }
+
+        public static object InvokeGetOn(this PropertyInfo prop, object entity)
+        {
+            return prop.GetMethod.Invoke(entity, new object[0]);
+        }
+
+        public static object InvokeSetOn(this PropertyInfo prop, object entity, object value)
+        {
+            return prop.SetMethod.Invoke(entity, new[] {value});
+        }
+
+        public static string GetIdCol(this Type type)
+        {
+            PropertyInfo[] props = type.GetProperties();
+
+            foreach (var prop in props)
+            {
+                if (prop.GetCustomAttribute(typeof(Id)) != null)
+                    return type.GetMappingForProp(prop);
+            }
+
+            throw new ArgumentException("No Id Column mapped on entity " + type.FullName);
         }
     }
 }
