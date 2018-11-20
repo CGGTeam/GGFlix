@@ -201,7 +201,7 @@ namespace GGFlix_Test
         public void GivenAnotherEntity_WhenUpdateRow_ShouldFormValidUpdateQuery()
         {
             AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = 3, AnotherProperty = "anotherValue" };
-            string validInsertQuery = "UPDATE OtherEntities SET (OtherEntities.AnotherProperty = 'anotherValue') WHERE (OtherEntities.Property = 3)";
+            string validInsertQuery = "UPDATE OtherEntities SET OtherEntities.AnotherProperty = 'anotherValue' WHERE (OtherEntities.Property = 3)";
 
             dataAdapter.UpdateRow(anEntity);
 
