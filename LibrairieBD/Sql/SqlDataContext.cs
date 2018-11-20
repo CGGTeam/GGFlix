@@ -50,6 +50,8 @@ namespace LibrairieBD.Sql
         {
             connection.Open();
 
+            command.CommandText = command.CommandText;
+
             command.Connection = connection;
         }
 

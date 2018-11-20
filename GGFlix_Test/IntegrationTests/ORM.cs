@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Transactions;
 using LibrairieBD.Dao;
@@ -70,19 +72,38 @@ namespace GGFlix_Test.IntegrationTests
                 NoUtilisateurMAJ = 1,
                 XTra = "",
             };
-            bool deleteSucceeded = false;
+            bool deleteSucceeded;
+            bool updateSucceeded;
             Film deletedFilm;
 
             using (TransactionScope scope = new TransactionScope())
             {
                 film = daoFilm.Save(film);
                 Film addedFilm = daoFilm.FindById(film.NoFilm.Value);
+                addedFilm.Categorie = 2;
+                Film updatedFilm = daoFilm.Save(addedFilm);
+                updateSucceeded = updatedFilm.Categorie.Value == addedFilm.Categorie.Value;
                 deleteSucceeded = daoFilm.Delete(addedFilm);
                 deletedFilm = daoFilm.FindById(film.NoFilm.Value);
             }
 
+            Assert.IsTrue(updateSucceeded);
             Assert.IsTrue(deleteSucceeded);
             Assert.IsNull(deletedFilm);
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestExpressionQuery()
+        {
+            ExpressionReadQuery<Film> query = new ExpressionReadQuery<Film>();
+
+            query.OrderByList.Add(new OrderByExpression<Film, object>(film => film.NoFilm));
+            query.OrderByList.Add(new OrderByExpression<Film, object>(film => film.Categorie));
+
+            query.WhereExpression = film => film.Categorie.Value < 1;
+
+            SqlCommand command = query.MakeCommand();
         }
     }
 }

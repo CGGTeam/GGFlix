@@ -10,7 +10,7 @@ namespace GGFlix_Test.Utils
     {
         [Id]
         [ColumnMapping]
-        public string Property { get; set; }
+        public int? Property { get; set; }
     }
 
     [TableMapping("OtherEntities")]
@@ -18,7 +18,7 @@ namespace GGFlix_Test.Utils
     {
         [Id]
         [ColumnMapping]
-        public string Property { get; set; }
+        public int? Property { get; set; }
         [ColumnMapping]
         public string AnotherProperty { get; set; }
     }

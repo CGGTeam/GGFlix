@@ -136,21 +136,15 @@ namespace GGFlix_Test
         [TestMethod]
         public void GivenAnEntity_WhenInsertInto_ShouldFormValidInsertQuery()
         {
-            SqlParameter[] expectedParameters =
-            {
-                new SqlParameter("@Property", SqlDbType.VarChar){ Value = "value"},
-            };
-            ExampleEntity anEntity = new ExampleEntity { Property = "value"};
+            ExampleEntity anEntity = new ExampleEntity { Property = 3};
             string validInsertQuery = "INSERT INTO Entities " +
-                                      "(Property) VALUE (@Property)";
+                                      "(Property) VALUES (4)";
+            _contextMock.Setup(ctxt => ctxt.ExecuteScalar(It.IsAny<SqlCommand>())).Returns(3);
 
             dataAdapter.InsertInto(anEntity);
 
             _contextMock.Verify(
                 context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
-            );
-            _contextMock.Verify(
-                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
             );
         }
 
@@ -159,12 +153,12 @@ namespace GGFlix_Test
         {
             SqlParameter[] expectedParameters =
             {
-                new SqlParameter("@Property", SqlDbType.VarChar){ Value = "value"}, 
                 new SqlParameter("@AnotherProperty", SqlDbType.VarChar){ Value = "anotherValue"},
             };
-            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = "value", AnotherProperty = "anotherValue"};
+            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = 3, AnotherProperty = "anotherValue"};
             string validInsertQuery = "INSERT INTO OtherEntities " +
-                                      "(Property, AnotherProperty) VALUE (@Property, @AnotherProperty)";
+                                      "(Property, AnotherProperty) VALUES (4, @AnotherProperty)";
+            _contextMock.Setup(ctxt => ctxt.ExecuteScalar(It.IsAny<SqlCommand>())).Returns(3);
 
             dataAdapter.InsertInto(anEntity);
 
@@ -180,106 +174,75 @@ namespace GGFlix_Test
         public void GivenAnEntityWithNoId_WhenInsertInto_ShouldSetId()
         {
             AnotherExampleEntity anEntity = new AnotherExampleEntity { AnotherProperty = "anotherValue" };
-            string expectedId = "3";
+            int expectedId = 3;
             _contextMock.Setup(
                 ctxt => ctxt.ExecuteScalar(It.IsAny<SqlCommand>())
             ).Returns(expectedId);
 
             anEntity = dataAdapter.InsertInto(anEntity);
 
-            Assert.AreEqual(anEntity.Property, expectedId);
+            Assert.AreEqual(anEntity.Property, expectedId + 1);
         }
 
         [TestMethod]
         public void GivenAnEntity_WhenUpdateRow_ShouldFormValidUpdateQuery()
         {
-            SqlParameter[] expectedParameters =
-            {
-                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"}
-            };
-            ExampleEntity anEntity = new ExampleEntity { Property = "value" };
-            string validInsertQuery = "UPDATE Entities " +
-                                      "WHERE Property = @Id";
+            ExampleEntity anEntity = new ExampleEntity { Property = 3 };
+            string validInsertQuery = "UPDATE Entities  WHERE (Entities.Property = 3)";
 
             dataAdapter.UpdateRow(anEntity);
 
             _contextMock.Verify(
                 context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
-            );
-            _contextMock.Verify(
-                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
             );
         }
 
         [TestMethod]
         public void GivenAnotherEntity_WhenUpdateRow_ShouldFormValidUpdateQuery()
         {
-            SqlParameter[] expectedParameters =
-            {
-                new SqlParameter("@AnotherProperty", SqlDbType.VarChar){ Value = "anotherValue"},
-                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"},
-            };
-            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = "value", AnotherProperty = "anotherValue" };
-            string validInsertQuery = "UPDATE OtherEntities SET " +
-                                      "AnotherProperty = @AnotherProperty " +
-                                      "WHERE Property = @Id";
+            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = 3, AnotherProperty = "anotherValue" };
+            string validInsertQuery = "UPDATE OtherEntities SET (OtherEntities.AnotherProperty = 'anotherValue') WHERE (OtherEntities.Property = 3)";
 
             dataAdapter.UpdateRow(anEntity);
 
             _contextMock.Verify(
                 context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
             );
-            _contextMock.Verify(
-                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
-            );
         }
 
         [TestMethod]
         public void GivenAnEntity_WhenDeleteRow_ShouldFormValidDeleteQuery()
         {
-            SqlParameter[] expectedParameters =
-            {
-                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"},
-            };
-            ExampleEntity anEntity = new ExampleEntity { Property = "value"};
+            ExampleEntity anEntity = new ExampleEntity { Property = 3};
             string validDeleteQuery = "DELETE FROM Entities " +
-                                      "WHERE Property = @Id";
+                                      "WHERE (Entities.Property = 3)";
 
             dataAdapter.DeleteRow(anEntity);
 
             _contextMock.Verify(
                 context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validDeleteQuery))
-            );
-            _contextMock.Verify(
-                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
             );
         }
 
         [TestMethod]
         public void GivenAnotherEntity_WhenDeleteRow_ShouldFormValidDeleteQuery()
         {
-            SqlParameter[] expectedParameters =
-            {
-                new SqlParameter("@Id", SqlDbType.VarChar){ Value = "value"},
-            };
-            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = "value", AnotherProperty = "anotherValue" };
+            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = 3, AnotherProperty = "anotherValue" };
             string validDeleteQuery = "DELETE FROM OtherEntities " +
-                                      "WHERE Property = @Id";
+                                      "WHERE (OtherEntities.Property = 3)";
 
             dataAdapter.DeleteRow(anEntity);
 
             _contextMock.Verify(
-                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validDeleteQuery))
-            );
-            _contextMock.Verify(
-                context => context.ExecuteNonQuery(It.Is(VerifyParamValues(expectedParameters)))
+                context => context.ExecuteNonQuery(
+                    It.Is<SqlCommand>(command => command.CommandText == validDeleteQuery))
             );
         }
 
         [TestMethod]
         public void GivenAnEntityThatDoesntExist_WhenDeleteRow_ReturnFalse()
         {
-            ExampleEntity anEntity = new ExampleEntity { Property = "value" };
+            ExampleEntity anEntity = new ExampleEntity { Property = 3 };
 
            _contextMock.Setup(
                 context => context.ExecuteNonQuery(It.IsAny<SqlCommand>())
@@ -293,7 +256,7 @@ namespace GGFlix_Test
         [TestMethod]
         public void GivenAnEntityThatExists_WhenDeleteRow_ReturnFalse()
         {
-            ExampleEntity anEntity = new ExampleEntity { Property = "value" };
+            ExampleEntity anEntity = new ExampleEntity { Property = 3 };
 
             _contextMock.Setup(
                 context => context.ExecuteNonQuery(It.IsAny<SqlCommand>())
@@ -307,9 +270,9 @@ namespace GGFlix_Test
         [TestMethod]
         public void GivenATypeAndAnExpression_WhenSelectWhere_ThenFormsValidSelectQuery()
         {
-            string validSelectQuery = "SELECT * FROM Entities WHERE (Entities.Property = 'aValue')";
+            string validSelectQuery = "SELECT * FROM Entities WHERE (Entities.Property = 3)";
 
-            dataAdapter.SelectWhere<ExampleEntity>(entity => entity.Property == "aValue");
+            dataAdapter.SelectWhere<ExampleEntity>(entity => entity.Property.Value == 3);
 
             _contextMock.Verify(
                 context => context.ExecuteReader(It.Is<SqlCommand>(command => command.CommandText == validSelectQuery))
@@ -331,10 +294,10 @@ namespace GGFlix_Test
         [TestMethod]
         public void GivenAnotherTypeAndAMoreComplexExpression_WhenSelectWhere_ThenFormsValidSelectQuery()
         {
-            string validSelectQuery = "SELECT * FROM OtherEntities WHERE ((OtherEntities.AnotherProperty = 'anotherValue') AND (OtherEntities.Property = 'aValue'))";
+            string validSelectQuery = "SELECT * FROM OtherEntities WHERE ((OtherEntities.AnotherProperty = 'anotherValue') AND (OtherEntities.Property = 3))";
 
             dataAdapter.SelectWhere<AnotherExampleEntity>(
-                entity => entity.AnotherProperty == "anotherValue" && entity.Property == "aValue"
+                entity => entity.AnotherProperty == "anotherValue" && entity.Property.Value == 3
             );
 
             _contextMock.Verify(
@@ -372,7 +335,7 @@ namespace GGFlix_Test
                 .Returns(true)
                 .Returns(false);
 
-            mockDataReader.Setup(dr => dr["Property"]).Returns("aValue");
+            mockDataReader.Setup(dr => dr["Property"]).Returns(3);
             mockDataReader.Setup(dr => dr["AnotherProperty"]).Returns("anotherValue");
 
             return mockDataReader.Object;
@@ -382,8 +345,8 @@ namespace GGFlix_Test
         {
             return new List<ExampleEntity>
             {
-                new ExampleEntity { Property = "aValue" },
-                new ExampleEntity { Property = "aValue" },
+                new ExampleEntity { Property = 3 },
+                new ExampleEntity { Property = 3 },
             };
         }
 
@@ -391,8 +354,8 @@ namespace GGFlix_Test
         {
             return new List<AnotherExampleEntity>
             {
-                new AnotherExampleEntity { Property = "aValue", AnotherProperty = "anotherValue"},
-                new AnotherExampleEntity { Property = "aValue",  AnotherProperty = "anotherValue" },
+                new AnotherExampleEntity { Property = 3, AnotherProperty = "anotherValue"},
+                new AnotherExampleEntity { Property = 3,  AnotherProperty = "anotherValue" },
             };
         }
     }
