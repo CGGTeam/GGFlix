@@ -12,6 +12,5 @@ namespace GGFlix_Test
         T FindById(ID id);
         T Save(T entity);
         bool Delete(T entity);
-        IList<T> ExecuteExpressionQuery(IExpressionQuery query);
     }
 }

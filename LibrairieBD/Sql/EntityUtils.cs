@@ -179,6 +179,8 @@ namespace LibrairieBD.Sql
             {
                 list.Add(ConvertRowToEntity<T>(dataReader));
             }
+
+            return list;
         }
 
         public static T ConvertRowToEntity<T>(IDataReader row)
