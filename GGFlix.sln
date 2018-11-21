@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GGFlix", "GGFlix\", "{B07A9837-77B2-4CE8-987E-0D6D4DB5BEDD}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		ProjectReferences = "{a2eb6873-1ea0-4cfa-8dbb-6e0ea40ae721}|LibrairieBD.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_49853"
 		Debug.AspNetCompiler.PhysicalPath = "GGFlix\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49853\"
@@ -25,13 +26,28 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GGFlix", "GGFlix\", "{B07A9
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGFlix_Test", "GGFlix_Test\GGFlix_Test.csproj", "{D568C432-BD3B-4439-80E9-5A82D67283FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrairieBD", "LibrairieBD\LibrairieBD.csproj", "{A2EB6873-1EA0-4CFA-8DBB-6E0EA40AE721}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B07A9837-77B2-4CE8-987E-0D6D4DB5BEDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B07A9837-77B2-4CE8-987E-0D6D4DB5BEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07A9837-77B2-4CE8-987E-0D6D4DB5BEDD}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07A9837-77B2-4CE8-987E-0D6D4DB5BEDD}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{D568C432-BD3B-4439-80E9-5A82D67283FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D568C432-BD3B-4439-80E9-5A82D67283FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D568C432-BD3B-4439-80E9-5A82D67283FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D568C432-BD3B-4439-80E9-5A82D67283FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2EB6873-1EA0-4CFA-8DBB-6E0EA40AE721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2EB6873-1EA0-4CFA-8DBB-6E0EA40AE721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2EB6873-1EA0-4CFA-8DBB-6E0EA40AE721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2EB6873-1EA0-4CFA-8DBB-6E0EA40AE721}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
