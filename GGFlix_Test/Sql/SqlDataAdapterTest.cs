@@ -141,7 +141,7 @@ namespace GGFlix_Test
                                       "(Property) VALUES (4)";
             _contextMock.Setup(ctxt => ctxt.ExecuteScalar(It.IsAny<SqlCommand>())).Returns(3);
 
-            dataAdapter.InsertInto(anEntity);
+            dataAdapter.InsertRow(anEntity);
 
             _contextMock.Verify(
                 context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
@@ -160,7 +160,7 @@ namespace GGFlix_Test
                                       "(Property, AnotherProperty) VALUES (4, @AnotherProperty)";
             _contextMock.Setup(ctxt => ctxt.ExecuteScalar(It.IsAny<SqlCommand>())).Returns(3);
 
-            dataAdapter.InsertInto(anEntity);
+            dataAdapter.InsertRow(anEntity);
 
             _contextMock.Verify(
                 context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
@@ -179,7 +179,7 @@ namespace GGFlix_Test
                 ctxt => ctxt.ExecuteScalar(It.IsAny<SqlCommand>())
             ).Returns(expectedId);
 
-            anEntity = dataAdapter.InsertInto(anEntity);
+            anEntity = dataAdapter.InsertRow(anEntity);
 
             Assert.AreEqual(anEntity.Property, expectedId + 1);
         }
@@ -208,63 +208,6 @@ namespace GGFlix_Test
             _contextMock.Verify(
                 context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validInsertQuery))
             );
-        }
-
-        [TestMethod]
-        public void GivenAnEntity_WhenDeleteRow_ShouldFormValidDeleteQuery()
-        {
-            ExampleEntity anEntity = new ExampleEntity { Property = 3};
-            string validDeleteQuery = "DELETE FROM Entities " +
-                                      "WHERE (Entities.Property = 3)";
-
-            dataAdapter.DeleteRow(anEntity);
-
-            _contextMock.Verify(
-                context => context.ExecuteNonQuery(It.Is<SqlCommand>(command => command.CommandText == validDeleteQuery))
-            );
-        }
-
-        [TestMethod]
-        public void GivenAnotherEntity_WhenDeleteRow_ShouldFormValidDeleteQuery()
-        {
-            AnotherExampleEntity anEntity = new AnotherExampleEntity { Property = 3, AnotherProperty = "anotherValue" };
-            string validDeleteQuery = "DELETE FROM OtherEntities " +
-                                      "WHERE (OtherEntities.Property = 3)";
-
-            dataAdapter.DeleteRow(anEntity);
-
-            _contextMock.Verify(
-                context => context.ExecuteNonQuery(
-                    It.Is<SqlCommand>(command => command.CommandText == validDeleteQuery))
-            );
-        }
-
-        [TestMethod]
-        public void GivenAnEntityThatDoesntExist_WhenDeleteRow_ReturnFalse()
-        {
-            ExampleEntity anEntity = new ExampleEntity { Property = 3 };
-
-           _contextMock.Setup(
-                context => context.ExecuteNonQuery(It.IsAny<SqlCommand>())
-            ).Returns(0);
-
-            bool returnVal = dataAdapter.DeleteRow(anEntity);
-
-            Assert.IsFalse(returnVal);
-        }
-
-        [TestMethod]
-        public void GivenAnEntityThatExists_WhenDeleteRow_ReturnFalse()
-        {
-            ExampleEntity anEntity = new ExampleEntity { Property = 3 };
-
-            _contextMock.Setup(
-                context => context.ExecuteNonQuery(It.IsAny<SqlCommand>())
-            ).Returns(1);
-
-            bool returnVal = dataAdapter.DeleteRow(anEntity);
-
-            Assert.IsTrue(returnVal);
         }
 
         [TestMethod]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -36,7 +37,7 @@ namespace LibrairieBD
                 PropertyInfo prop = properties[i];
                 string mappedColumn = prop.GetColMapping();
 
-                if (prop.GetCustomAttribute(typeof(Id)) != null)
+                if (prop.IsIdProp())
                 {
                     idCol = mappedColumn;
 
@@ -55,6 +56,11 @@ namespace LibrairieBD
                 }
 
                 SqlParameter param = prop.ToParam(entity);
+                if (prop.PropertyType == typeof(DateTime))
+                {
+                    param.SqlDbType = SqlDbType.DateTime;
+                }
+
                 command.Parameters.Add(param);
             }
 

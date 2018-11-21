@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LibrairieBD.Entites;
-using LibrairieBD.Sql;
+﻿using System.Collections.Generic;
 
-namespace GGFlix_Test
+namespace LibrairieBD.Dao
 {
     interface IDao<T, ID>
     {
         IList<T> FindAll();
-        T FindById(ID id);
+        IList<T> Find(T id);
         T Save(T entity);
         bool Delete(T entity);
     }

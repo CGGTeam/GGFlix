@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
@@ -142,10 +143,21 @@ namespace LibrairieBD.Sql
 
         public static Expression<Func<T, bool>> IdEqualsExpression<T>(object val)
         {
-            return PropCompareExpression<T>(typeof(T).GetIdProp(), typeof(T).GetIdProp().CastVarToPropType(val));
+            return ToPropComparisonPredicate<T>(typeof(T).GetIdProp(), typeof(T).GetIdProp().CastVarToPropType(val));
         }
 
-        public static Expression<Func<T, bool>> PropCompareExpression<T>(PropertyInfo prop, object val)
+        public static Expression<Func<T, bool>> ToPropComparisonPredicate<T>(PropertyInfo prop, object val)
+        {
+            ParameterExpression inputParam = Expression.Parameter(typeof(T), typeof(T).Name);
+
+            BinaryExpression comparison = prop.ToPropComparisonExpression<T>(val);
+
+            Expression<Func<T, bool>> result = Expression.Lambda<Func<T, bool>>(comparison, inputParam);
+
+            return result;
+        }
+
+        public static BinaryExpression ToPropComparisonExpression<T>(this PropertyInfo prop, object val)
         {
             ParameterExpression inputParam = Expression.Parameter(typeof(T), typeof(T).Name);
             Expression propAccess = Expression.Property(inputParam, prop);
@@ -161,9 +173,18 @@ namespace LibrairieBD.Sql
                 comparison = Expression.Equal(propAccess, Expression.Constant(castedVal, propAccess.Type));
             }
 
-            Expression<Func<T, bool>> result = Expression.Lambda<Func<T, bool>>(comparison, inputParam);
+            return comparison;
+        }
 
-            return result;
+        public static object GetDefault(this Type type)
+        {
+            if (type.IsValueType)
+            {
+                if (type == typeof(DateTime))
+                    return (DateTime)SqlDateTime.MinValue;
+                return Activator.CreateInstance(type);
+            }
+            return null;
         }
 
         public static bool IsIdProp(this PropertyInfo prop)

@@ -17,11 +17,9 @@ namespace LibrairieBD.Sql
 
         public IDataReader ExecuteReader(SqlCommand command)
         {
-            SqlDataReader reader;
-
             PrepareCommandForExecute(command);
 
-            reader = command.ExecuteReader(CommandBehavior.CloseConnection);
+            var reader = command.ExecuteReader(CommandBehavior.CloseConnection);
 
             return reader;
         }

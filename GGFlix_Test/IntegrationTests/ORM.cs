@@ -30,36 +30,12 @@ namespace GGFlix_Test.IntegrationTests
 
         [TestMethod]
         [TestCategory("Integration")]
-        public void TestSelectAllFilms()
-        {
-            DaoFilm daoFilm = new DaoFilm(adapter);
-
-            IList<Film> films = daoFilm.FindAll();
-
-            return;
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        public void TestSelectById()
-        {
-            DaoFilm daoFilm = new DaoFilm(adapter);
-
-            Film film = daoFilm.FindById(181001);
-
-            return;
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
         public void TestCRUD()
         {
-            DaoFilm daoFilm = new DaoFilm(adapter);
             Film film = new Film
             {
                 AnneeSortie = null,
                 Categorie = 1,
-                DateMAJ = new DateTime(2018, 01, 01),
                 DureeMinutes = 34,
                 Resume = "test",
                 FilmOriginal = true,
@@ -68,28 +44,31 @@ namespace GGFlix_Test.IntegrationTests
                 TitreOriginal = "test",
                 VersionEtendue = false,
                 NoProducteur = 1,
-                NoRealisateur =  1,
+                NoRealisateur = 1,
                 NoUtilisateurMAJ = 1,
                 XTra = "",
             };
+
+            Assert.IsTrue(ValidateCRUDForEntity(film));
+        }
+
+        private bool ValidateCRUDForEntity<T>(T entity)
+        {
+            GenericDao<T> dao = new GenericDao<T>(adapter);
             bool deleteSucceeded;
-            bool updateSucceeded;
-            Film deletedFilm;
+            bool existsSucceeded;
+            bool addSucceeded;
 
             using (TransactionScope scope = new TransactionScope())
             {
-                film = daoFilm.Save(film);
-                Film addedFilm = daoFilm.FindById(film.NoFilm.Value);
-                addedFilm.Categorie = 2;
-                Film updatedFilm = daoFilm.Save(addedFilm);
-                updateSucceeded = updatedFilm.Categorie.Value == addedFilm.Categorie.Value;
-                deleteSucceeded = daoFilm.Delete(addedFilm);
-                deletedFilm = daoFilm.FindById(film.NoFilm.Value);
+                IList<T> entities = dao.FindAll();
+                existsSucceeded = dao.Exists(entities[0]);
+                T addedEntity = dao.Save(entity);
+                addSucceeded = dao.Find(addedEntity).Count > 0;
+                deleteSucceeded = dao.Delete(addedEntity) && !dao.Exists(addedEntity);
             }
 
-            Assert.IsTrue(updateSucceeded);
-            Assert.IsTrue(deleteSucceeded);
-            Assert.IsNull(deletedFilm);
+            return deleteSucceeded && existsSucceeded && addSucceeded;
         }
 
         [TestMethod]

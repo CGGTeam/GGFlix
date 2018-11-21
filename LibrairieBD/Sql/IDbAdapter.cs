@@ -10,9 +10,9 @@ namespace LibrairieBD.Sql
     {
         IList<T> SelectAllInTable<T>();
         IList<T> SelectWhere<T>(Expression<Func<T, bool>> predicate);
-        T InsertInto<T>(T entity);
+        T InsertRow<T>(T entity);
         T UpdateRow<T>(T entity);
-        bool DeleteRow<T>(T entity);
+        bool DeleteWhere<T>(Expression<Func<T, bool>> predicate);
         object ExecuteExpressionQuery<T>(IExpressionQuery query);
     }
 }

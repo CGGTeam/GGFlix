@@ -41,9 +41,18 @@ namespace LibrairieBD.Sql
             return new SqlCommand(selectQuery);
         }
 
-        public T InsertInto<T>(T entity)
+        public T InsertRow<T>(T entity)
         {
-            entity.SetId(CalcNextId<T>());
+            foreach (PropertyInfo prop in typeof(T).GetProperties())
+            {
+                object propVal = prop.InvokeGetOn(entity);
+                if (prop.IsIdProp() && (propVal == null || propVal.Equals(prop.PropertyType.GetDefault())))
+                {
+                    int nextVal = CalcNextColumnValue<T>(prop.GetColMapping());
+                    prop.InvokeSetOn(entity, nextVal);
+                }
+            }
+
             ExpressionInsertQuery<T> insertQuery = new ExpressionInsertQuery<T>(entity);
 
             SqlCommand insertCommand = insertQuery.MakeCommand();
@@ -53,9 +62,9 @@ namespace LibrairieBD.Sql
             return entity;
         }
 
-        public int CalcNextId<T>()
+        public int CalcNextColumnValue<T>(string column)
         {
-            SqlCommand getIdCommand = new SqlCommand($"SELECT MAX({typeof(T).GetIdCol()}) FROM {typeof(T).GetTableMapping()}");
+            SqlCommand getIdCommand = new SqlCommand($"SELECT MAX({column}) FROM {typeof(T).GetTableMapping()}");
             int nextId = (int)_dataContext.ExecuteScalar(getIdCommand) + 1;
 
             return nextId;
@@ -63,16 +72,33 @@ namespace LibrairieBD.Sql
 
         public T UpdateRow<T>(T entity)
         {
+            Expression whereExpression = null;
             List<Expression<Func<T, bool>>> setClauses = new List<Expression<Func<T, bool>>>();
             foreach (var prop in typeof(T).GetProperties())
             {
-                if (prop.IsIdProp()) continue;
-                setClauses.Add(EntityUtils.PropCompareExpression<T>(prop, prop.InvokeGetOn(entity)));
+                if (prop.IsIdProp())
+                {
+                    if (whereExpression == null)
+                    {
+                        whereExpression = prop.ToPropComparisonExpression<T>(prop.InvokeGetOn(entity));
+                    }
+                    else
+                    {
+                        whereExpression = Expression.AndAlso(whereExpression, prop.ToPropComparisonExpression<T>(prop.InvokeGetOn(entity)));
+                    }
+                }
+                else
+                {
+                    setClauses.Add(EntityUtils.ToPropComparisonPredicate<T>(prop, prop.InvokeGetOn(entity)));
+                }
             }
 
-            ExpressionUpdateQuery<T> query = new ExpressionUpdateQuery<T>(
-                EntityUtils.IdEqualsExpression<T>(entity.GetId()),
-                setClauses);
+            ParameterExpression inputParam = Expression.Parameter(typeof(T));
+            Expression<Func<T, bool>> whereClause = 
+                whereExpression == null ? 
+                    Expression.Lambda<Func<T, bool>>(whereExpression, inputParam) : ent => true;
+
+            ExpressionUpdateQuery<T> query = new ExpressionUpdateQuery<T>(whereClause, setClauses);
 
             SqlCommand updateCommand = query.MakeCommand();
 
@@ -81,9 +107,9 @@ namespace LibrairieBD.Sql
             return entity;
         }
 
-        public bool DeleteRow<T>(T entity)
+        public bool DeleteWhere<T>(Expression<Func<T, bool>> where)
         {
-            ExpressionDeleteQuery<T> query = new ExpressionDeleteQuery<T>(EntityUtils.IdEqualsExpression<T>(entity.GetId()));
+            ExpressionDeleteQuery<T> query = new ExpressionDeleteQuery<T>(where);
 
             SqlCommand deleteCommand = query.MakeCommand();
 

@@ -33,7 +33,7 @@ namespace LibrairieBD.Sql
             string pattern = $@"\b{paramName}\b";
             Regex rexp = new Regex(pattern);
 
-            string dateTimePattern = @"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} (AM)|(PM)";
+            string dateTimePattern = @"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} [A-Z]{2}";
             whereClause = Regex.Replace(whereClause, dateTimePattern, ReformatDateAndWrapWithApostrophes);
 
             whereClause = rexp.Replace(whereClause, typeof(T).GetTableMapping());

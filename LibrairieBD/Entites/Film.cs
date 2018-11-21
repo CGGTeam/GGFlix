@@ -5,14 +5,10 @@ namespace LibrairieBD.Entites
 {
     public class Film
     {
-        private int? noFilm;
-        private bool? versionEtendue;
-        private bool? filmOriginal;
-
         [Id] [ColumnMapping] public int? NoFilm { get; set; } = null;
         [ColumnMapping] public int? AnneeSortie { get; set; } = null;
         [ColumnMapping] public int? Categorie { get; set; } = null;
-        [ColumnMapping] public DateTime DateMAJ { get; set; } = DateTime.Now;
+        [ColumnMapping] public DateTime DateMAJ { get; set; } = (DateTime)SqlDateTime.MinValue;
         [ColumnMapping] public int? NoUtilisateurMAJ { get; set; } = null;
         [ColumnMapping] public string Resume { get; set; } = null;
         [ColumnMapping] public int? DureeMinutes { get; set; } = null;
