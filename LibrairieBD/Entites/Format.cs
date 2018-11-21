@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    class Format
+    public class Format
     {
         [Id]
         [ColumnMapping]

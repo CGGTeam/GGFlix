@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    class Realisateur
+    public class Realisateur
     {
         [Id]
         [ColumnMapping]

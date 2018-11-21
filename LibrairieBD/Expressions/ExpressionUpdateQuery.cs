@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LibrairieBD.Sql
 {
-    public class ExpressionUpdateQuery<T> : IExpressionQuery
+    public class ExpressionUpdateQuery<T> : IExpressionQuery<T>
     {
         public ExpressionUpdateQuery(Expression<Func<T, bool>> Where, IList<Expression<Func<T, bool>>> SetClauses)
         {

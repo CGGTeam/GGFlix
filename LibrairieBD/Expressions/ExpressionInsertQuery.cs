@@ -9,7 +9,7 @@ using LibrairieBD.Sql;
 
 namespace LibrairieBD
 {
-    public class ExpressionInsertQuery<TEntity>
+    public class ExpressionInsertQuery<TEntity>: IExpressionQuery<TEntity>
     {
         public ExpressionInsertQuery(TEntity entity)
         {
@@ -29,22 +29,11 @@ namespace LibrairieBD
             PropertyInfo[] properties = typeof(T).GetProperties();
             string columns = "";
             string values = "";
-            string idCol = "";
-            string idVal = "";
 
             for (var i = 0; i < properties.Length; i++)
             {
                 PropertyInfo prop = properties[i];
                 string mappedColumn = prop.GetColMapping();
-
-                if (prop.IsIdProp())
-                {
-                    idCol = mappedColumn;
-
-                    idVal = prop.InvokeGetOn(entity).ToString();
-
-                    continue;
-                }
 
                 columns += mappedColumn;
                 values += $"@{mappedColumn}";
@@ -64,11 +53,8 @@ namespace LibrairieBD
                 command.Parameters.Add(param);
             }
 
-            if (!string.IsNullOrEmpty(columns)) idCol += ", ";
-            if (!string.IsNullOrEmpty(values)) idVal += ", ";
-
             command.CommandText =
-                $"INSERT INTO {typeof(T).GetTableMapping()} ({idCol}{columns}) VALUES ({idVal}{values})";
+                $"INSERT INTO {typeof(T).GetTableMapping()} ({columns}) VALUES ({values})";
             return command;
         }
 

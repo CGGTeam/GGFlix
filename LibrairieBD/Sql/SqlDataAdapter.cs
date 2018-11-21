@@ -116,7 +116,7 @@ namespace LibrairieBD.Sql
             return _dataContext.ExecuteNonQuery(deleteCommand) > 0;
         }
 
-        public object ExecuteExpressionQuery<T>(IExpressionQuery query)
+        public object ExecuteExpressionQuery<T>(IExpressionQuery<T> query)
         {
             SqlCommand command = query.MakeCommand();
 

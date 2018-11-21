@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LibrairieBD.Sql
 {
-    public class ExpressionReadQuery<TEntity>: IExpressionQuery
+    public class ExpressionReadQuery<TEntity>: IExpressionQuery<TEntity>
     {
         public Expression<Func<TEntity, bool>> WhereExpression { get; set; }
         public IList<OrderByExpression<TEntity, object>> OrderByList { get; } = new List<OrderByExpression<TEntity, object>>();

@@ -4,14 +4,13 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    [TableMapping("ValeursPreferences")]
-    public class ValeurPreference
+    [TableMapping("UtilisateursPreferences")]
+    public class UtilisateurPreference
     {
         [Id]
         [ColumnMapping]
         public int NoUtilisateur { get; set; }
         [Id]
-        [ColumnMapping]
-        public int NoPreference { get; set; }
+        [ColumnMapping] public int NoPreference { get; set; }
     }
 }

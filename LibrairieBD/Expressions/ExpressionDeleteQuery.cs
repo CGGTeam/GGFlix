@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LibrairieBD.Sql
 {
-    public class ExpressionDeleteQuery<T> : IExpressionQuery
+    public class ExpressionDeleteQuery<T> : IExpressionQuery<T>
     {
         public ExpressionDeleteQuery(Expression<Func<T, bool>> where)
         {

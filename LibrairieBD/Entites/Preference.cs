@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    class Preference
+    public class Preference
     {
         [Id]
         [ColumnMapping]

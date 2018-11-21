@@ -4,11 +4,9 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    class Acteur
+    public class Acteur
     {
-        [Id]
-        [ColumnMapping]
-        public int NoActeur { get; set; }
+        [Id] [ColumnMapping] public int? NoActeur { get; set; } = null;
         [ColumnMapping]
         public string Nom { get; set; }
         [ColumnMapping]

@@ -5,7 +5,7 @@ using System.Text;
 namespace LibrairieBD.Entites
 {
     [TableMapping("FilmsSupplements")]
-    class FilmsSupplements
+    public class FilmsSupplements
     {
         [Id]
         [ColumnMapping]

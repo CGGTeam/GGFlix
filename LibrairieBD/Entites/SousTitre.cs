@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    class SousTitre
+    public class SousTitre
     {
         [Id]
         [ColumnMapping]

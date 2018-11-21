@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    class Supplement
+    public class Supplement
     {
         [Id]
         [ColumnMapping]

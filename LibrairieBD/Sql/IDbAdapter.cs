@@ -13,6 +13,6 @@ namespace LibrairieBD.Sql
         T InsertRow<T>(T entity);
         T UpdateRow<T>(T entity);
         bool DeleteWhere<T>(Expression<Func<T, bool>> predicate);
-        object ExecuteExpressionQuery<T>(IExpressionQuery query);
+        object ExecuteExpressionQuery<T>(IExpressionQuery<T> query);
     }
 }

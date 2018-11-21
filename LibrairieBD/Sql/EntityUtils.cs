@@ -92,6 +92,11 @@ namespace LibrairieBD.Sql
 
         public static object CastVarToType(this Type type, object varToConvert)
         {
+            if (Nullable.GetUnderlyingType(type) != null)
+            {
+                type = Nullable.GetUnderlyingType(type);
+            }
+
             var parameter = Expression.Parameter(typeof(object), "input");
 
             var cast = Expression.TypeAs(Expression.Convert(parameter, type), typeof(object));
@@ -209,15 +214,16 @@ namespace LibrairieBD.Sql
             try
             {
                 ConstructorInfo defaultConstructor = typeof(T).GetConstructor(new Type[0]);
-                T entity = (T)defaultConstructor.Invoke(new object[0]);
+                T entity = (T) defaultConstructor.Invoke(new object[0]);
 
                 entity = MapColumnValuesToEntity(entity, row);
 
                 return entity;
             }
-            catch (Exception e)
+            catch (NullReferenceException e)
             {
                 throw new ArgumentException("Specified entity has no default constructor");
+
             }
         }
 

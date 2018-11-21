@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LibrairieBD.Sql
 {
-    public interface IExpressionQuery
+    public interface IExpressionQuery<T>
     {
         SqlCommand MakeCommand();
         ExecuteType ExecuteType { get; }

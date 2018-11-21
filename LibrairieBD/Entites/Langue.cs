@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    class Langue
+    public class Langue
     {
         [Id]
         [ColumnMapping]

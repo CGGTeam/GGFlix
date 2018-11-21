@@ -30,7 +30,7 @@ namespace GGFlix_Test.IntegrationTests
 
         [TestMethod]
         [TestCategory("Integration")]
-        public void TestCRUD()
+        public void TestCrudFilm()
         {
             Film film = new Film
             {
@@ -50,6 +50,47 @@ namespace GGFlix_Test.IntegrationTests
             };
 
             Assert.IsTrue(ValidateCRUDForEntity(film));
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestCrudActeur()
+        {
+            Acteur acteur = new Acteur
+            {
+                Nom = "Hubert Lenoir",
+                Sexe = "?"
+            };
+
+            Assert.IsTrue(ValidateCRUDForEntity(acteur));
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestCrudUtilisateur()
+        {
+            Utilisateur utilisateur = new Utilisateur
+            {
+                Courriel = "",
+                MotPasse = 12345,
+                NomUtilisateur = "test",
+                TypeUtilisateur = "U",
+            };
+
+            Assert.IsTrue(ValidateCRUDForEntity(utilisateur));
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestCrudUtilisateurPreference()
+        {
+            UtilisateurPreference pref = new UtilisateurPreference
+            {
+                NoPreference = 2,
+                NoUtilisateur = 5,
+            };
+
+            Assert.IsTrue(ValidateCRUDForEntity(pref));
         }
 
         private bool ValidateCRUDForEntity<T>(T entity)
@@ -82,7 +123,7 @@ namespace GGFlix_Test.IntegrationTests
 
             query.WhereExpression = film => film.Categorie.Value < 1;
 
-            SqlCommand command = query.MakeCommand();
+            adapter.ExecuteExpressionQuery(query);
         }
     }
 }
