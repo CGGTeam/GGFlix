@@ -33,6 +33,7 @@
                         <asp:TextBox runat="server"
                                      tabindex="2"
                                      ID="tbPassword" 
+                                     MaxLength="5"
                                      class="form-control"
                                      TextMode="password"/>
                     </div>
