@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GGFlix", "GGFlix\", "{B07A9837-77B2-4CE8-987E-0D6D4DB5BEDD}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.1"
 		ProjectReferences = "{a2eb6873-1ea0-4cfa-8dbb-6e0ea40ae721}|LibrairieBD.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_49853"
 		Debug.AspNetCompiler.PhysicalPath = "GGFlix\"
@@ -26,9 +26,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GGFlix", "GGFlix\", "{B07A9
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GGFlix_Test", "GGFlix_Test\GGFlix_Test.csproj", "{D568C432-BD3B-4439-80E9-5A82D67283FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GGFlix_Test", "GGFlix_Test\GGFlix_Test.csproj", "{D568C432-BD3B-4439-80E9-5A82D67283FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrairieBD", "LibrairieBD\LibrairieBD.csproj", "{A2EB6873-1EA0-4CFA-8DBB-6E0EA40AE721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrairieBD", "LibrairieBD\LibrairieBD.csproj", "{A2EB6873-1EA0-4CFA-8DBB-6E0EA40AE721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

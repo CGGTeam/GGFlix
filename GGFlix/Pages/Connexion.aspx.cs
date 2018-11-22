@@ -5,9 +5,13 @@ using System.Web;
 using System.Web.Routing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using LibrairieBD.Dao;
+using LibrairieBD.Entites;
 
 public partial class Pages_Connexion : System.Web.UI.Page
 {
+    private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -28,6 +32,6 @@ public partial class Pages_Connexion : System.Web.UI.Page
 
     private bool credentialsAreValid(string username, string password)
     {
-        return username == "admin" && password == "admin";
+        return utilDao.Find(new Utilisateur {NomUtilisateur = username, MotPasse = int.Parse(password)}).Count > 0;
     }
 }
