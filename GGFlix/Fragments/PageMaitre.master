@@ -39,6 +39,9 @@
                 </li>
             </ul>
         </div>
+        <div class="ml-auto text-light d-inline-block">
+            <span class="nav-link">Connecté en tant que: <asp:Literal runat="server" ID="lblUser"></asp:Literal></span>
+        </div>
     </nav>
     <form id="frmPrincipal" runat="server">
         <asp:ContentPlaceHolder ID="ContenuPrincipal" runat="server">

@@ -5,8 +5,13 @@
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="Contenu">
-    <form runat="server" class="vertical-center">
-        <div class="container">
+    <form runat="server">
+        <div runat="server" ID="divErreurs" class="alert alert-danger text-center">
+            <asp:Label runat="server" ID="lblErreur"/>
+        </div>
+        
+        <div  class="vertical-center">
+            <div class="container">
             <div class="row flex-column h-100 justify-content-center align-items-center">
                 <asp:Image runat="server"
                            ImageUrl="/Static/img/CD-512-dark.png"
@@ -46,6 +51,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </form>
 </asp:Content>
