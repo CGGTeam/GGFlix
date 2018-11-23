@@ -10,7 +10,7 @@
 ### Must add netstandard?
 
 ```xml
-<compilation debug="true" targetFramework="4.5.1">
+<compilation debug="true" targetFramework="4.6.1">
   <assemblies>
     <add assembly="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51"/>
   </assemblies>
