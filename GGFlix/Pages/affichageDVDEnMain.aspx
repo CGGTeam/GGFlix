@@ -47,7 +47,7 @@
 		</div><br/><br/>
 
 	<div class="card">
-		<div class="card-body">
+		<asp:panel id="panelDeFilm" cssClass="card-body" runat="server">
 		    <div class="row" style="margin-left: 15%;margin-right: 15%">
 		        <div class="col-xs-2 col-md-2">
                     <a href="/DVD/1">
@@ -88,7 +88,7 @@
 		    <div align="center">
 			    <a href="/Utilisateur/1" class="btn btn-success">Afficher les DVDs d'un autre utilisateur</a>
 			</div>
-		</div>
+		</asp:panel>
 	<br/>
 </body>
 </asp:Content>

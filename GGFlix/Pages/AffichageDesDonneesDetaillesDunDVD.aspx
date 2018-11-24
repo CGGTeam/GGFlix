@@ -55,9 +55,9 @@
                 <h4><small><asp:Label id="lblNomActeurs" AssociatedControlId="NomActeurs" Text="Nom des trois princiaux acteurs/actrices" runat="server"/><asp:DropDownList id="NomActeurs" runat="server" /></small></h4>               
                 <h4><small><asp:Label id="lblSousTitre" AssociatedControlId="SousTitre" Text="Sous-Titres" runat="server"/>
                     <asp:DropDownList id="SousTitre" runat="server" >
-                         <asp:ListItem Text="Anglais" Value="0" />
-                             <asp:ListItem Text="Français" Value="1" />
-                             <asp:ListItem Text="Espagnol" Value="2" />
+                        <asp:ListItem Text="Anglais" Value="0" />
+                        <asp:ListItem Text="Français" Value="1" />
+                        <asp:ListItem Text="Espagnol" Value="2" />
                         </asp:DropDownList></small></h4>
                 <h4><small><asp:Label id="lblTitreFrancais" AssociatedControlId="TitreFrancais" Text="Titre-français" runat="server"/><asp:TextBox id="TitreFrancais" Text="À travers l'univers" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblTitreOriginal" AssociatedControlId="TitreOriginal" Text="Titre original" runat="server"/><asp:TextBox id="TitreOriginal" Text="Across the Universe" runat="server" /></small></h4>
