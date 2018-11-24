@@ -10,11 +10,8 @@ public partial class Fragments_MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
             Utilisateur utilisateurCourant = Securite.UtilisateurCourant;
 
             lblUser.Text = utilisateurCourant.NomUtilisateur;
-        }
     }
 }
