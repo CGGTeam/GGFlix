@@ -17,14 +17,15 @@ public partial class Pages_EnvoiCourriel : System.Web.UI.Page
         username = HttpContext.Current.User.Identity.Name;
         if (!username.Trim().Equals(""))
         {
-            noUtil = Convert.ToInt32(Page.RouteData.Values["id"]);
-            if (noUtil > 0)
-            {
-                Utilisateur utilRecevoir = utilDao.Find(new Utilisateur { NoUtilisateur = noUtil })[0];
-                tbA.Text = utilRecevoir.Courriel;
-                Utilisateur utilEnvoyer = utilDao.Find(new Utilisateur { NomUtilisateur = username })[0];
-                tbDe.Text = utilEnvoyer.Courriel;
-            }
+            Utilisateur utilEnvoyer = utilDao.Find(new Utilisateur { NomUtilisateur = username })[0];
+            tbDe.Text = utilEnvoyer.Courriel;
+
+        }
+        noUtil = Convert.ToInt32(Page.RouteData.Values["id"]);
+        if (noUtil > 0)
+        {
+            Utilisateur utilRecevoir = utilDao.Find(new Utilisateur { NoUtilisateur = noUtil })[0];
+            tbA.Text = utilRecevoir.Courriel;
         }
 
     }
