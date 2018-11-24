@@ -23,16 +23,16 @@
                 <asp:DropDownList runat="server" ID="ddlUtilisateur" AutoPostBack="true" style="width:260px;height:25px;" OnSelectedIndexChanged="creerAffichage" ></asp:DropDownList>
             </div>
             <asp:Panel ID="panelAffichage" CssClass="col-md-8 card card-body" runat="server">
-                </asp:Panel>
+            </asp:Panel>
 
 
         </div>
     <div align="center">
-        <a href="-1" class="btn btn-success">|<</a>
+        <a href=/Utilisateur/1" class="btn btn-success">|<</a>
         <a href="0" class="btn btn-success"><</a>
-        <a href="1" class="btn btn-success">Page 1</a>
-        <a href="2" class="btn btn-success">Page 2</a>
-        <a href="3" class="btn btn-success">Page 3</a>
+        <a href="/Utilisateur/1" class="btn btn-success">Page 1</a>
+        <a href="/Utilisateur/2" class="btn btn-success">Page 2</a>
+        <a href="/Utilisateur/3" class="btn btn-success">Page 3</a>
         <a href="4" class="btn btn-success">Page 4</a>
         <a href="5" class="btn btn-success">Page 5</a>
         <a href="6" class="btn btn-success">></a>

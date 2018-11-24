@@ -13,29 +13,40 @@ public partial class DVDAutreUtil : System.Web.UI.Page
     private GenericDao<Exemplaire> exemDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<Film> filmDao = Persistance.GetDao<Film>();
     private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
-    private String id = "admin";
+    private String id = "";
     Utilisateur currentUser = null;
+    int numPage = -1;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        numPage = Convert.ToInt32(Page.RouteData.Values["id"]);
+        System.Diagnostics.Debug.WriteLine("PAGE : " + numPage);
+        id = HttpContext.Current.User.Identity.Name;
+        if (!id.Trim().Equals(""))
         {
-            currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
-
-            IList<Utilisateur> lstUtilisateurs = utilDao.FindAll();
-            ddlUtilisateur.Items.Clear();
-            foreach (Utilisateur util in lstUtilisateurs)
+            if (!Page.IsPostBack)
             {
-                if (!util.NomUtilisateur.Equals(currentUser.NomUtilisateur))
+                currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
+
+                IList<Utilisateur> lstUtilisateurs = utilDao.FindAll();
+                ddlUtilisateur.Items.Clear();
+                foreach (Utilisateur util in lstUtilisateurs)
                 {
-                    ListItem item = new ListItem();
-                    item.Value = util.NoUtilisateur.ToString();
-                    item.Text = util.NomUtilisateur;
-                    ddlUtilisateur.Items.Add(item);
+                    if (!util.NomUtilisateur.Equals(currentUser.NomUtilisateur) && !util.NomUtilisateur.Trim().Equals("admin"))
+                    {
+                        ListItem item = new ListItem();
+                        item.Value = util.NoUtilisateur.ToString();
+                        item.Text = util.NomUtilisateur;
+                        ddlUtilisateur.Items.Add(item);
+                    }
                 }
+                creerAffichage(sender, e);
             }
-            creerAffichage(sender, e);
         }
-        
+        else
+        {
+            // Page devrait crash
+        }
+
 
     }
     //Utilisateur utilSelect = utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(ddlUtilisateur.SelectedValue), NomUtilisateur = ddlUtilisateur.Text })[0];
@@ -44,7 +55,6 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         try
         {
             int utilChoisi = int.Parse(ddlUtilisateur.SelectedValue);
-            System.Diagnostics.Debug.WriteLine("VALUE == " + utilChoisi);
             int i = 0;
             panelAffichage.Controls.Clear();
             Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info
@@ -52,19 +62,14 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             // On choisi que les exemplaires du proprio sélectionné
             // Sinon voir dans empruntDao empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = v.NoExemplaire, NoUtilisateur = utilChoisi }).Count>0
             .Where(v => v.NoUtilisateurProprietaire == utilChoisi).ToList();
-            int maxPage = 10;                                                                                           // maxPage est la variable de configuration de l'utilisateur
-            int numPage = 0;                                                                                            // numPage est le numéro de la page demande -1 (Pour avoir le total de DVD déjà affiché)
-            System.Diagnostics.Debug.WriteLine("COUNT ==" + lstExemp.Count());
-            if (numPage * maxPage < lstExemp.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
+            int maxPage = 10;
+            int nbPagePrec = numPage - 1;
+            if (nbPagePrec * maxPage < lstExemp.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
             {
-                System.Diagnostics.Debug.WriteLine("DANS IF == " + utilChoisi);
-                for (int j = numPage; j < lstExemp.Count() && i < maxPage; j++,i++)
+                for (int j = nbPagePrec; j < lstExemp.Count() && i < maxPage; j++,i++)
                 {
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
 
-                    System.Diagnostics.Debug.WriteLine("DANS FOR == " + film.TitreOriginal);
-                    // foreach (Exemplaire exp in lstExemp) if (i < maxPage)
-                    //   {
                     //Premier DIV
                     Panel panRow = new Panel();
                     panRow.CssClass = "row";
@@ -140,19 +145,11 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             {
                 // Redirection vers page max? ou vide
             }
-
-            //panel.Controls.Add();
-            //return panel;
+           
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine(ex.ToString());
         }
-    }
-
-
-    protected void image_Click()
-    {
-        Response.Redirect("");
     }
 }
