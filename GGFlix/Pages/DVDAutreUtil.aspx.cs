@@ -16,13 +16,19 @@ public partial class DVDAutreUtil : System.Web.UI.Page
     private String id = "";
     Utilisateur currentUser = null;
     int numPage = -1;
+    int nbPage = -1;
+    int ddlSelect = -1;
     protected void Page_Load(object sender, EventArgs e)
     {
         numPage = Convert.ToInt32(Page.RouteData.Values["id"]);
         id = HttpContext.Current.User.Identity.Name;
+        if (ddlSelect != -1)
+        {
+            ddlUtilisateur.Items.FindByValue(ddlSelect.ToString()).Selected = true;
+        }
         if (!id.Trim().Equals(""))
         {
-            if (!Page.IsPostBack)
+            if (!IsPostBack)
             {
                 currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
 
@@ -38,6 +44,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                         ddlUtilisateur.Items.Add(item);
                     }
                 }
+
                 creerAffichage(sender, e);
             }
         }
@@ -47,28 +54,31 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         }
 
 
+
     }
     //Utilisateur utilSelect = utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(ddlUtilisateur.SelectedValue), NomUtilisateur = ddlUtilisateur.Text })[0];
     protected void creerAffichage(object sender, EventArgs e)
     {
         try
         {
-            int utilChoisi = int.Parse(ddlUtilisateur.SelectedValue);
+            ddlSelect = int.Parse(ddlUtilisateur.SelectedValue);
             int i = 0;
             panelAffichage.Controls.Clear();
             Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info
             List<Exemplaire> lstExemp = exemDao.FindAll()
             // On choisi que les exemplaires du proprio sélectionné
-            // Sinon voir dans empruntDao empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = v.NoExemplaire, NoUtilisateur = utilChoisi }).Count>0
-            .Where(v => v.NoUtilisateurProprietaire == utilChoisi).ToList();
+            // Sinon voir dans empruntDao empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = v.NoExemplaire, NoUtilisateur = ddlSelect }).Count>0
+            .Where(v => v.NoUtilisateurProprietaire == ddlSelect).ToList();
             int maxPage = 10;
             int nbPagePrec = numPage - 1;
+            decimal page = decimal.Parse(lstExemp.Count().ToString()) / decimal.Parse(maxPage.ToString());
+            nbPage = int.Parse(Math.Ceiling(page).ToString());
             if (nbPagePrec * maxPage < lstExemp.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
             {
                 for (int j = nbPagePrec; j < lstExemp.Count() && i < maxPage; j++,i++)
                 {
-                    System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE ==== " + lstExemp[j].NoExemplaire + " NOUTIL ==== " + utilChoisi);
-                    //EmpruntFilm empruntFilm = empruntFilmDao.Find(new EmpruntFilm { NoUtilisateur = utilChoisi, NoExemplaire = lstExemp[j].NoExemplaire })[0];
+                    System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE ==== " + lstExemp[j].NoExemplaire + " NOUTIL ==== " + ddlSelect);
+                    //EmpruntFilm empruntFilm = empruntFilmDao.Find(new EmpruntFilm { NoUtilisateur = ddlSelect, NoExemplaire = lstExemp[j].NoExemplaire })[0];
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
 
                     //Premier DIV
@@ -146,11 +156,274 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             {
                 // Redirection vers page max? ou vide
             }
+            creerBasDePage(sender,e);
            
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine(ex.ToString());
+        }
+    }
+
+    //Toujours appeler APRÈS créerAffichage
+    protected void creerBasDePage(object sender, EventArgs e)
+    {
+        int nbPageMax = 5;
+        Panel panBasDePage = panelBasDePage;
+        panBasDePage.HorizontalAlign = HorizontalAlign.Center;
+        //Première page
+        if(numPage == 1)
+        {
+            // btnPremier
+            Button btnPremier = new Button();
+            btnPremier.ID = "btnPremier";
+            btnPremier.Enabled = false;
+            btnPremier.CssClass = "btn btn-success page-item disabled";
+            btnPremier.Text = "|<";
+            panBasDePage.Controls.Add(btnPremier);
+
+            //btnLast
+            Button btnPrec = new Button();
+            btnPrec.ID = "btnPrec";
+            btnPrec.Enabled = false;
+            btnPrec.CssClass = "btn btn-success page-item disabled";
+            btnPrec.Text = "<";
+            panBasDePage.Controls.Add(btnPrec);
+            //btnPage
+            for (int i = 1; i < 6; i++)
+            {
+                Button btnPage = new Button();
+                btnPage.ID = "btnPage" + i;
+                
+                if (i == 1||i>nbPage)
+                {
+                    btnPage.Enabled = false;
+                    btnPage.CssClass = "btn btn-success page-item active";
+                }
+                else
+                {
+                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.CssClass = "btn btn-success";
+                }
+                btnPage.Text = "Page " + i;
+                panBasDePage.Controls.Add(btnPage);
+            }
+            //btnNext
+            Button btnNext = new Button();
+            btnNext.ID = "btnNext";
+            if (nbPage == 1)
+            {
+                btnNext.Enabled = false;
+            }
+            else
+            {
+                btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1);
+            }
+            btnNext.CssClass = "btn btn-success";
+            btnNext.Text = ">";
+            panBasDePage.Controls.Add(btnNext);
+
+            //btnLast
+            Button btnLast = new Button();
+            btnLast.ID = "btnLast";
+
+            if (nbPage == 1)
+            {
+                btnLast.Enabled = false;
+            }
+            else
+            {
+                btnLast.PostBackUrl = "~/Utilisateur/" + nbPage;
+            }
+            btnLast.CssClass = "btn btn-success";
+            btnLast.Text = ">|";
+            panBasDePage.Controls.Add(btnLast);
+
+        }
+        //Deuxième page
+        else if(numPage == 2)
+        {
+            //btnPremier
+            Button btnPremier = new Button();
+            btnPremier.ID = "btnPremier";
+            btnPremier.PostBackUrl = "~/Utilisateur/1";
+            btnPremier.CssClass = "btn btn-success";
+            btnPremier.Text = "|<";
+            panBasDePage.Controls.Add(btnPremier);
+
+            //btnLast
+            Button btnPrec = new Button();
+            btnPrec.ID = "btnPrec";
+            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage-1);
+            btnPrec.CssClass = "btn btn-success";
+            btnPrec.Text = "<";
+            panBasDePage.Controls.Add(btnPrec);
+
+
+            //btnPage
+            for (int i = 1; i < 6; i++)
+            {
+                Button btnPage = new Button();
+                btnPage.ID = "btnPage" + i;
+                if (i == 2 || i > nbPage)
+                {
+                    btnPage.Enabled = false;
+                    btnPage.CssClass = "btn btn-success page-item active";
+                }
+                else
+                {
+                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.CssClass = "btn btn-success";
+                }
+                btnPage.Text = "Page " + i;
+                panBasDePage.Controls.Add(btnPage);
+            }
+            //btnNext
+            Button btnNext = new Button();
+            btnNext.ID = "btnNext";
+            if (nbPage == 2)
+            {
+                btnNext.Enabled = false;
+            }
+            else
+            {
+                btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1);
+            }
+            btnNext.CssClass = "btn btn-success";
+            btnNext.Text = ">";
+            panBasDePage.Controls.Add(btnNext);
+
+            //btnLast
+            Button btnLast = new Button();
+            btnLast.ID = "btnLast" + nbPage;
+
+            if (nbPage == 2)
+            {
+                btnLast.Enabled = false;
+            }
+            else
+            {
+                btnLast.PostBackUrl = "~/Utilisateur/" + nbPage;
+            }
+            btnLast.CssClass = "btn btn-success";
+            btnLast.Text = ">|";
+            panBasDePage.Controls.Add(btnLast);
+
+        }
+        //Avant-dernière page
+        else if(numPage == nbPage-1)
+        {
+            //btnPremier
+            Button btnPremier = new Button();
+            btnPremier.ID = "btnPremier";
+            btnPremier.PostBackUrl = "~/Utilisateur/1";
+            btnPremier.CssClass = "btn btn-success";
+            btnPremier.Text = "|<";
+            panBasDePage.Controls.Add(btnPremier);
+
+            //btnLast
+            Button btnPrec = new Button();
+            btnPrec.ID = "btnPrec";
+            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage - 1);
+            btnPrec.CssClass = "btn btn-success";
+            btnPrec.Text = "<";
+            panBasDePage.Controls.Add(btnPrec);
+
+            //btnPage
+            for (int i = nbPage-2; i < nbPage+2; i++)
+            {
+                Button btnPage = new Button();
+                btnPage.ID = "btnPage" + i;
+                btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                if (i == numPage || i > nbPage)
+                {
+                    btnPage.Enabled = false;
+                    btnPage.CssClass = "btn btn-success page-item active";
+                }
+                else
+                {
+                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.CssClass = "btn btn-success";
+                }
+                btnPage.Text = "Page " + i;
+                panBasDePage.Controls.Add(btnPage);
+            }
+            //btnNext
+            Button btnNext = new Button();
+            btnNext.ID = "btnNext";
+            btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1);
+            btnNext.CssClass = "btn btn-success";
+            btnNext.Text = ">";
+            panBasDePage.Controls.Add(btnNext);
+
+            //btnLast
+            Button btnLast = new Button();
+            btnLast.ID = "btnLast";
+            btnLast.PostBackUrl = "~/Utilisateur/" + nbPage;
+            btnLast.CssClass = "btn btn-success";
+            btnLast.Text = ">|";
+            panBasDePage.Controls.Add(btnLast);
+        }
+        //Dernière page
+        else if(numPage == nbPage)
+        {
+            //btnPremier
+            Button btnPremier = new Button();
+            btnPremier.ID = "btnPremier";
+            btnPremier.PostBackUrl = "~/Utilisateur/1";
+            btnPremier.CssClass = "btn btn-success";
+            btnPremier.Text = "|<";
+            panBasDePage.Controls.Add(btnPremier);
+
+            //btnLast
+            Button btnPrec = new Button();
+            btnPrec.ID = "btnPrec";
+            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage - 1);
+            btnPrec.CssClass = "btn btn-success";
+            btnPrec.Text = "<";
+            panBasDePage.Controls.Add(btnPrec);
+
+            //btnPage
+            if(nbPage < 5)
+            for (int j = 0; j < nbPage ; j++)
+            {
+                int i = nbPage - j;
+                Button btnPage = new Button();
+                btnPage.ID = "btnPage" + i;
+                btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                if (i == numPage || i > nbPage)
+                {
+                    btnPage.Enabled = false;
+                    btnPage.CssClass = "btn btn-success page-item active";
+                }
+                else
+                {
+                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.CssClass = "btn btn-success";
+                }
+                btnPage.Text = "Page " + i;
+                panBasDePage.Controls.Add(btnPage);
+            }
+            //btnNext
+            Button btnNext = new Button();
+            btnNext.ID = "btnNext";
+            btnNext.Enabled = false;
+            btnNext.CssClass = "btn btn-success";
+            btnNext.Text = ">";
+            panBasDePage.Controls.Add(btnNext);
+
+            //btnLast
+            Button btnLast = new Button();
+            btnLast.ID = "btnLast";
+            btnLast.Enabled = false;
+            btnLast.CssClass = "btn btn-success";
+            btnLast.Text = ">|";
+            panBasDePage.Controls.Add(btnLast);
+        }
+        //Le reste
+        else
+        {
+
         }
     }
 }

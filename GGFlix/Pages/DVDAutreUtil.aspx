@@ -27,21 +27,7 @@
 
 
         </div>
-    <div align="center">
-        <a href=/Utilisateur/1" class="btn btn-success">|<</a>
-        <a href="0" class="btn btn-success"><</a>
-        <a href="/Utilisateur/1" class="btn btn-success">Page 1</a>
-        <a href="/Utilisateur/2" class="btn btn-success">Page 2</a>
-        <a href="/Utilisateur/3" class="btn btn-success">Page 3</a>
-        <a href="4" class="btn btn-success">Page 4</a>
-        <a href="5" class="btn btn-success">Page 5</a>
-        <a href="6" class="btn btn-success">></a>
-        <a href="7" class="btn btn-success">>|</a>
-        <br />
-        <br />
-        <a href="/Catalogue/1" class="btn btn-success">Afficher les DVDs de tous les utilisateurs</a>
-        <a href="/MesDVD" class="btn btn-success">Afficher les DVDs en main</a>
-    </div>
+    <asp:Panel ID="panelBasDePage" runat="server"></asp:Panel>
     <br />
     <br />
     <br />
