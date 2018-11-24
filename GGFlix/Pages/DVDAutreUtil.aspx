@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master"
-    AutoEventWireup="true" CodeFile="DVDAutreUtil.aspx.cs" Inherits="DVDAutreUtil"
+    AutoEventWireup="true" CodeFile="DVDAutreUtil.aspx.cs" Inherits="DVDAutreUtil" EnableEventValidation="false"
     Title="DVDs d'un utilisateur" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
