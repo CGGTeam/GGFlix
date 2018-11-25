@@ -47,48 +47,9 @@
 		</div><br/><br/>
 
 	<div class="card">
-		<asp:panel id="panelDeFilm" cssClass="card-body" runat="server">
-		    <div class="row" style="margin-left: 15%;margin-right: 15%">
-		        <div class="col-xs-2 col-md-2">
-                    <a href="/DVD/1">
-                        <img class="img-responsive" src="/Static/img/181201.jpg" alt="prewiew">
-                    </a>
-		        </div>
-		        <div class="col-xs-4 col-md-6">
-		            <h4 class="product-name pb-5"><strong>Across the universe</strong></h4><h4><small>Par <a href="/Utilisateur/4">Perro</a></small></h4>
-                     <h4><small >Réservé par : <a href="/Utilisateur/3">Francis Perreault</a></small></h4>
-		        </div>		 
-                <div class="col-xs-6 col-md-4 btn-group-vertical" style="padding-top: 5px;">
-                    <br/>
-                    <a href="/DVD/1" class="btn btn-info btn-primary">Affichage des données détaillées</a><br/>
-					<a href="/Messagerie" class="btn btn-warning btn-primary">Modification des données existantes</a><br/>
-					<a href="" class="btn btn-danger btn-primary">Suppression du film</a>
-                </div>
-		
-		    </div>
-		    <hr>
-		    <div class="row" style="margin-left: 15%;margin-right: 15%">
-		        <div class="col-xs-2 col-md-2">
-                    <a href="/DVD/2">
-		             <img class="img-responsive" src="/Static/img/181003.jpg" alt="prewiew">
-                    </a>
-		        </div>
-		        <div class="col-xs-4 col-md-6">
-		            <h4 class="product-name"><strong>Danny Ocean 13</strong></h4><h4><small><a href="/Utilisateur/2">Par Niko</a></small></h4>
-                     <h4><small >Réservé par : <a href="/Utilisateur/1">Landry DeRonald</a></small></h4>
-		        </div>		        
-                    <div class="col-xs-6 col-md-4 btn-group-vertical" style="padding-top: 5px;">
-                        <br/>
-                        <a href="/DVD/2" class="btn btn-info btn-block btn-primary">Affichage des données détaillées</a><br/>
-					    <a href="/Messagerie" class="btn btn-warning btn-block btn-primary">Modification des données existantes</a><br/>
-					    <a href="" class="btn btn-danger btn-block btn-primary">Suppression du film</a>
-                    </div>
-		    </div>
-		    <hr>
-		    <div align="center">
-			    <a href="/Utilisateur/1" class="btn btn-success">Afficher les DVDs d'un autre utilisateur</a>
-			</div>
+		<asp:panel id="panelAffichage" cssClass="card-body" runat="server">
 		</asp:panel>
 	<br/>
+        <asp:Panel ID="panelBasDePage" runat="server"></asp:Panel>
 </body>
 </asp:Content>

@@ -81,7 +81,7 @@
 		    </div>
 		    <hr>
 		    <div align="center">
-			    <a href="/MesDVD" class="btn btn-success">Afficher les DVDs en main</a>
+			    <a href="/MesDVD/1" class="btn btn-success">Afficher les DVDs en main</a>
 			    <a href="/Utilisateur/1" class="btn btn-success">Afficher les DVDs d'un autre utilisateur</a>
 			</div>
 		</div>

@@ -17,7 +17,7 @@
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
 		        <div class="col-xs-2 col-md-3 d-flex flex-wrap align-items-center">
-		            <img class="img-responsive " width="75%" height="60%" src="/Static/img/181201.jpg" alt="prewiew">
+		            <asp:image id="imageFilm" cssClass="img-responsive " width="75%" height="60%" alt="prewiew" runat="server"/>
 		        </div>
 		        <div class="col-xs-4 col-md-4">
 		            <h4 class="product-name"></h4>
@@ -85,7 +85,7 @@
 	</div>
 	<br/>
 	 <div align="center">
-		<a href="/Catalogue/1" class="btn btn-success">Afficher liste de DVD</a>
+		<a href="/MesDVD/1" class="btn btn-success">Afficher liste de DVD</a>
 	</div>
 </body>
 

@@ -19,7 +19,7 @@
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
 		        <div class="col-xs-2 col-md-3 d-flex flex-wrap align-items-center">
-		            <img class="img-responsive " width="75%" height="60%" src="/Static/img/181201.jpg" alt="prewiew">
+		            <asp:image id="imageFilm" cssClass="img-responsive " width="75%" height="60%" alt="prewiew" runat="server"/>
 		        </div>
 		        <div class="col-xs-4 col-md-4">
 		            <h4 class="product-name"></h4>
@@ -88,7 +88,7 @@
 	<br/>
 	 <div align="center">
 		<a href="" class="btn btn-success">Modifier le DVD</a>
-          <a href="/Pages/DVDTousLesUtilisateurs.aspx" class="btn btn-success">Afficher les DVDs de tous les utilisateurs</a>
+          <a href="/MesDVD/1" class="btn btn-success">Afficher les DVDs</a>
 	</div>
 </body>
 
