@@ -25,12 +25,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
         if (!id.Trim().Equals(""))
         {
             currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
-            Response.Write("Le id:" + currentUser.NoUtilisateur);
             IList<Exemplaire> lstExemp = exemDao.FindAll().Where(v => v.NoUtilisateurProprietaire == currentUser.NoUtilisateur).ToList();
-            foreach (Exemplaire exmp in lstExemp)
-            {
-                Response.Write(exmp.NoExemplaire);
-            }
             creerAffichage(sender, e);
         }
         else
@@ -114,7 +109,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                     btnDonnees.ID = "DONNEE" + film.NoFilm.ToString();
                     btnDonnees.CssClass = "btn btn-info btn-primary";
                     btnDonnees.Text = "Affichage des données détaillées";
-                    btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString();
+                    btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString()+ "/N-" + currentUser.NoUtilisateur+"/"+ lstExemp[j].NoExemplaire.ToString();
                     panBouton.Controls.Add(btnDonnees);
                     panBouton.Controls.Add(new LiteralControl("<br />"));
 
