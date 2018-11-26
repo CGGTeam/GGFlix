@@ -17,7 +17,6 @@
     void Application_Error(object sender, EventArgs e)
     {
         // Code that runs when an unhandled error occurs
-
     }
 
     void Session_Start(object sender, EventArgs e)
@@ -39,7 +38,7 @@
     {
         routes.MapPageRoute("ConnexionRoute", "", "~/Pages/Connexion.aspx");
         routes.MapPageRoute("CatalogueRoute", "Catalogue/{page}", "~/Pages/DVDTousLesUtilisateurs.aspx");
-        routes.MapPageRoute("DVDRoute", "DVD/{id}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx");
+        routes.MapPageRoute("DVDRoute", "DVD/{id}/{idUtil}/{noExemp}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx");
         routes.MapPageRoute("UtilRoute", "Utilisateur/{page}/{indexDdl}", "~/Pages/DVDAutreUtil.aspx");
         routes.MapPageRoute("MesDVDSRoute", "MesDVD/{id}", "~/Pages/affichageDVDEnMain.aspx");
         routes.MapPageRoute("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx");

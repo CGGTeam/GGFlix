@@ -126,9 +126,10 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             {
                 for (int j = nbPagePrec * maxPage; j < lstExemp.Count() && i < maxPage; j++,i++)
                 {
+                    int noExemp = lstExemp[j].NoExemplaire;
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                  //  System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE " + lstExemp[j].NoExemplaire);
-                  //  EmpruntFilm empFilm = empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = lstExemp.ElementAt(j).NoExemplaire }).OrderByDescending(v => v.DateEmprunt).First();
+                 // System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE " + noExemp);
+                  //EmpruntFilm empFilm = empruntFilmDao.Find(new EmpruntFilm { }).Where(v => v.NoExemplaire.ToString().Trim() == "18100101").OrderByDescending(v => v.DateEmprunt).First();
                             //Premier DIV
                             Panel panRow = new Panel();
                     panRow.CssClass = "row";
@@ -180,20 +181,21 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     btnDonnees.ID = "DONNEE"+film.NoFilm.ToString();
                     btnDonnees.CssClass = "btn btn-info btn-primary";
                     btnDonnees.Text = "Affichage des données détaillées";
-                    btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString();
+                    btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstExemp[j].NoExemplaire; ;
                     panBouton.Controls.Add(btnDonnees);
                     panBouton.Controls.Add(new LiteralControl("<br />"));
 
                     Button btnMessage = new Button();
                     btnMessage.CssClass = "btn btn-warning btn-primary";
                     btnMessage.Text = "Envoi un courriel à celui qui l'a en main";
-                   // btnMessage.PostBackUrl = "~/Messagerie/" + empFilm.NoUtilisateur;
+                    //btnMessage.PostBackUrl = "~/Messagerie/" + empFilm.NoUtilisateur;
                     panBouton.Controls.Add(btnMessage);
                     panBouton.Controls.Add(new LiteralControl("<br />"));
 
                     Button btnAppropriation = new Button();
                     btnAppropriation.CssClass = "btn btn-danger btn-primary";
                     btnAppropriation.Text = "S'approprier ce DVD";
+                    btnAppropriation.PostBackUrl = "~/DVD/" + film.NoFilm.ToString()+"/" + id +"/" + lstExemp[j].NoExemplaire;
                     panBouton.Controls.Add(btnAppropriation);
                     panRow.Controls.Add(panBouton);
                     panel.Controls.Add(panRow);
