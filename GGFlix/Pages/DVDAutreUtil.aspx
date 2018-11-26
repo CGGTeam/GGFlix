@@ -11,17 +11,7 @@
     <br />
     <br />
         <div class="form-group row">
-            <div class="col-md-2" style="margin-left:10px;">
-                <label for="rechercheDVD" >Rechercher DVD:</label>
-                <br />
-                <input id="rechercheDVD" type="text" style="width:260px;height:25px;">
-                <input type="image" src="/Static/img/loupe.png" width="20px" height="20px" />
-                <br />
-                <br />
-                <label>DVD de l'utilisateur : </label>
-                <br />
-                <asp:DropDownList runat="server" ID="ddlUtilisateur" AutoPostBack="true" style="width:260px;height:25px;" OnSelectedIndexChanged="creerAffichage" ></asp:DropDownList>
-            </div>
+            <asp:Panel ID ="panelSideBar" CssClass="col-md-2" runat="server"></asp:Panel>
             <asp:Panel ID="panelAffichage" CssClass="col-md-8 card card-body" runat="server">
             </asp:Panel>
 

@@ -25,7 +25,6 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         Film currentFilm = filmDao.Find(new Film { NoFilm = intDVD })[0];
 
         AnneeSortie.Text = currentFilm.AnneeSortie.ToString();
-        Response.Write("pochette" + currentFilm.ImagePochette);
         if (currentFilm.ImagePochette.ToString().Trim().Length==0)
         {
             imageFilm.ImageUrl = "/Static/img/CD-512.png";
