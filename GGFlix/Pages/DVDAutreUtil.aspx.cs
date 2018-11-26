@@ -18,14 +18,20 @@ public partial class DVDAutreUtil : System.Web.UI.Page
     int numPage = -1;
     int nbPage = -1;
     int ddlSelect = -1;
+    int ddlSelectedValue = -1;
     protected void Page_Load(object sender, EventArgs e)
     {
-        numPage = Convert.ToInt32(Page.RouteData.Values["id"]);
+        numPage = Convert.ToInt32(Page.RouteData.Values["page"]);
+        if (Page.RouteData.Values["indexDdl"] == null ||!int.TryParse(Page.RouteData.Values["indexDdl"].ToString(),out ddlSelect))
+        {
+            ddlSelect = 0;
+        }
         id = HttpContext.Current.User.Identity.Name;
+        currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
         if (!id.Trim().Equals(""))
         {
-            creerAffichage(sender, e);
             creerSideBar(sender, e);
+            creerAffichage(sender, e);
         }
         else
         {
@@ -76,6 +82,8 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     ddlUtil.Items.Add(item);
                 }
             }
+            ddlUtil.SelectedIndex = ddlSelect;
+            ddlSelectedValue = int.Parse(ddlUtil.SelectedValue);
             ddlUtil.AutoPostBack = true;
             ddlUtil.Width = 260;
             ddlUtil.Height = 25;
@@ -93,33 +101,23 @@ public partial class DVDAutreUtil : System.Web.UI.Page
     {
         try
         {
-            currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
+
             //On récupère l'utilisateur choisi
             if (sender.GetType().Name.Equals("DropDownList"))
             {
-            DropDownList ddlUtilisateur = (DropDownList)sender;
-            if (ddlUtilisateur != null)
-            {
-                System.Diagnostics.Debug.WriteLine(ddlUtilisateur.SelectedValue + "CREERAFFICHAGE");
-                ddlSelect = int.Parse(ddlUtilisateur.SelectedValue);
-            }
-
-            }
-            else
-            {
-                if (currentUser.NoUtilisateur.Value.Equals(2)){
-                    ddlSelect = 3;
-                }
-                else
+                DropDownList ddlUtilisateur = (DropDownList)sender;
+                if (ddlUtilisateur != null)
                 {
-                    ddlSelect = 2;
+                    ddlSelect = ddlUtilisateur.SelectedIndex;
+                    ddlSelectedValue = int.Parse(ddlUtilisateur.SelectedValue);
                 }
+
             }
             int i = 0;
             panelAffichage.Controls.Clear();
             Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info
             List<Exemplaire> lstExemp = exemDao.FindAll()
-            .Where(v => v.NoUtilisateurProprietaire == ddlSelect).ToList();
+            .Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).ToList();
             int maxPage = 10;
             int nbPagePrec = numPage - 1;
             decimal page = decimal.Parse(lstExemp.Count().ToString()) / decimal.Parse(maxPage.ToString());
@@ -243,7 +241,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                 }
                 else
                 {
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
                     btnPage.CssClass = "btn btn-success";
                 }
                 btnPage.Text = "Page " + i;
@@ -265,7 +263,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                 }
                 else
                 {
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
                     btnPage.CssClass = "btn btn-success";
                 }
                 btnPage.Text = "Page " + i;
@@ -282,7 +280,6 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                 {
                     Button btnPage = new Button();
                     btnPage.ID = "btnPage" + i;
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
                     if (i == numPage || i > nbPage)
                     {
                         btnPage.Enabled = false;
@@ -290,7 +287,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     }
                     else
                     {
-                        btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                        btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
                         btnPage.CssClass = "btn btn-success";
                     }
                     btnPage.Text = "Page " + i;
@@ -303,7 +300,6 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                 {
                     Button btnPage = new Button();
                     btnPage.ID = "btnPage" + i;
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
                     if (i == numPage || i > nbPage)
                     {
                         btnPage.Enabled = false;
@@ -311,7 +307,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     }
                     else
                     {
-                        btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                        btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
                         btnPage.CssClass = "btn btn-success";
                     }
                     btnPage.Text = "Page " + i;
@@ -324,7 +320,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         {
             if (numPage > nbPage)
             {
-                Response.Redirect("~/Utilisateur/" + nbPage);
+                Response.Redirect("~/Utilisateur/" + nbPage + "/" + ddlSelect);
             }
             else
             {
@@ -333,7 +329,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                 {
                     Button btnPage = new Button();
                     btnPage.ID = "btnPage" + i;
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
                     if (i == numPage || i > nbPage)
                     {
                         btnPage.Enabled = false;
@@ -341,7 +337,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     }
                     else
                     {
-                        btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                        btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
                         btnPage.CssClass = "btn btn-success";
                     }
                     btnPage.Text = "Page " + i;
@@ -370,7 +366,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         }
         else
         {
-            btnLast.PostBackUrl = "~/Utilisateur/" + nbPage;
+            btnLast.PostBackUrl = "~/Utilisateur/" + nbPage + "/" + ddlSelect;
             btnLast.CssClass = "btn btn-success";
         }
 
@@ -392,7 +388,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         }
         else
         {
-            btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1);
+            btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1) + "/" + ddlSelect;
             btnNext.CssClass = "btn btn-success";
         }
         btnNext.Text = ">";
@@ -410,7 +406,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         }
         else
         {
-            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage - 1);
+            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage - 1) + "/" + ddlSelect;
             btnPrec.CssClass = "btn btn-success";
         }
         btnPrec.Text = "<";
@@ -429,7 +425,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         else
         {
 
-            btnPremier.PostBackUrl = "~/Utilisateur/1";
+            btnPremier.PostBackUrl = "~/Utilisateur/1/" + ddlSelect;
             btnPremier.CssClass = "btn btn-success";
         }
         btnPremier.Text = "|<";
