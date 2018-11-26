@@ -3,6 +3,21 @@
 
 <script runat="server">
 
+    private static readonly Route[] Routes =
+        {
+            new Route("ConnexionRoute", "", "~/Pages/Connexion.aspx"),
+            new Route("DeconnexionRoute", "Deconnexion", "~/Actions/Deconnexion.aspx"),
+            new Route("CatalogueRoute", "Catalogue/{page}", "~/Pages/DVDTousLesUtilisateurs.aspx"),
+            new Route("DVDRoute", "DVD/{id}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx"),
+            new Route("UtilRoute", "Utilisateur/{id}", "~/Pages/DVDAutreUtil.aspx"),
+            new Route("MesDVDSRoute", "MesDVD/{id}", "~/Pages/affichageDVDEnMain.aspx"),
+            new Route("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx"),
+            new Route("MessagerieRoute", "Messagerie/{id}", "~/Pages/EnvoiCourriel.aspx"),
+            new Route("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx"),
+            new Route("MonCompte", "MonCompte", "~/Pages/PersonnalisationEnv.aspx"),
+            new Route("ModifDVD", "modifDVD/{id}", "~/Pages/ModificationDVD.aspx"),
+        };
+
     void Application_Start(object sender, EventArgs e)
     {
         RegisterRoutes(RouteTable.Routes);
@@ -37,16 +52,25 @@
 
     void RegisterRoutes(RouteCollection routes)
     {
-        routes.MapPageRoute("ConnexionRoute", "", "~/Pages/Connexion.aspx");
-        routes.MapPageRoute("DeconnexionRoute", "Deconnexion", "~/Actions/Deconnexion.aspx");
-        routes.MapPageRoute("CatalogueRoute", "Catalogue/{page}", "~/Pages/DVDTousLesUtilisateurs.aspx");
-        routes.MapPageRoute("DVDRoute", "DVD/{id}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx");
-        routes.MapPageRoute("UtilRoute", "Utilisateur/{id}", "~/Pages/DVDAutreUtil.aspx");
-        routes.MapPageRoute("MesDVDSRoute", "MesDVD/{id}", "~/Pages/affichageDVDEnMain.aspx");
-        routes.MapPageRoute("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx");
-        routes.MapPageRoute("MessagerieRoute", "Messagerie/{id}", "~/Pages/EnvoiCourriel.aspx");
-        routes.MapPageRoute("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx");
-        routes.MapPageRoute("MonCompte", "MonCompte", "~/Pages/PersonnalisationEnv.aspx");
-        routes.MapPageRoute("ModifDVD", "modifDVD/{id}", "~/Pages/ModificationDVD.aspx");
+        routes.RouteExistingFiles = false;
+
+        foreach (var route in Routes)
+        {
+            routes.MapPageRoute(route.Nom, route.Url, route.Fichier, false);
+        }
+    }
+
+    class Route
+    {
+        public string Nom { get; set; }
+        public string Url { get; set; }
+        public string Fichier { get; set; }
+
+        public Route(string nom, string url, string fichier)
+        {
+            Nom = nom;
+            Url = url;
+            Fichier = fichier;
+        }
     }
 </script>
