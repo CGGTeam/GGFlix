@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="Deconnexion.aspx.cs" Inherits="Actions_Deconnexion" %>
