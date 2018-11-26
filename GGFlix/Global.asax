@@ -37,6 +37,7 @@
     void RegisterRoutes(RouteCollection routes)
     {
         routes.MapPageRoute("ConnexionRoute", "", "~/Pages/Connexion.aspx");
+        routes.MapPageRoute("DeconnexionRoute", "Deconnexion", "~/Actions/Deconnexion.aspx");
         routes.MapPageRoute("CatalogueRoute", "Catalogue/{page}", "~/Pages/DVDTousLesUtilisateurs.aspx");
         routes.MapPageRoute("DVDRoute", "DVD/{id}/{idUtil}/{noExemp}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx");
         routes.MapPageRoute("UtilRoute", "Utilisateur/{page}/{indexDdl}", "~/Pages/DVDAutreUtil.aspx");

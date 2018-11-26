@@ -32,7 +32,7 @@
                     <a class="nav-link" href="/DVDAjout/Ajouter">Ajouter un DVD</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Déconnexion</a>
+                    <a class="nav-link" href="/Deconnexion">Déconnexion</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/GestionUtilisateur">Gestion utilisateur</a>
