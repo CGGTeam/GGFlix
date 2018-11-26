@@ -95,7 +95,8 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                     panInfo.Controls.Add(new LiteralControl("<br />"));
 
                     Label lblTitreFrancais = new Label();
-                    lblTitreFrancais.Text = "<h4><strong>" + film.TitreFrancais + "</strong></h4>";
+                    int chiffre = j + 1;
+                    lblTitreFrancais.Text = "<h4><strong>" + chiffre + " - " + film.TitreFrancais + "</strong></h4>";
                     lblTitreFrancais.CssClass = "product-name pb-5";
                     panInfo.Controls.Add(lblTitreFrancais);
                     panRow.Controls.Add(panInfo);

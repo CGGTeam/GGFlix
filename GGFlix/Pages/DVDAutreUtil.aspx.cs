@@ -46,8 +46,8 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         try
         {
             panelSideBar.Controls.Clear();
-            panelSideBar.Attributes.Add("margin-left","10");
-            Label lblRecherche = new Label();
+            panelSideBar.Attributes.Add("margin-left","10px");
+            /*Label lblRecherche = new Label();
             lblRecherche.Text = "Rechercher DVD:";
             panelSideBar.Controls.Add(lblRecherche);
             panelSideBar.Controls.Add(new LiteralControl("<br />"));
@@ -63,9 +63,10 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             imgLoupe.ImageUrl = "/Static/img/loupe.png";
             panelSideBar.Controls.Add(imgLoupe);
             panelSideBar.Controls.Add(new LiteralControl("<br />"));
-            panelSideBar.Controls.Add(new LiteralControl("<br />"));
+            panelSideBar.Controls.Add(new LiteralControl("<br />"));*/
             Label lblDdl = new Label();
             lblDdl.Text = "DVD de l'utilisateur";
+            panelSideBar.Controls.Add(lblDdl);
             panelSideBar.Controls.Add(new LiteralControl("<br />"));
             DropDownList ddlUtil = new DropDownList();
             ddlUtil.ID = "ddlUtilisateur";
@@ -167,7 +168,8 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     panInfo.Controls.Add(new LiteralControl("<br />"));
 
                     Label lblTitreFrancais = new Label();
-                    lblTitreFrancais.Text = "<h4><strong>" + film.TitreFrancais + "</strong></h4>";
+                    int chiffre = j + 1;
+                    lblTitreFrancais.Text = "<h4><strong>" + chiffre + " - " + film.TitreFrancais + "</strong></h4>";
                     lblTitreFrancais.CssClass = "product-name pb-5";
                     panInfo.Controls.Add(lblTitreFrancais);
                     panRow.Controls.Add(panInfo);
