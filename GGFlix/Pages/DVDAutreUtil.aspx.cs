@@ -118,7 +118,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             panelAffichage.Controls.Clear();
             Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info
             List<Exemplaire> lstExemp = exemDao.FindAll()
-            .Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).ToList();
+            .Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).OrderBy(v => filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
             int maxPage = 10;
             int nbPagePrec = numPage - 1;
             decimal page = decimal.Parse(lstExemp.Count().ToString()) / decimal.Parse(maxPage.ToString());
