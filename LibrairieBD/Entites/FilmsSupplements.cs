@@ -9,9 +9,9 @@ namespace LibrairieBD.Entites
     {
         [Id]
         [ColumnMapping]
-        public int NoFilm { get; set; }
+        public int? NoFilm { get; set; }
         [Id]
         [ColumnMapping]
-        public int NoSupplement { get; set; }
+        public int? NoSupplement { get; set; }
     }
 }
