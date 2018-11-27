@@ -109,7 +109,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                     btnDonnees.ID = "DONNEE" + film.NoFilm.ToString();
                     btnDonnees.CssClass = "btn btn-info btn-primary";
                     btnDonnees.Text = "Affichage des données détaillées";
-                    btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString()+ "/N-" + currentUser.NoUtilisateur+"/"+ lstExemp[j].NoExemplaire.ToString();
+                    btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString()+ "/N-" + currentUser.NomUtilisateur.ToString().Trim()+"/"+ lstExemp[j].NoExemplaire.ToString();
                     panBouton.Controls.Add(btnDonnees);
                     panBouton.Controls.Add(new LiteralControl("<br />"));
 
@@ -123,6 +123,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                     Button btnSupprimerFilm = new Button();
                     btnSupprimerFilm.CssClass = "btn btn-danger btn-primary";
                     btnSupprimerFilm.Text = "Suppression du film";
+                    btnSupprimerFilm.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
                     panBouton.Controls.Add(btnSupprimerFilm);
                     panRow.Controls.Add(panBouton);
                     panel.Controls.Add(panRow);
@@ -179,7 +180,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                 }
                 else
                 {
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.PostBackUrl = "~/MesDVD/" + i;
                     btnPage.CssClass = "btn btn-success";
                 }
                 btnPage.Text = "Page " + i;
@@ -194,7 +195,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             }
             else
             {
-                btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1);
+                btnNext.PostBackUrl = "~/MesDVD/" + (numPage + 1);
             }
             btnNext.CssClass = "btn btn-success";
             btnNext.Text = ">";
@@ -210,7 +211,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             }
             else
             {
-                btnLast.PostBackUrl = "~/Utilisateur/" + nbPage;
+                btnLast.PostBackUrl = "~/MesDVD/" + nbPage;
             }
             btnLast.CssClass = "btn btn-success";
             btnLast.Text = ">|";
@@ -223,7 +224,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnPremier
             Button btnPremier = new Button();
             btnPremier.ID = "btnPremier";
-            btnPremier.PostBackUrl = "~/Utilisateur/1";
+            btnPremier.PostBackUrl = "~/MesDVD/1";
             btnPremier.CssClass = "btn btn-success";
             btnPremier.Text = "|<";
             panBasDePage.Controls.Add(btnPremier);
@@ -231,7 +232,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnLast
             Button btnPrec = new Button();
             btnPrec.ID = "btnPrec";
-            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage - 1);
+            btnPrec.PostBackUrl = "~/MesDVD/" + (numPage - 1);
             btnPrec.CssClass = "btn btn-success";
             btnPrec.Text = "<";
             panBasDePage.Controls.Add(btnPrec);
@@ -249,7 +250,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                 }
                 else
                 {
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.PostBackUrl = "~/MesDVD/" + i;
                     btnPage.CssClass = "btn btn-success";
                 }
                 btnPage.Text = "Page " + i;
@@ -264,7 +265,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             }
             else
             {
-                btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1);
+                btnNext.PostBackUrl = "~/MesDVD/" + (numPage + 1);
             }
             btnNext.CssClass = "btn btn-success";
             btnNext.Text = ">";
@@ -280,7 +281,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             }
             else
             {
-                btnLast.PostBackUrl = "~/Utilisateur/" + nbPage;
+                btnLast.PostBackUrl = "~/MesDVD/" + nbPage;
             }
             btnLast.CssClass = "btn btn-success";
             btnLast.Text = ">|";
@@ -293,7 +294,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnPremier
             Button btnPremier = new Button();
             btnPremier.ID = "btnPremier";
-            btnPremier.PostBackUrl = "~/Utilisateur/1";
+            btnPremier.PostBackUrl = "~/MesDVD/1";
             btnPremier.CssClass = "btn btn-success";
             btnPremier.Text = "|<";
             panBasDePage.Controls.Add(btnPremier);
@@ -301,7 +302,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnLast
             Button btnPrec = new Button();
             btnPrec.ID = "btnPrec";
-            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage - 1);
+            btnPrec.PostBackUrl = "~/MesDVD/" + (numPage - 1);
             btnPrec.CssClass = "btn btn-success";
             btnPrec.Text = "<";
             panBasDePage.Controls.Add(btnPrec);
@@ -311,7 +312,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             {
                 Button btnPage = new Button();
                 btnPage.ID = "btnPage" + i;
-                btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                btnPage.PostBackUrl = "~/MesDVD/" + i;
                 if (i == numPage || i > nbPage)
                 {
                     btnPage.Enabled = false;
@@ -319,7 +320,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                 }
                 else
                 {
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.PostBackUrl = "~/MesDVD/" + i;
                     btnPage.CssClass = "btn btn-success";
                 }
                 btnPage.Text = "Page " + i;
@@ -328,7 +329,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnNext
             Button btnNext = new Button();
             btnNext.ID = "btnNext";
-            btnNext.PostBackUrl = "~/Utilisateur/" + (numPage + 1);
+            btnNext.PostBackUrl = "~/MesDVD/" + (numPage + 1);
             btnNext.CssClass = "btn btn-success";
             btnNext.Text = ">";
             panBasDePage.Controls.Add(btnNext);
@@ -336,7 +337,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnLast
             Button btnLast = new Button();
             btnLast.ID = "btnLast";
-            btnLast.PostBackUrl = "~/Utilisateur/" + nbPage;
+            btnLast.PostBackUrl = "~/MesDVD/" + nbPage;
             btnLast.CssClass = "btn btn-success";
             btnLast.Text = ">|";
             panBasDePage.Controls.Add(btnLast);
@@ -347,7 +348,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnPremier
             Button btnPremier = new Button();
             btnPremier.ID = "btnPremier";
-            btnPremier.PostBackUrl = "~/Utilisateur/1";
+            btnPremier.PostBackUrl = "~/MesDVD/1";
             btnPremier.CssClass = "btn btn-success";
             btnPremier.Text = "|<";
             panBasDePage.Controls.Add(btnPremier);
@@ -355,7 +356,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //btnLast
             Button btnPrec = new Button();
             btnPrec.ID = "btnPrec";
-            btnPrec.PostBackUrl = "~/Utilisateur/" + (numPage - 1);
+            btnPrec.PostBackUrl = "~/MesDVD/" + (numPage - 1);
             btnPrec.CssClass = "btn btn-success";
             btnPrec.Text = "<";
             panBasDePage.Controls.Add(btnPrec);
@@ -367,7 +368,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                     int i = nbPage - j;
                     Button btnPage = new Button();
                     btnPage.ID = "btnPage" + i;
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                    btnPage.PostBackUrl = "~/MesDVD/" + i;
                     if (i == numPage || i > nbPage)
                     {
                         btnPage.Enabled = false;
@@ -375,7 +376,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                     }
                     else
                     {
-                        btnPage.PostBackUrl = "~/Utilisateur/" + i;
+                        btnPage.PostBackUrl = "~/MesDVD/" + i;
                         btnPage.CssClass = "btn btn-success";
                     }
                     btnPage.Text = "Page " + i;
