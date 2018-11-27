@@ -142,7 +142,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             TextBox txtAddress = (TextBox)panelSideBar.FindControl("tbRechercher");
 
             string strTitreRechercher = txtAddress.Text;
-            Response.Write(strTitreRechercher);
+            //Response.Write(strTitreRechercher);
 
             int maxPage = 10;
             int nbPagePrec = numPage - 1;
