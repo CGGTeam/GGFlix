@@ -152,7 +152,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             {
                 for (int j = nbPagePrec * maxPage; j < lstExemp.Count() && i < maxPage; j++, i++)
                 {
-                    int noExemp = lstExemp[j].NoExemplaire;
+                    int noExemp = int.Parse(lstExemp[j].NoExemplaire.ToString());
                     /*List<Exemplaire> lstExemp = exemDao.FindAll()
              .Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).OrderBy(v => filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
                       List<Film> film = filmDao.FindAll()
