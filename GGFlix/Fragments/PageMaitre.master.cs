@@ -18,10 +18,5 @@ public partial class Fragments_MasterPage : System.Web.UI.MasterPage
         {
             optAdmin.Visible = true;
         }
-
-        if (utilisateurCourant.NoUtilisateur != null)
-            optMesDvd.HRef = "/MesDVD/" + utilisateurCourant.NoUtilisateur.Value;
-        else
-            optMesDvd.Visible = false;
     }
 }

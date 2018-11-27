@@ -24,7 +24,7 @@
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="/Catalogue/1">Tous les DVDs</a>
-                        <a runat="server" ID="optMesDvd" class="dropdown-item">Mes DVDs en main</a>
+                        <a class="dropdown-item" href="/MesDvd/1">Mes DVDs en main </a>
                         <a class="dropdown-item" href="/Utilisateur/1/0">DVDs d'un utilisateur</a>
                     </div>
                 </div>
