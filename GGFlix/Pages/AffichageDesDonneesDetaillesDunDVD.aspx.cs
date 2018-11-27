@@ -19,9 +19,27 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     private GenericDao<SousTitre> soustitreDao = Persistance.GetDao<SousTitre>();
     private GenericDao<Exemplaire> exemDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
+
+    int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
+        if(Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("")&& !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0,2).Equals("N-")))
+        {
+            string target = Request["__EVENTTARGET"];
+            string argument = Request["__EVENTARGUMENT"];
+
+            if (target != null && target.Equals("txtConfirmRetour"))
+            {
+                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
+                // On lui donnera le dvd dans BDD
+            }
+            else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
+            {
+                noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation","confirmerAppropriation()", true);
+            }
+        }
         Film currentFilm = filmDao.Find(new Film { NoFilm = intDVD })[0];
 
         AnneeSortie.Text = currentFilm.AnneeSortie.ToString();

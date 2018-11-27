@@ -17,7 +17,7 @@
 </div>
     <br /> 
             <br />
-<div align="center">
+<!--<div align="center">
 			<a href="1" class="btn btn-success">Page 1</a>
 			<a href="2" class="btn btn-success">Page 2</a>
 			<a href="3" class="btn btn-success">Page 3</a>
@@ -45,7 +45,7 @@
                 </div>
 		    </div>
 		</div><br/><br/>
-
+    -->
 	<div class="card">
 		<asp:panel id="panelAffichage" cssClass="card-body" runat="server">
 		</asp:panel>

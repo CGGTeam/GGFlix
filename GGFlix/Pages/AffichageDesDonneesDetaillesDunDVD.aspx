@@ -3,6 +3,24 @@
     <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+    
+    <script type="text/javascript">
+    function confirmerAppropriation() {
+        var Result = confirm("Êtes-vous certain de vouloir vous appropriez ce dvd?");
+        if (Result == true) {
+            var txtConfirmResult = document.getElementById('valConfirm');
+            txtConfirmResult.value = Result;//assigning to hidden text box 
+            //alert(txtConfirmresult.value); //displaying for debug purposes
+            __doPostBack( 'txtConfirmRetour', Result ); //sending back to server.
+        return true;
+        }
+    else 
+    {
+        document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
+         return false;
+        }
+        }
+    </script>
 
 <head>
     <title>DVD Express</title>
@@ -13,6 +31,7 @@
 
 
 </head>
+    <asp:HiddenField ID="valConfirm" runat="server" />
 	<div class="card">
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">

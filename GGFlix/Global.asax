@@ -8,8 +8,8 @@
             new Route("ConnexionRoute", "", "~/Pages/Connexion.aspx"),
             new Route("DeconnexionRoute", "Deconnexion", "~/Actions/Deconnexion.aspx"),
             new Route("CatalogueRoute", "Catalogue/{page}", "~/Pages/DVDTousLesUtilisateurs.aspx"),
-            new Route("DVDRoute", "DVD/{id}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx"),
-            new Route("UtilRoute", "Utilisateur/{id}", "~/Pages/DVDAutreUtil.aspx"),
+            new Route("DVDRoute", "DVD/{id}/{idUtil}/{noExemp}", "~/Pages/AffichageDesDonneesDetaillesDunDVD.aspx"),
+            new Route("UtilRoute", "Utilisateur/{page}/{indexDdl}", "~/Pages/DVDAutreUtil.aspx"),
             new Route("MesDVDSRoute", "MesDVD/{id}", "~/Pages/affichageDVDEnMain.aspx"),
             new Route("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx"),
             new Route("MessagerieRoute", "Messagerie/{id}", "~/Pages/EnvoiCourriel.aspx"),
@@ -32,7 +32,6 @@
     void Application_Error(object sender, EventArgs e)
     {
         // Code that runs when an unhandled error occurs
-
     }
 
     void Session_Start(object sender, EventArgs e)
