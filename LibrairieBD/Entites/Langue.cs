@@ -8,7 +8,7 @@ namespace LibrairieBD.Entites
     {
         [Id]
         [ColumnMapping]
-        public int NoLangue { get; set; }
+        public int? NoLangue { get; set; }
         [ColumnMapping("Langue")]
         public string DescLangue { get; set; }
     }

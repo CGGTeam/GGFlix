@@ -9,11 +9,11 @@ namespace LibrairieBD.Entites
     {
         [Id]
         [ColumnMapping]
-        public int NoExemplaire { get; set; }
+        public int? NoExemplaire { get; set; }
         [Id]
         [ColumnMapping]
-        public int NoUtilisateur { get; set; }
+        public int? NoUtilisateur { get; set; }
         [ColumnMapping]
-        public DateTime DateEmprunt { get; set; }
+        public DateTime? DateEmprunt { get; set; }
     }
 }

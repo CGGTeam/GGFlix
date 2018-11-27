@@ -8,7 +8,7 @@ namespace LibrairieBD.Entites
     {
         [Id]
         [ColumnMapping]
-        public int NoCategorie { get; set; }
+        public int? NoCategorie { get; set; }
         [ColumnMapping]
         public string Description { get; set; }
     }

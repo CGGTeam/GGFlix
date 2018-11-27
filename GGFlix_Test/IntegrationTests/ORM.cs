@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
@@ -91,6 +92,15 @@ namespace GGFlix_Test.IntegrationTests
             };
 
             Assert.IsTrue(ValidateCRUDForEntity(pref));
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestFuckupNIc()
+        {
+            GenericDao<EmpruntFilm> filmDao = new GenericDao<EmpruntFilm>(adapter);
+
+            EmpruntFilm ef = filmDao.Find(new EmpruntFilm {NoExemplaire = int.Parse("18120301")}).OrderByDescending(v => v.DateEmprunt).First();
         }
 
         private bool ValidateCRUDForEntity<T>(T entity)

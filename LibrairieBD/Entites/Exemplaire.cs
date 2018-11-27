@@ -8,8 +8,8 @@ namespace LibrairieBD.Entites
     {
         [Id]
         [ColumnMapping]
-        public int NoExemplaire { get; set; }
+        public int? NoExemplaire { get; set; }
         [ColumnMapping]
-        public int NoUtilisateurProprietaire { get; set; }
+        public int? NoUtilisateurProprietaire { get; set; }
     }
 }
