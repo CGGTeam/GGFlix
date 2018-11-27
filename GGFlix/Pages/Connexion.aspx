@@ -9,6 +9,9 @@
         <div runat="server" ID="divErreurs" class="alert alert-danger text-center">
             <asp:Label runat="server" ID="lblErreur"/>
         </div>
+        <div runat="server" ID="divDeconnexion" class="alert alert-info text-center">
+            <asp:Label runat="server" ID="messageDeconnexion">Votre session a été terminée avec succès</asp:Label>
+        </div>
         
         <div  class="vertical-center">
             <div class="container">
@@ -25,13 +28,11 @@
                         <h2 class="text-center">Connexion</h2>
                     </div>
                     <div class="form-group">
-                        <label for="tbCourriel">Courriel:</label><br/>
+                        <label for="tbCourriel">Nom d'utilisateur:</label><br/>
                         <input runat="server"
                                tabindex="1"
                                ID="tbEmail" 
-                               class="form-control"
-                               TextMode="email"
-                               placeholder="courriel@example.com"/>
+                               class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label for="tbPassword">Mot de passe:</label>
@@ -42,7 +43,7 @@
                                      class="form-control"
                                      TextMode="password"/>
                     </div>
-                    <div class="form-group d-flex justify-content-between align-items-baseline">
+                    <div class="form-group d-flex justify-content-center pt-3 mb-0 mt-3">
                         <asp:Button runat="server"
                                     tabindex="3"
                                     CssClass="btn btn-primary"

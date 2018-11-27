@@ -17,6 +17,8 @@ public partial class Pages_Connexion : System.Web.UI.Page
     {
         Page.Validate();
         divErreurs.Visible = !Page.IsValid;
+        bool deconnexion = Request["deconnexion"] != null;
+        divDeconnexion.Visible = deconnexion;
     }
 
     protected void connexion(object sender, EventArgs e)

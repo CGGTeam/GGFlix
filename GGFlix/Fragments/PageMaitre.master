@@ -7,23 +7,31 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="Contenu" runat="server">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="/Catalogue/1">
             <img class="brand-icon d-inline-block" src="/Static/img/CD-512.png"/>
             GGFlix
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        
+        <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+            <div class="ml-auto text-light d-inline-block">
+                <div class="dropdown show">
+                    <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Afficher les  DVDs
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="/Catalogue/1">Tous les DVDs</a>
+                        <a runat="server" ID="optMesDvd" class="dropdown-item">Mes DVDs en main</a>
+                        <a class="dropdown-item" href="/Utilisateur/1/0">DVDs d'un utilisateur</a>
+                    </div>
+                </div>
+            </div>
             <ul class="navbar-nav">
-                <!--<li class="nav-item active">
-                    <a class="nav-link" href="/mesDVD">Mes DVDs</a>
-                </li>=-->
                 <li class="nav-item active">
                     <a class="nav-link" href="/Catalogue/1">Notre catalogue</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/MonCompte">Personnaliser</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/Messagerie/0">Envoyer un message</a>
@@ -31,16 +39,22 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/DVDAjout/Ajouter">Ajouter un DVD</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Deconnexion">Déconnexion</a>
-                </li>
-                <li class="nav-item active">
+                <li runat="server" ID="optAdmin" Visible="False" class="nav-item active">
                     <a class="nav-link" href="/GestionUtilisateur">Gestion utilisateur</a>
                 </li>
             </ul>
-        </div>
-        <div class="ml-auto text-light d-inline-block">
-            <span class="nav-link">Connecté en tant que: <asp:Literal runat="server" ID="lblUser"></asp:Literal></span>
+            <div class="text-light d-inline-block">
+                <div class="dropdown show">
+                    <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Connecté en tant que: <asp:Literal runat="server" ID="lblUser"></asp:Literal>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="/MonCompte">Personnaliser mon compte</a>
+                        <a class="dropdown-item" href="/Deconnexion">Déconnexion</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
     <form id="frmPrincipal" runat="server">

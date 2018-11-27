@@ -15,6 +15,6 @@ public partial class Actions_Deconnexion : System.Web.UI.Page
         FormsAuthentication.SignOut();
         Session.Abandon();
 
-        Response.Redirect("/");
+        Response.Redirect("/?deconnexion=true");
     }
 }

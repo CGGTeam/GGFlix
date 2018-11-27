@@ -10,8 +10,18 @@ public partial class Fragments_MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-            Utilisateur utilisateurCourant = Securite.UtilisateurCourant;
+        Utilisateur utilisateurCourant = Securite.UtilisateurCourant;
 
-            lblUser.Text = utilisateurCourant.NomUtilisateur;
+        lblUser.Text = utilisateurCourant.NomUtilisateur;
+
+        if (utilisateurCourant.TypeUtilisateur == "A")
+        {
+            optAdmin.Visible = true;
+        }
+
+        if (utilisateurCourant.NoUtilisateur != null)
+            optMesDvd.HRef = "/MesDVD/" + utilisateurCourant.NoUtilisateur.Value;
+        else
+            optMesDvd.Visible = false;
     }
 }
