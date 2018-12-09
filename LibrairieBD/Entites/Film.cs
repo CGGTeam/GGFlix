@@ -12,6 +12,7 @@ namespace LibrairieBD.Entites
         [ColumnMapping] public int? NoUtilisateurMAJ { get; set; } = null;
         [ColumnMapping] public string Resume { get; set; } = null;
         [ColumnMapping] public int? DureeMinutes { get; set; } = null;
+        [ColumnMapping] public int? Format { get; set; } = null;
         [ColumnMapping] public bool? FilmOriginal { get; set; } = null;
         [ColumnMapping] public string ImagePochette { get; set; } = null;
         [ColumnMapping] public string TitreFrancais { get; set; } = null;

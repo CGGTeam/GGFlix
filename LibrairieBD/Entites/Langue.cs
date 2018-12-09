@@ -4,6 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
+    [TableMapping("Langues")]
     public class Langue
     {
         [Id]

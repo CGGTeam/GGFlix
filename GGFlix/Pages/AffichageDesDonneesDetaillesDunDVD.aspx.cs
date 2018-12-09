@@ -21,8 +21,9 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     private GenericDao<Exemplaire> exemDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
     private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
-    //private GenericDao<FilmsLangue> filmLangueDao = Persistance.GetDao<FilmsLangue>();
+    private GenericDao<FilmsLangue> filmLangueDao = Persistance.GetDao<FilmsLangue>();
     private GenericDao<Langue> langueDao = Persistance.GetDao<Langue>();
+    private GenericDao<Format> formatDao = Persistance.GetDao<Format>();
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -45,10 +46,10 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
                 {
                     System.Diagnostics.Debug.WriteLine("entre");
                     empF.DateEmprunt = DateTime.Now;
-                    //empruntFilmDao.Save(empF);
+                    empruntFilmDao.Save(empF);
                 }
                 else {
-                    //empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur =utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur,DateEmprunt=DateTime.Now });
+                    empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur =utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur,DateEmprunt=DateTime.Now });
                 }
 
             } else if (target != null && argument.Split(':')[0].Equals("Retrait")) {
@@ -109,15 +110,18 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         }
 
         /*VisibleTous.Checked = currentFilm*/
-        /*txtFormat.Items.Add = currentFilm
-        foreach (FilmL filmActeur in exemDao.FindAll().Where(exempl => exempl.NoExemplaire.ToString().Substring(0, 5).Equals(currentFilm.NoFilm.Value.ToString())).ToList())
+        foreach (Format form in formatDao.FindAll().Where(film => film.NoFormat == currentFilm.Format).ToList()) {
+            if (form != null)
+            {
+                txtFormat.Text = form.Description;
+            }
+        }
+        
+        foreach (FilmsLangue filmLangue in filmLangueDao.FindAll().Where(exempl => exempl.NoFilm.Equals(intExemplaire)).ToList())
         {
-            Proprietaire.Text = utilDao.Find(new Utilisateur { NoUtilisateur = filmActeur.NoUtilisateurProprietaire })[0].NomUtilisateur;
-        }*/
-        /*foreach (FilmsLangue filmLangue in filmLangueDao.FindAll().Where(exempl => exempl.NoFilm.Equals(intExemplaire)).ToList())
-        {
-            ddlLangue.Text = langueDao.Find(new Langue { NoLangue = filmLangue.NoLangue })[0].DescLangue;
-        }*/
+            if (filmLangue != null)
+            txtLangue.Text = langueDao.Find(new Langue { NoLangue = filmLangue.NoLangue })[0].DescLangue;
+        }
         //tbNbDisques.Text = currentFilm */
 
     }
