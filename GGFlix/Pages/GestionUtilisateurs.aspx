@@ -18,22 +18,6 @@
         <asp:PlaceHolder ID="phUtilisateurs" runat="server">
 
         </asp:PlaceHolder>
-        <tr>
-          <th scope="row">SuperUtilisateur</th>
-          <th scope="row">SuperUtilisateur</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td><asp:Button CssClass="btn btn-warning" Text="Modifier" runat="server"/></td>
-          <td><asp:Button CssClass="btn btn-danger" Text="Supprimer" runat="server"/></td>
-
-        </tr>
-        <tr>
-          <th scope="row">Utilisateur</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td><asp:Button CssClass="btn btn-warning" Text="Modifier" runat="server"/></td>
-          <td><asp:Button CssClass="btn btn-danger" Text="Supprimer" runat="server"/></td>
-        </tr>
       </tbody>
     </table>
     <br />

@@ -42,16 +42,16 @@ public partial class GestionUtilisateurs : Page
 
         foreach (var utilisateur in utilisateurs)
         {
-            AjouterUtilisateurAuTableau(utilisateur);
+            phUtilisateurs.Controls.Add(GenererRangeeUtilisateur(utilisateur));
         }
     }
 
-    private void AjouterUtilisateurAuTableau(Utilisateur utilisateur)
+    private TableRow GenererRangeeUtilisateur(Utilisateur utilisateur)
     {
         bool estEnLectureSeule = utilisateur.NomUtilisateur == utilCourant.NomUtilisateur;
-        string descriptionType = typesUtilisateurs.Ou(t => (char)t.IdTypeUtilisateur.GetValueOrDefault() == utilisateur.TypeUtilisateur[0]).Premier().Description;
+        string descriptionType = typesUtilisateurs.Ou(t => t.IdTypeUtilisateur == utilisateur.TypeUtilisateur).Premier().Description;
 
-        TableRow rangeeUtilisateur = new TableRow
+        return new TableRow
         {
             Cells =
             {
@@ -73,7 +73,21 @@ public partial class GestionUtilisateurs : Page
                 },
                 new TableCell
                 {
-                    Text = utilisateur.MotPasse
+                    Text = utilisateur.MotPasse.ToString()
+                },
+                new TableCell
+                {
+                    Controls =
+                    {
+                        new Button { Text = "Modifier", CssClass = "btn btn-warning"}
+                    }
+                },
+                new TableCell
+                {
+                    Controls =
+                    {
+                        new Button { Text = "Supprimer", CssClass = "btn btn-danger"}
+                    }
                 },
             }
         };
