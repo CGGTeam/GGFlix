@@ -117,8 +117,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             int i = 0;
             panelAffichage.Controls.Clear();
             Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info
-            List<Exemplaire> lstExemp = exemDao.FindAll()
-            .Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).OrderBy(v => filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
+            List<Exemplaire> lstExemp = exemDao.FindAll().Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).OrderBy(v => filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
             int maxPage = 10;
             int nbPagePrec = numPage - 1;
             decimal page = decimal.Parse(lstExemp.Count().ToString()) / decimal.Parse(maxPage.ToString());
@@ -127,10 +126,13 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             {
                 for (int j = nbPagePrec * maxPage; j < lstExemp.Count() && i < maxPage; j++,i++)
                 {
-                    int noExemp = lstExemp[j].NoExemplaire.Value;
+                    int noExemp = int.Parse(lstExemp[j].NoExemplaire.ToString());
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                 // System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE " + noExemp);
-                  //EmpruntFilm empFilm = empruntFilmDao.Find(new EmpruntFilm { }).Where(v => v.NoExemplaire.ToString().Trim() == "18100101").OrderByDescending(v => v.DateEmprunt).First();
+                    // System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE " + noExemp);
+                   // 
+                EmpruntFilm empFilm = empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = lstExemp[j].NoExemplaire }).OrderByDescending(v => v.DateEmprunt).First();
+
+                    //System.Diagnostics.Debug.WriteLine("NOUTIL :" + empFilm.NoUtilisateur);
                             //Premier DIV
                             Panel panRow = new Panel();
                     panRow.CssClass = "row";
@@ -190,7 +192,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     Button btnMessage = new Button();
                     btnMessage.CssClass = "btn btn-warning btn-primary";
                     btnMessage.Text = "Envoi un courriel à celui qui l'a en main";
-                    //btnMessage.PostBackUrl = "~/Messagerie/" + empFilm.NoUtilisateur;
+                    btnMessage.PostBackUrl = "~/Messagerie/"+empFilm.NoUtilisateur;
                     panBouton.Controls.Add(btnMessage);
                     panBouton.Controls.Add(new LiteralControl("<br />"));
 

@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
 {
     int intDVD = 0;
+    int intExemplaire = 0;
     private GenericDao<Film> filmDao = Persistance.GetDao<Film>();
     private GenericDao<Producteur> prodDao = Persistance.GetDao<Producteur>();
     private GenericDao<Realisateur> realDao = Persistance.GetDao<Realisateur>();
@@ -19,12 +20,16 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     private GenericDao<SousTitre> soustitreDao = Persistance.GetDao<SousTitre>();
     private GenericDao<Exemplaire> exemDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
-
+    private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
+    //private GenericDao<FilmsLangue> filmLangueDao = Persistance.GetDao<FilmsLangue>();
+    private GenericDao<Langue> langueDao = Persistance.GetDao<Langue>();
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
+        ClientScript.GetPostBackEventReference(this, string.Empty);
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
-        if(Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("")&& !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0,2).Equals("N-")))
+        intExemplaire = Convert.ToInt32(Page.RouteData.Values["noExemp"]); 
+        if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("")&& !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0,2).Equals("N-")))
         {
             string target = Request["__EVENTTARGET"];
             string argument = Request["__EVENTARGUMENT"];
@@ -36,9 +41,14 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
+
+
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation", "confirmerAppropriation()", true);
+                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
                 noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation","confirmerAppropriation()", true);
             }
+
+            System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
         }
         Film currentFilm = filmDao.Find(new Film { NoFilm = intDVD })[0];
 
@@ -79,23 +89,23 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         }
         TitreFrancais.Text = currentFilm.TitreFrancais;
         TitreOriginal.Text = currentFilm.TitreOriginal;
-        foreach (Exemplaire filmActeur in exemDao.FindAll().Where(exempl => exempl.NoExemplaire.ToString().Substring(0, 5).Equals(currentFilm.NoFilm.Value.ToString())).ToList())
-        {
-            Proprietaire.Text = utilDao.Find(new Utilisateur { NoUtilisateur = filmActeur.NoUtilisateurProprietaire })[0].NomUtilisateur;
-        }
-
-        /*Emprunteur.Text = currentFilm.*/
+        Proprietaire.Text= utilDao.Find(new Utilisateur { NoUtilisateur = exemDao.Find(new Exemplaire {NoExemplaire=intExemplaire}).FirstOrDefault().NoUtilisateurProprietaire})[0].NomUtilisateur;
+        Emprunteur.Text = utilDao.Find(new Utilisateur { NoUtilisateur = empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = intExemplaire }).OrderByDescending(v => v.DateEmprunt).First().NoUtilisateur })[0].NomUtilisateur;
         if (currentFilm.VersionEtendue != null) {
             VersionEtendue.Checked = currentFilm.VersionEtendue.Value;
         }
+
         /*VisibleTous.Checked = currentFilm*/
         /*txtFormat.Items.Add = currentFilm
-        foreach (Exemplaire filmActeur in exemDao.FindAll().Where(exempl => exempl.NoExemplaire.ToString().Substring(0, 5).Equals(currentFilm.NoFilm.Value.ToString())).ToList())
+        foreach (FilmL filmActeur in exemDao.FindAll().Where(exempl => exempl.NoExemplaire.ToString().Substring(0, 5).Equals(currentFilm.NoFilm.Value.ToString())).ToList())
         {
             Proprietaire.Text = utilDao.Find(new Utilisateur { NoUtilisateur = filmActeur.NoUtilisateurProprietaire })[0].NomUtilisateur;
-        }
-        txtLangue.Text = currentFilm
-        tbNbDisques.Text = currentFilm */
+        }*/
+        /*foreach (FilmsLangue filmLangue in filmLangueDao.FindAll().Where(exempl => exempl.NoFilm.Equals(intExemplaire)).ToList())
+        {
+            ddlLangue.Text = langueDao.Find(new Langue { NoLangue = filmLangue.NoLangue })[0].DescLangue;
+        }*/
+        //tbNbDisques.Text = currentFilm */
 
     }
 }
