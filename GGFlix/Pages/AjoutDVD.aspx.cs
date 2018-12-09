@@ -231,7 +231,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         {
             prodAjouter = prodDao.Find(new Producteur { Nom = NomProducteur.Text.Trim() }).First();
         }
-        else
+        else if(NomProducteur.Text.Trim() != "")
         {
             prodAjouter = prodDao.Save(new Producteur { Nom = NomProducteur.Text.Trim() });
         }
@@ -240,7 +240,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         {
             realAjouter = realDao.Find(new Realisateur { Nom = NomRealisateur.Text.Trim() }).First();
         }
-        else
+        else if(NomRealisateur.Text.Trim() != "")
         {
             realAjouter = realDao.Save(new Realisateur { Nom = NomRealisateur.Text.Trim() });
         }
@@ -249,7 +249,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         {
             catAjouter = catDao.Find(new Categorie { Description = tbCategorie.Text.Trim() }).First();
         }
-        else
+        else if(tbCategorie.Text.Trim() != "")
         {
             catAjouter = catDao.Save(new Categorie { Description = tbCategorie.Text.Trim() });
         }
@@ -258,7 +258,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         {
             formAjouter = formatDao.Find(new Format { Description = tbFormat.Text.Trim() }).First();
         }
-        else
+        else if(tbFormat.Text.Trim() != "")
         {
             formAjouter = formatDao.Save(new Format { Description = tbFormat.Text.Trim() });
         }
@@ -380,7 +380,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         if(imageFilm.ImageUrl.Trim() != "")
         {
             String[] strUrl = imageFilm.ImageUrl.Split('/');
-            filmAdd.ImagePochette = strUrl[strUrl.Length];
+            if(strUrl[strUrl.Length-1] != "block.jpg") filmAdd.ImagePochette = strUrl[strUrl.Length-1];
         }
         if(Resume.Text.Trim() != "")
         {
@@ -390,8 +390,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         filmAdd.NoUtilisateurMAJ = currentUser.NoUtilisateur;
         filmAdd.VersionEtendue = VersionEtendue.Checked;
         filmAdd.FilmOriginal = DVDOriginal.Checked;
-        filmDao.Save(filmAdd);
-        Film film = filmDao.Find(filmAdd).First();
+        Film film = filmDao.Save(filmAdd);
         foreach(Acteur act in lstAct)
         {
             filmActeurDao.Save(new FilmActeur { NoFilm = film.NoFilm, NoActeur = act.NoActeur });
@@ -409,6 +408,8 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
             filmLangueDao.Save(new FilmsLangue { NoFilm = film.NoFilm, NoLangue = lang.NoLangue });
         }
         // Peut-être boucle pour plusieurs? Faudrait aussi modifier pour le type d'utilisateur (superuser je crois que c'est le NoUtilisateur choisi)
-        exempDao.Save(new Exemplaire { NoExemplaire = int.Parse(film.NoFilm + "01"), NoUtilisateurProprietaire = currentUser.NoUtilisateur });
+        int intExemp = int.Parse(film.NoFilm + "01");
+        Exemplaire exmp = new Exemplaire { NoExemplaire = intExemp, NoUtilisateurProprietaire = currentUser.NoUtilisateur };
+        exempDao.Save(exmp);
     }
 }
