@@ -139,6 +139,9 @@
                         </div>
 
                     </div>
+                    <asp:Label ID="lblErreur" runat="server" Visible="false"/><br />
+                    <asp:Label ID="lblGood" runat="server" Visible="false"/><br />
+                    
                     <asp:Button ID="btnAjouter" Text="Ajouter" runat="server"/>
                 </div>
             </div>
