@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -20,8 +21,12 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
     int nbPage = -1;
     int ddlSelect = -1;
     int ddlSelectedValue = -1;
+   
+    string strTitreRechercher = "";
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {  
+
+  
         numPage = Convert.ToInt32(Page.RouteData.Values["page"]);
         if (Page.RouteData.Values["indexDdl"] == null || !int.TryParse(Page.RouteData.Values["indexDdl"].ToString(), out ddlSelect))
         {
@@ -38,6 +43,28 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         {
             Response.Redirect("~/Pages/Connexion");
         }
+
+        if (Session["recherche"] != null)
+        {
+            TextBox txtRerchercher = (TextBox)panelSideBar.FindControl("tbRechercher");
+            if (txtRerchercher != null)
+            {
+                txtRerchercher.Text = Session["recherche"].ToString();
+                Response.Write(" LE TXTBOX = " + Session["recherche"].ToString());
+            }            
+        }
+
+        if (Session["ddlTrier"] != null && Session["ddlTrier"].ToString() != "")
+        {
+            DropDownList ddlTrier = (DropDownList)panelSideBar.FindControl("ddlTrier");
+            if (ddlTrier != null)
+            {
+                ddlSelectedValue = int.Parse(Session["ddlTrier"].ToString());
+                ddlTrier.SelectedIndex = int.Parse(Session["ddlTrier"].ToString());
+            }
+        }
+
+
 
 
 
@@ -57,12 +84,15 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             tbRecherche.Width = 240;
             tbRecherche.Height = 20;
             tbRecherche.ID = "tbRechercher";
+            tbRecherche.AutoPostBack = true;
             panelSideBar.Controls.Add(tbRecherche);
             ImageButton imgLoupe = new ImageButton();
             imgLoupe.Width = 20;
             imgLoupe.Height = 20;
             imgLoupe.ImageAlign = ImageAlign.AbsMiddle;
             imgLoupe.ImageUrl = "/Static/img/loupe.png";
+            imgLoupe.CausesValidation = false;
+            imgLoupe.Click += new ImageClickEventHandler(creerAffichage);
             panelSideBar.Controls.Add(imgLoupe);
             panelSideBar.Controls.Add(new LiteralControl("<br />"));
             panelSideBar.Controls.Add(new LiteralControl("<br />"));
@@ -84,6 +114,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                 ddlOptionsDisplay.Items.Add(item);                
             }
             ddlOptionsDisplay.SelectedIndex = ddlSelect;
+            ddlOptionsDisplay.ID = "ddlTrier";
             ddlSelectedValue = int.Parse(ddlOptionsDisplay.SelectedValue);
             ddlOptionsDisplay.AutoPostBack = true;
             ddlOptionsDisplay.Width = 240;
@@ -95,6 +126,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine(ex.ToString());
+            Response.Write(ex);
         }
     }
     //Utilisateur utilSelect = utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(ddlUtilisateur.SelectedValue), NomUtilisateur = ddlUtilisateur.Text })[0];
@@ -103,28 +135,54 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         try
         {
 
+         
+     
+
+            if (sender.GetType().Name.Equals("ImageButton"))
+            {
+                ImageButton imgLoupe = (ImageButton)sender;
+                if (imgLoupe != null)
+                {
+                    TextBox txtRerchercher = (TextBox)panelSideBar.FindControl("tbRechercher");
+                    if (txtRerchercher != null)
+                    {
+                        Session["recherche"] = txtRerchercher.Text;                       
+                    }                    
+                }
+            }
+            if (Session["recherche"] != null)
+            {
+                strTitreRechercher = Session["recherche"].ToString();
+
+            }
+
+
             //On récupère l'utilisateur choisi
-            string strValeur = "";
+
             if (sender.GetType().Name.Equals("DropDownList"))
             {
                 DropDownList ddlListeRecherche = (DropDownList)sender;
                 if (ddlListeRecherche != null)
-                {
+                {                      
                     ddlSelect = ddlListeRecherche.SelectedIndex;
-                    ddlSelectedValue = int.Parse(ddlListeRecherche.SelectedValue);
-                    strValeur = ddlListeRecherche.SelectedItem.Text;
+                    ddlSelectedValue = int.Parse(ddlListeRecherche.SelectedValue);                                        
+                    Session["ddlTrier"] = ddlListeRecherche.SelectedIndex;                              
                 }
+            }
 
+
+            if (Session["ddlTrier"] != null)
+            {
+                ddlSelect = int.Parse(Session["ddlTrier"].ToString());
+                ddlSelectedValue = int.Parse(Session["ddlTrier"].ToString());
             }
             int i = 0;
             panelAffichage.Controls.Clear();
-            Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info
-            /*List<Exemplaire> lstExemp = exemDao.FindAll().ToList();*/
-            Response.Write(strValeur);
-            List<Exemplaire> lstExemp = exemDao.FindAll().ToList();
+            Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info          
+            List<Exemplaire> lstExemp = exemDao.FindAll().ToList();          
             if (ddlSelectedValue == 0)
-            {
-                lstExemp = exemDao.FindAll()
+            {               
+                lstExemp = exemDao.FindAll()                    
             .OrderBy(v => filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
             }
             else if(ddlSelectedValue == 1)
@@ -138,34 +196,31 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                   .OrderBy(v => utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(v.NoUtilisateurProprietaire.ToString()) })[0].NomUtilisateur +
                   filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
             }
-
-            TextBox txtAddress = (TextBox)panelSideBar.FindControl("tbRechercher");
-
-            string strTitreRechercher = txtAddress.Text;
-            //Response.Write(strTitreRechercher);
+          
+            List<Exemplaire> lstRechercher = new List<Exemplaire>();
+            for (int j = 0 ; j < lstExemp.Count()-1; j++)
+            {
+                Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
+                if (film.TitreFrancais.ToString().Contains(strTitreRechercher) || film.TitreOriginal.ToString().Contains(strTitreRechercher))
+                {
+                    lstRechercher.Add(lstExemp[j]);                   
+                }             
+            }            
 
             int maxPage = 10;
-            int nbPagePrec = numPage - 1;
-            decimal page = decimal.Parse(lstExemp.Count().ToString()) / decimal.Parse(maxPage.ToString());
+            int nbPagePrec = numPage - 1;                        
+            decimal page = decimal.Parse(lstRechercher.Count().ToString()) / decimal.Parse(maxPage.ToString());
             nbPage = int.Parse(Math.Ceiling(page).ToString());
-            if (nbPagePrec * maxPage < lstExemp.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
-            {
-                for (int j = nbPagePrec * maxPage; j < lstExemp.Count() && i < maxPage; j++, i++)
+            if (nbPagePrec * maxPage < lstRechercher.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
+            {              
+                for (int j = nbPagePrec * maxPage; j < lstRechercher.Count() && i < maxPage; j++, i++)
                 {
-                    int noExemp = int.Parse(lstExemp[j].NoExemplaire.ToString());
-                    /*List<Exemplaire> lstExemp = exemDao.FindAll()
-             .Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).OrderBy(v => filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
-                      List<Film> film = filmDao.FindAll()
-                          .Where(v => v.NoFilm.Value  int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)));*/
-                    Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                    Utilisateur util = utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(lstExemp[j].NoUtilisateurProprietaire.ToString()) })[0];
-
-                    if (film.TitreFrancais.Contains(strTitreRechercher))
-                    {
-
-
-                        // System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE " + noExemp);
-                        //EmpruntFilm empFilm = empruntFilmDao.Find(new EmpruntFilm { }).Where(v => v.NoExemplaire.ToString().Trim() == "18100101").OrderByDescending(v => v.DateEmprunt).First();
+                   
+                    int noExemp = int.Parse(lstRechercher[j].NoExemplaire.ToString());      
+                    Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstRechercher[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
+                    List<EmpruntFilm> lesEmprunts = empruntFilmDao.FindAll().Where(c => c.NoExemplaire.Equals(lstRechercher[j].NoExemplaire)).OrderByDescending(c=>c.DateEmprunt).ToList();
+                    Utilisateur util = utilDao.Find(new Utilisateur { NoUtilisateur = lesEmprunts.First().NoUtilisateur })[0];
+                    
                         //Premier DIV
                         Panel panRow = new Panel();
                         panRow.CssClass = "row";
@@ -177,7 +232,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         panPoster.CssClass = "col-xs-2 col-md-2";
 
                         ImageButton imagePoster = new ImageButton();
-                        if (!film.ImagePochette.Trim().Equals(""))
+                        if (film.ImagePochette != null && !film.ImagePochette.Trim().Equals(""))
                         {
                             imagePoster.ImageUrl = "/Static/img/" + film.ImagePochette;
                         }
@@ -224,26 +279,49 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         btnDonnees.ID = "DONNEE" + film.NoFilm.ToString();
                         btnDonnees.CssClass = "btn btn-info btn-primary";
                         btnDonnees.Text = "Affichage des données détaillées";
-                        btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstExemp[j].NoExemplaire; ;
+                        btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstRechercher[j].NoExemplaire; ;
                         panBouton.Controls.Add(btnDonnees);
                         panBouton.Controls.Add(new LiteralControl("<br />"));
+
+                    if(util.NoUtilisateur != currentUser.NoUtilisateur)
+                    {
 
                         Button btnMessage = new Button();
                         btnMessage.CssClass = "btn btn-warning btn-primary";
                         btnMessage.Text = "Envoi un courriel à celui qui l'a en main";
-                        //btnMessage.PostBackUrl = "~/Messagerie/" + empFilm.NoUtilisateur;
+                        btnMessage.PostBackUrl = "~/Messagerie/" + util.NoUtilisateur;
                         panBouton.Controls.Add(btnMessage);
                         panBouton.Controls.Add(new LiteralControl("<br />"));
 
                         Button btnAppropriation = new Button();
                         btnAppropriation.CssClass = "btn btn-danger btn-primary";
                         btnAppropriation.Text = "S'approprier ce DVD";
-                        btnAppropriation.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + id + "/" + lstExemp[j].NoExemplaire;
+                        btnAppropriation.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + id + "/" + lstRechercher[j].NoExemplaire;
                         panBouton.Controls.Add(btnAppropriation);
                         panRow.Controls.Add(panBouton);
                         panel.Controls.Add(panRow);
                         panel.Controls.Add(new LiteralControl("<hr />"));
                     }
+                    else
+                    {
+                        Button btnMod = new Button();
+                        btnMod.CssClass = "btn btn-warning btn-primary";
+                        btnMod.Text = "Modification des données existantes";
+                        btnMod.PostBackUrl = "~/modifDVD/" + film.NoFilm.ToString();
+                        panBouton.Controls.Add(btnMod);
+                        panBouton.Controls.Add(new LiteralControl("<br />"));
+
+                        Button btnSupprimer = new Button();
+                        btnSupprimer.CssClass = "btn btn-danger btn-primary";
+                        btnSupprimer.Text = "Supprimer";
+                        //btnSupprimer.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + id + "/" + lstRechercher[j].NoExemplaire;
+                        panBouton.Controls.Add(btnSupprimer);
+                        panRow.Controls.Add(panBouton);
+                        panel.Controls.Add(panRow);
+                        panel.Controls.Add(new LiteralControl("<hr />"));
+                    }
+
+                    
                 }
             }
             else
@@ -256,6 +334,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine(ex.ToString());
+            Response.Write(ex);
         }
     }
 
