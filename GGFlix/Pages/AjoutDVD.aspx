@@ -65,10 +65,11 @@
                                     <div class="col-xs-2 col-md-2" style="align-items: center;">
                                         <asp:Image ID="imageFilm" CssClass="img-responsive" ImageUrl="/Static/img/block.jpg" AlternateText="imagePlaceHolder" Width="140px" Height="208px" runat="server" />
                                         <br />
-                                        <asp:FileUpload ID="FileUpload" runat="server" />
+                                        <asp:FileUpload ID="FileUpload" runat="server"/>
+                                       <asp:Button ID="btnUpload" runat="server" Text="Upload"  OnClick="afficherImage_Click"  /><br />
                                     </div>
                                     <div class="col-xs-1 col-md-2">
-                                        <asp:Label ID="lblTitreFrancais" Text="Titre français" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <asp:Label ID="lblTitreFrancais" Text="Titre français" runat="server" Style="font-size: initial" CssClass="row" Height="26px"/><br />
                                         <br />
                                         <asp:Label ID="lblTitreOriginal" Text="Titre original" Style="font-size: initial" runat="server" CssClass="row" Height="26px" /><br />
                                         <br />
@@ -92,15 +93,15 @@
                                         <asp:Label ID="lblResume" Text="Résumé du film" runat="server" Style="font-size: initial" CssClass="row" Height="26px" />
                                     </div>
                                     <div class="col-xs-2 col-md-2">
-                                        <asp:TextBox ID="TitreFrancais" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:TextBox ID="TitreOriginal" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="TitreFrancais" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50" /><br />
+                                        <asp:TextBox ID="TitreOriginal" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/><br />
                                         <asp:TextBox ID="NomProducteur" Text="" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
                                         <asp:TextBox ID="NomRealisateur" Text="" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
                                         <asp:TextBox ID="AnneeSortie" runat="server" TextMode="Number" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="categorieddl" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:TextBox ID="DureeFilm" TextMode="Number"  CssClass="row" runat="server" Height="26px" min="0" max="400" step="1" MaxLength="3" Width="100%" /><br />
-                                        <asp:DropDownList ID="ddlFormat" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:TextBox ID="tbNbDisques" TextMode="Number" Width="100%" CssClass="row" Height="26px" runat="server" min="1" max="99" step="1" MaxLength="2" /><br />
+                                        <asp:TextBox ID="tbCategorie" runat="server" Width="100%" CssClass="row" Height="26px" /> <br />
+                                        <asp:TextBox ID="DureeFilm" TextMode="Number"  CssClass="row" runat="server" Height="26px" min="0" max="9999" step="1" MaxLength="4" Width="100%" /><br />
+                                        <asp:TextBox ID="tbFormat" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbNbDisques" TextMode="Number" Width="100%" CssClass="row" Height="26px" runat="server" min="1" max="9999" step="1" MaxLength="2" /><br />
                                         <asp:TextBox ID="tbXtra" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
                                         <div style="overflow: auto;">
                                             <asp:TextBox TextMode="multiline" runat="server" Style="width: 100%; height: 200px;" CssClass="row" ID="Resume"></asp:TextBox>
@@ -145,19 +146,18 @@
                                     </div>
 
                                     <div class="col-xs-2 col-md-2">
-                                        <asp:DropDownList ID="NomActeurs1" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="NomActeurs2" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="NomActeurs3" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="DescriptionSupplementDispo1" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="DescriptionSupplementDispo2" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="DescriptionSupplementDispo3" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="SousTitre1" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="SousTitre2" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="SousTitre3" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-
-                                        <asp:DropDownList ID="ddlLangue1" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="ddlLangue2" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:DropDownList ID="ddlLangue3" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbNomActeur1" runat="server" Width="100%" CssClass="row" Height="26px" /> est une femme <asp:CheckBox ID="estFemme1" runat="server" /><br />
+                                        <asp:TextBox ID="tbNomActeur2" runat="server" Width="100%" CssClass="row" Height="26px" /> est une femme <asp:CheckBox ID="estFemme2" runat="server" /><br />
+                                        <asp:TextBox ID="tbNomActeur3" runat="server" Width="100%" CssClass="row" Height="26px" /> est une femme <asp:CheckBox ID="estFemme3" runat="server" /><br />
+                                        <asp:TextBox ID="tbSupplement1" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbSupplement2" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbSupplement3" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbSousTitre1" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbSousTitre2" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbSousTitre3" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbLangue1" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbLangue2" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
+                                        <asp:TextBox ID="tbLangue3" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
                                         <asp:CheckBox ID="DVDOriginal" runat="server" CssClass="row" Height="26px" /><br />
                                         <br />
                                         <asp:CheckBox ID="VersionEtendue" runat="server" CssClass="row" Height="26px" /><br />
