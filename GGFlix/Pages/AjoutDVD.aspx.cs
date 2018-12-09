@@ -10,6 +10,12 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
 {
     private GenericDao<Film> filmDao = Persistance.GetDao<Film>();
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
+    private GenericDao<Categorie> catDao = Persistance.GetDao<Categorie>();
+    private GenericDao<SousTitre> soustitreDao = Persistance.GetDao<SousTitre>();
+    private GenericDao<Acteur> actDao = Persistance.GetDao<Acteur>();
+    private GenericDao<Langue> langDao = Persistance.GetDao<Langue>();
+    private GenericDao<Format> formatDao = Persistance.GetDao<Format>();
+    private GenericDao<Supplement> supplDao = Persistance.GetDao<Supplement>();
     private List<Film> lstFilm = new List<Film>();
 
     Utilisateur currentUser = null;
@@ -37,6 +43,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
             divComplet.Visible = true;
             btnAjouter.Click -= new EventHandler(btnClickSimple);
             btnAjouter.Click += new EventHandler(btnClickSpecifique);
+            LoadAjoutSpecifique();
         }
     }
 
@@ -155,4 +162,73 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
             // Un courriel doit être envoyé ici
         }
     }
+
+    public void LoadAjoutSpecifique()
+    {
+        NomActeurs1.Items.Clear();
+        NomActeurs2.Items.Clear();
+        NomActeurs3.Items.Clear();
+        SousTitre1.Items.Clear();
+        SousTitre2.Items.Clear();
+        SousTitre3.Items.Clear();
+        categorieddl.Items.Clear();
+        ddlFormat.Items.Clear();
+        ddlLangue1.Items.Clear();
+        ddlLangue2.Items.Clear();
+        ddlLangue3.Items.Clear();
+        DescriptionSupplementDispo1.Items.Clear();
+        DescriptionSupplementDispo2.Items.Clear();
+        DescriptionSupplementDispo3.Items.Clear();
+        foreach(Supplement suppl in supplDao.FindAll().ToList())
+        {
+            ListItem item = new ListItem();
+            item.Value = suppl.NoSupplement.ToString();
+            item.Text = suppl.Description;
+            DescriptionSupplementDispo1.Items.Add(item);
+            DescriptionSupplementDispo2.Items.Add(item);
+            DescriptionSupplementDispo3.Items.Add(item);
+        }
+        foreach (Acteur acteurs in actDao.FindAll().ToList())
+        {
+            ListItem item = new ListItem();
+            item.Value = acteurs.NoActeur.ToString();
+            item.Text = acteurs.Nom;
+            NomActeurs1.Items.Add(item);
+            NomActeurs2.Items.Add(item);
+            NomActeurs3.Items.Add(item);
+        }
+        foreach (SousTitre sousTitres in soustitreDao.FindAll().ToList())
+        {
+            ListItem item = new ListItem();
+            item.Value = sousTitres.NoSousTitre.ToString();
+            item.Text = sousTitres.LangueSousTitre;
+            SousTitre1.Items.Add(item);
+            SousTitre2.Items.Add(item);
+            SousTitre3.Items.Add(item);
+        }
+        foreach(Categorie cat in catDao.FindAll().ToList())
+        {
+            ListItem item = new ListItem();
+            item.Value = cat.NoCategorie.ToString();
+            item.Text = cat.Description;
+            categorieddl.Items.Add(item);
+        }
+        foreach(Langue lang in langDao.FindAll().ToList())
+        {
+            ListItem item = new ListItem();
+            item.Value = lang.NoLangue.ToString();
+            item.Text = lang.DescLangue;
+            ddlLangue1.Items.Add(item);
+            ddlLangue2.Items.Add(item);
+            ddlLangue3.Items.Add(item);
+        }
+        foreach(Format form in formatDao.FindAll().ToList())
+        {
+            ListItem item = new ListItem();
+            item.Value = form.NoFormat.ToString();
+            item.Text = form.Description;
+            ddlFormat.Items.Add(item);
+        }
+    }
+
 }
