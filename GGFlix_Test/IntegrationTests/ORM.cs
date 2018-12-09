@@ -103,6 +103,20 @@ namespace GGFlix_Test.IntegrationTests
             EmpruntFilm ef = filmDao.Find(new EmpruntFilm {NoExemplaire = int.Parse("18120301")}).OrderByDescending(v => v.DateEmprunt).First();
         }
 
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestCRUDEmpruntFilm()
+        {
+            EmpruntFilm emprunt = new EmpruntFilm
+            {
+                NoExemplaire = 18100101,
+                NoUtilisateur = 3,
+                DateEmprunt = new DateTime(2018, 02, 01),
+            };
+
+            Assert.IsTrue(ValidateCRUDForEntity(emprunt));
+        }
+
         private bool ValidateCRUDForEntity<T>(T entity)
         {
             GenericDao<T> dao = new GenericDao<T>(adapter);

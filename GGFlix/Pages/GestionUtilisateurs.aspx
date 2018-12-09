@@ -6,33 +6,22 @@
     <table class="table table-striped table-bordered" style="padding-left:10%;padding-right:10%;">
       <thead class="black white-text">
         <tr>
+          <th scope="col">No d'utilisateur</th>
           <th scope="col">Type d'utilisateur</th>
-          <th scope="col">Prénom</th>
-          <th scope="col">Nom de famille</th>
+          <th scope="col">Nom utilisateur</th>
+          <th scope="col">Courriel </th>
             <th scope="col">Modifier</th>
             <th scope="col">Supprimer</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">SuperUtilisateur</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td><asp:Button CssClass="btn btn-warning" Text="Modifier" runat="server"/></td>
-          <td><asp:Button CssClass="btn btn-danger" Text="Supprimer" runat="server"/></td>
+        <asp:PlaceHolder ID="phUtilisateurs" runat="server">
 
-        </tr>
-        <tr>
-          <th scope="row">Utilisateur</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td><asp:Button CssClass="btn btn-warning" Text="Modifier" runat="server"/></td>
-          <td><asp:Button CssClass="btn btn-danger" Text="Supprimer" runat="server"/></td>
-        </tr>
+        </asp:PlaceHolder>
       </tbody>
     </table>
     <br />
     <div align="center">
-        <a href="/Pages/AjoutUtilisateur.aspx" class="btn btn-success">Ajout d'un utilisateur</a>
+        <a href="/Utilisateur/Ajout" class="btn btn-success">Ajout d'un utilisateur</a>
     </div>
 </asp:Content>

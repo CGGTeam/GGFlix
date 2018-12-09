@@ -38,8 +38,6 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
         {
             categorieddl.SelectedIndex = int.Parse(currentFilm.Categorie.ToString());
         }
-        DerniereMiseJourLe.Text = currentFilm.DateMAJ.ToString();
-        DerniereMiseJourPar.Text = currentFilm.NoUtilisateurMAJ.ToString();
         DescriptionSupplementDispo.SelectedIndex = int.Parse(currentFilm.NoUtilisateurMAJ.ToString());
         DureeFilm.Text = currentFilm.DureeMinutes.ToString();
         if (currentFilm.FilmOriginal != null)

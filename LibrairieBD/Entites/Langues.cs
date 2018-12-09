@@ -4,13 +4,13 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    [TableMapping("Formats")]
-    public class Format
+    [TableMapping("Langues")]
+    public class Langues
     {
         [Id]
         [ColumnMapping]
-        public int? NoFormat { get; set; }
+        public int? NoLangue { get; set; }
         [ColumnMapping]
-        public string Description { get; set; }
+        public string Langue { get; set; }
     }
 }

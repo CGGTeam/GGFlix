@@ -4,12 +4,14 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    public class Langue
+    [TableMapping("FilmsLangues")]
+    public class FilmsLangue
     {
         [Id]
         [ColumnMapping]
+        public int? NoFilm { get; set; }
+        [Id]
+        [ColumnMapping]
         public int? NoLangue { get; set; }
-        [ColumnMapping("Langue")]
-        public string DescLangue { get; set; }
     }
 }

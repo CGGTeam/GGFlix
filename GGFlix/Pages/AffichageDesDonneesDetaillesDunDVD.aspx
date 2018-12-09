@@ -8,30 +8,36 @@
     function confirmerAppropriation() {
         var Result = confirm("Êtes-vous certain de vouloir vous appropriez ce dvd?");
         if (Result == true) {
-            var txtConfirmResult = document.getElementById('valConfirm');
-            txtConfirmResult.value = Result;//assigning to hidden text box 
-            //alert(txtConfirmresult.value); //displaying for debug purposes
-            __doPostBack( 'txtConfirmRetour', Result ); //sending back to server.
-        return true;
-        }
-    else 
-    {
-        document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
-         return false;
-        }
-        }
-    </script>
+            alert(Result);
 
-<head>
-    <title>DVD Express</title>
-    
+            __doPostBack('txtConfirmRetour', "Approprier"); //sending back to server.
+            return true;
+        }
+        else 
+        {
+
+             return false;
+        }
+    }
+    function confirmerRetrait() {
+        var Result = confirm("Êtes-vous certain de vouloir supprimer ce dvd?");
+        if (Result == true) {
+            alert(Result);
+
+            __doPostBack('txtConfirmRetour', "Retrait"); //sending back to server.
+            return true;
+        }
+        else 
+        {
+            //document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
+             return false;
+        }
+    }
+    </script>  
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-
-</head>
-    <asp:HiddenField ID="valConfirm" runat="server" />
 	<div class="card">
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
@@ -43,20 +49,12 @@
 		            <h4><small><asp:Label id="lblAnneeSortie" AssociatedControlId="AnneeSortie" Text="Année de sortie" runat="server"/>
                         <asp:TextBox id="AnneeSortie" Text="2007" runat="server" /></small></h4>
 		            <h4><small><asp:Label id="lblCategorieFilm" Text="Catégorie" AssociatedControlId="categorieddl" runat="server"/>
-                        <asp:DropDownList id="categorieddl" runat="server" >
-                             <asp:ListItem Text="Action" Value="0" />
-                             <asp:ListItem Text="Comédie dramatique" Value="1" />
-                             <asp:ListItem Text="Criminel" Value="2" />
-                         </asp:DropDownList></small>
+                        <asp:DropDownList id="categorieddl" runat="server" /></small>
 		            </h4>
                     <h4><small><asp:Label id="lblDerniereMiseJourLe" AssociatedControlId="DerniereMiseJourLe" Text="Dernière mise à jour le" runat="server"/><asp:TextBox id="DerniereMiseJourLe" Text="2018-11-14" runat="server" /></small></h4>
                     <h4><small><asp:Label id="lblDerniereMiseJourPar" AssociatedControlId="DerniereMiseJourPar" Text="Dernière mise à jour par" runat="server"/><asp:TextBox id="DerniereMiseJourPar" Text="Nikola Jouanik" runat="server" /></small></h4>
                     <h4><small><asp:Label id="lblDescriptionSupplementDispo" AssociatedControlId="DescriptionSupplementDispo" Text="Description de trois suppléments disponibles" runat="server"/>
-                        <asp:DropDownList id="DescriptionSupplementDispo" runat="server">
-                             <asp:ListItem Text="Bande-annonce (Trailer)" Value="0" />
-                             <asp:ListItem Text="Commentaires audio" Value="1" />
-                             <asp:ListItem Text="Scènes supprimées" Value="2" />
-                         </asp:DropDownList>
+                        <asp:DropDownList id="DescriptionSupplementDispo" runat="server"/>
                             </small></h4>
                     <h4><small><asp:Label id="lblDureeFilm" AssociatedControlId="DureeFilm" Text="Durée du film" runat="server"/>
                         <asp:TextBox id="DureeFilm" TextMode="Number" Text="200"  runat="server" min="0" max="400" step="1" MaxLength="3"/></small></h4>
@@ -73,11 +71,7 @@
 		            <h4><small><asp:Label id="lblNomRealisateur" AssociatedControlId="NomRealisateur" Text="Nom du réalisateur" runat="server"/><asp:TextBox id="NomRealisateur" Text="Francis Ford Coppola" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblNomActeurs" AssociatedControlId="NomActeurs" Text="Nom des trois princiaux acteurs/actrices" runat="server"/><asp:DropDownList id="NomActeurs" runat="server" /></small></h4>               
                 <h4><small><asp:Label id="lblSousTitre" AssociatedControlId="SousTitre" Text="Sous-Titres" runat="server"/>
-                    <asp:DropDownList id="SousTitre" runat="server" >
-                        <asp:ListItem Text="Anglais" Value="0" />
-                        <asp:ListItem Text="Français" Value="1" />
-                        <asp:ListItem Text="Espagnol" Value="2" />
-                        </asp:DropDownList></small></h4>
+                    <asp:DropDownList id="SousTitre" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblTitreFrancais" AssociatedControlId="TitreFrancais" Text="Titre-français" runat="server"/><asp:TextBox id="TitreFrancais" Text="À travers l'univers" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblTitreOriginal" AssociatedControlId="TitreOriginal" Text="Titre original" runat="server"/><asp:TextBox id="TitreOriginal" Text="Across the Universe" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblProprietaire" AssociatedControlId="Proprietaire" Text="Utilisateur ayant acheté le DVD (propriétaire)" runat="server"/><asp:TextBox id="Proprietaire" runat="server" Text="Francis Perro" /></small></h4>
@@ -85,17 +79,9 @@
                 <h4><small><asp:Label id="lblVersionEtendue" AssociatedControlId="VersionEtendue" Text="Version étendue ?" runat="server"/><asp:CheckBox id="VersionEtendue" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblVisibleTous" AssociatedControlId="VisibleTous" Text="Visible à tous ?" runat="server"/><asp:CheckBox id="VisibleTous" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblFormat" AssociatedControlId="txtFormat" Text="Format" runat="server"/>
-                    <asp:DropDownList id="txtFormat" runat="server">
-                             <asp:ListItem Text="Panoramique" Value="0" />
-                             <asp:ListItem Text="Blu-Ray" Value="1" />
-                             <asp:ListItem Text="Normal" Value="2" />
-                         </asp:DropDownList></small></h4>        
+                    <asp:TextBox id="txtFormat" runat="server"/></small></h4>        
                 <h4><small><asp:Label id="lblLangue" AssociatedControlId="txtLangue" Text="Langue" runat="server"/>
-                     <asp:DropDownList id="txtLangue" runat="server">
-                             <asp:ListItem Text="Français" Value="0" />
-                             <asp:ListItem Text="Anglais" Value="1" />
-                             <asp:ListItem Text="Espagnol" Value="2" />
-                         </asp:DropDownList></small></h4>                    
+                     <asp:TextBox id="txtLangue" runat="server"/></small></h4>                    
                 <h4><small><asp:Label id="lblNbDisques" AssociatedControlId="tbNbDisques" Text="Nombre de disques" runat="server"/>
                 <asp:TextBox id="tbNbDisques" TextMode="Number" Text="2"  runat="server" min="0" max="15" step="1" MaxLength="2"/></small></h4>
 		        </div>
@@ -106,6 +92,5 @@
 	 <div align="center">
 		<a href="/MesDVD/1" class="btn btn-success">Afficher liste de DVD</a>
 	</div>
-</body>
 
 </asp:Content>

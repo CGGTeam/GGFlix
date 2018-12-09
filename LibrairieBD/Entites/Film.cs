@@ -8,6 +8,8 @@ namespace LibrairieBD.Entites
         [Id] [ColumnMapping] public int? NoFilm { get; set; } = null;
         [ColumnMapping] public int? AnneeSortie { get; set; } = null;
         [ColumnMapping] public int? Categorie { get; set; } = null;
+        [ColumnMapping] public int? Format { get; set; } = null;
+        [ColumnMapping] public int? NbDisques { get; set; } = null;
         [ColumnMapping] public DateTime? DateMAJ { get; set; }
         [ColumnMapping] public int? NoUtilisateurMAJ { get; set; } = null;
         [ColumnMapping] public string Resume { get; set; } = null;

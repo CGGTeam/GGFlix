@@ -9,7 +9,7 @@ namespace LibrairieBD.Entites
     {
         [Id]
         [ColumnMapping("TypeUtilisateur")]
-        public int? IdTypeUtilisateur { get; set; }
+        public string IdTypeUtilisateur { get; set; }
         [ColumnMapping]
         public string Description { get; set; }
     }

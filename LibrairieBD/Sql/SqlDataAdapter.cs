@@ -93,10 +93,10 @@ namespace LibrairieBD.Sql
                 }
             }
 
-            ParameterExpression inputParam = Expression.Parameter(typeof(T));
+            ParameterExpression inputParam = Expression.Parameter(typeof(T), typeof(T).Name);
             Expression<Func<T, bool>> whereClause = 
-                whereExpression == null ? 
-                    Expression.Lambda<Func<T, bool>>(whereExpression, inputParam) : ent => true;
+                whereExpression == null ?
+                    ent => 1 == 1 : Expression.Lambda<Func<T, bool>>(whereExpression, inputParam);
 
             ExpressionUpdateQuery<T> query = new ExpressionUpdateQuery<T>(whereClause, setClauses);
 

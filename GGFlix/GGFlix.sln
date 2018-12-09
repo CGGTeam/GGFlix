@@ -1,8 +1,29 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GGFlix", "GGFlix\", "{B07A9837-77B2-4CE8-987E-0D6D4DB5BEDD}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		ProjectReferences = "{a2eb6873-1ea0-4cfa-8dbb-6e0ea40ae721}|LibrairieBD.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_49853"
+		Debug.AspNetCompiler.PhysicalPath = "GGFlix\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49853\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_49853"
+		Release.AspNetCompiler.PhysicalPath = "GGFlix\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49853\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "49853"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
 		ProjectReferences = "{a2eb6873-1ea0-4cfa-8dbb-6e0ea40ae721}|LibrairieBD.dll;"

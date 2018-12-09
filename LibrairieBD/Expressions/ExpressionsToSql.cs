@@ -23,6 +23,12 @@ namespace LibrairieBD.Sql
             { "\"", "\'" },
         };
 
+        private static readonly Dictionary<string, string> supportedDateTimePatterns = new Dictionary<string, string>
+        {
+            {@"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} ([AP]M)", "yyyy-MM-dd h:mm:ss tt"},
+            {@"\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2}", "dd/MM/yyyy HH:mm:ss"},
+        };
+
         public static string ToWhereClause<T>(this Expression<Func<T, bool>> predicate)
         {
             var literalized = (Expression<Func<T, bool>>)new Literalizer().Visit(predicate);
@@ -33,8 +39,17 @@ namespace LibrairieBD.Sql
             string pattern = $@"\b{paramName}\b";
             Regex rexp = new Regex(pattern);
 
-            string dateTimePattern = @"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} [A-Z]{2}";
-            whereClause = Regex.Replace(whereClause, dateTimePattern, ReformatDateAndWrapWithApostrophes);
+            foreach (var combo in supportedDateTimePatterns)
+            {
+                string regex = combo.Key;
+                string correspondingFormat = combo.Value;
+
+                if (Regex.IsMatch(whereClause, regex))
+                {
+                    whereClause = Regex.Replace(whereClause, regex, match => ReformatDateAndWrapWithApostrophes(match, correspondingFormat));
+                    break;
+                }
+            }
 
             whereClause = rexp.Replace(whereClause, typeof(T).GetTableMapping());
             whereClause = MakeStandardConversions(new StringBuilder(whereClause)).ToString();
@@ -42,11 +57,11 @@ namespace LibrairieBD.Sql
             return whereClause;
         }
 
-        private static string ReformatDateAndWrapWithApostrophes(Match match)
+        private static string ReformatDateAndWrapWithApostrophes(Match match, string format)
         {
-            DateTime date = DateTime.Parse(match.Value);
+            DateTime date = DateTime.ParseExact(match.Value, format, CultureInfo.InvariantCulture);
 
-            return $@"'{date:yyyyMMdd hh:mm:ss tt}'";
+            return "'" + date.ToString("yyyyMMdd hh:mm:ss tt", CultureInfo.InvariantCulture) + "'";
         }
 
         private static StringBuilder MakeStandardConversions(StringBuilder builder)
