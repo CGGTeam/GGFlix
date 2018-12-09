@@ -22,7 +22,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
     private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
     //private GenericDao<FilmsLangue> filmLangueDao = Persistance.GetDao<FilmsLangue>();
-    private GenericDao<Langue> langueDao = Persistance.GetDao<Langue>();
+    private GenericDao<LangueTable> langueDao = Persistance.GetDao<LangueTable>();
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
