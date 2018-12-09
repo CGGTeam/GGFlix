@@ -15,7 +15,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
     private GenericDao<Realisateur> realDao = Persistance.GetDao<Realisateur>();
     private GenericDao<SousTitre> soustitreDao = Persistance.GetDao<SousTitre>();
     private GenericDao<Acteur> actDao = Persistance.GetDao<Acteur>();
-    private GenericDao<LangueTable> langDao = Persistance.GetDao<LangueTable>();
+    private GenericDao<Langues> langDao = Persistance.GetDao<Langues>();
     private GenericDao<Format> formatDao = Persistance.GetDao<Format>();
     private GenericDao<Supplement> supplDao = Persistance.GetDao<Supplement>();
 
@@ -225,8 +225,8 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         List<Acteur> lstAct = new List<Acteur>();
         List<Supplement> lstSuppl = new List<Supplement>();
         List<SousTitre> lstSousTitre = new List<SousTitre>();
-        List<LangueTable> lstLangue = new List<LangueTable>();
-        //Producteur
+        List<Langues> lstLangue = new List<Langues>();
+        //Langues
         if(NomProducteur.Text.Trim() != "" && prodDao.Find(new Producteur { Nom = NomProducteur.Text.Trim() }).Count > 0)
         {
             prodAjouter = prodDao.Find(new Producteur { Nom = NomProducteur.Text.Trim() }).First();
@@ -328,14 +328,14 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
             TextBox tbLangue = (TextBox)divComplet.FindControl("tbLangue" + i);
             if (tbLangue.Text.Trim() != "")
             {
-                if (langDao.Find(new LangueTable { Langue = tbLangue.Text.Trim() }).Count > 0)
+                if (langDao.Find(new Langues { Langue = tbLangue.Text.Trim() }).Count > 0)
                 {
-                    LangueTable lang = langDao.Find(new LangueTable { Langue = tbLangue.Text.Trim() }).First();
+                    Langues lang = langDao.Find(new Langues { Langue = tbLangue.Text.Trim() }).First();
                     lstLangue.Add(lang);
                 }
                 else
                 {
-                    LangueTable lang = langDao.Save(new LangueTable { Langue = tbLangue.Text.Trim() });
+                    Langues lang = langDao.Save(new Langues { Langue = tbLangue.Text.Trim() });
                     lstLangue.Add(lang);
                 }
             }
@@ -404,7 +404,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         {
             filmSousTitreDao.Save(new FilmsSousTitres { NoFilm = film.NoFilm, NoSousTitre = sTitre.NoSousTitre });
         }
-        foreach(LangueTable lang in lstLangue)
+        foreach(Langues lang in lstLangue)
         {
             filmLangueDao.Save(new FilmsLangue { NoFilm = film.NoFilm, NoLangue = lang.NoLangue });
         }

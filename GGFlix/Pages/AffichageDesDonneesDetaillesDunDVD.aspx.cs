@@ -22,7 +22,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
     private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
     private GenericDao<FilmsLangue> filmLangueDao = Persistance.GetDao<FilmsLangue>();
-    private GenericDao<Langue> langueDao = Persistance.GetDao<Langue>();
+    private GenericDao<Langues> langueDao = Persistance.GetDao<Langues>();
     private GenericDao<Format> formatDao = Persistance.GetDao<Format>();
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
@@ -120,7 +120,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         foreach (FilmsLangue filmLangue in filmLangueDao.FindAll().Where(exempl => exempl.NoFilm.Equals(intDVD)).ToList())
         {
             if (filmLangue != null)
-            txtLangue.Text = langueDao.Find(new Langue { NoLangue = filmLangue.NoLangue })[0].DescLangue;
+            txtLangue.Text = langueDao.Find(new Langues { NoLangue = filmLangue.NoLangue })[0].Langue;
         }
         //tbNbDisques.Text = currentFilm */
 
