@@ -28,21 +28,34 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     {
         ClientScript.GetPostBackEventReference(this, string.Empty);
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
-        intExemplaire = Convert.ToInt32(Page.RouteData.Values["noExemp"]); 
+        intExemplaire = Convert.ToInt32(Page.RouteData.Values["noExemp"]);
         if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("")&& !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0,2).Equals("N-")))
         {
-            string target = Request["__EVENTTARGET"];
-            string argument = Request["__EVENTARGUMENT"];
+            string target = Request["__EVENTTARGET"].ToString();
+            string argument = Request["__EVENTARGUMENT"].ToString();
 
-            if (target != null && target.Equals("txtConfirmRetour"))
+            if (target != null && argument.Split(':')[0].Equals("Approprier"))
             {
-                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
+                String id = HttpContext.Current.User.Identity.Name;
+
+                EmpruntFilm empF = empruntFilmDao.FindAll().Where(exem => (exem.NoExemplaire == intExemplaire) && (exem.NoUtilisateur ==
+                    utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur)).FirstOrDefault();
                 // On lui donnera le dvd dans BDD
+                if (empF != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("entre");
+                    empF.DateEmprunt = DateTime.Now;
+                    //empruntFilmDao.Save(empF);
+                }
+                else {
+                    //empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur =utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur,DateEmprunt=DateTime.Now });
+                }
+
+            } else if (target != null && argument.Split(':')[0].Equals("Retrait")) {
+
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
-
-
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation", "confirmerAppropriation()", true);
                 System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
                 noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());

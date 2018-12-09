@@ -9,30 +9,35 @@
         var Result = confirm("Êtes-vous certain de vouloir vous appropriez ce dvd?");
         if (Result == true) {
             alert(Result);
-            //document.getElementById('valConfirm').value = Result.value;
 
-             //displaying for debug purposes
-            __doPostBack( 'txtConfirmRetour', Result ); //sending back to server.
-        return true;
+            __doPostBack('txtConfirmRetour', "Approprier"); //sending back to server.
+            return true;
         }
-    else 
-    {
-        //document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
-         return false;
-        }
-        }
-    </script>
+        else 
+        {
 
-<head>
-    <title>DVD Express</title>
-    
+             return false;
+        }
+    }
+    function confirmerRetrait() {
+        var Result = confirm("Êtes-vous certain de vouloir supprimer ce dvd?");
+        if (Result == true) {
+            alert(Result);
+
+            __doPostBack('txtConfirmRetour', "Retrait"); //sending back to server.
+            return true;
+        }
+        else 
+        {
+            //document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
+             return false;
+        }
+    }
+    </script>  
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-
-</head>
-    <asp:HiddenField ID="valConfirm" runat="server" Value="true"/>
 	<div class="card">
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
@@ -87,6 +92,5 @@
 	 <div align="center">
 		<a href="/MesDVD/1" class="btn btn-success">Afficher liste de DVD</a>
 	</div>
-</body>
 
 </asp:Content>
