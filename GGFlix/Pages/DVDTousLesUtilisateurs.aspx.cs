@@ -63,9 +63,11 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             imgLoupe.Height = 20;
             imgLoupe.ImageAlign = ImageAlign.AbsMiddle;
             imgLoupe.ImageUrl = "/Static/img/loupe.png";
+            //imgLoupe.AutoPostBack = true;
+            imgLoupe.OnClientClick += new EventHandler(creerAffichage);
             panelSideBar.Controls.Add(imgLoupe);
-            panelSideBar.Controls.Add(new LiteralControl("<br />"));
-            panelSideBar.Controls.Add(new LiteralControl("<br />"));
+            //panelSideBar.Controls.Add(new LiteralControl("<br />"));
+            //panelSideBar.Controls.Add(new LiteralControl("<br />"));
             Label lblDdl = new Label();
             lblDdl.Text = "Trier par ";
             panelSideBar.Controls.Add(lblDdl);
@@ -142,7 +144,6 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             TextBox txtAddress = (TextBox)panelSideBar.FindControl("tbRechercher");
 
             string strTitreRechercher = txtAddress.Text;
-            //Response.Write(strTitreRechercher);
 
             int maxPage = 10;
             int nbPagePrec = numPage - 1;

@@ -24,7 +24,7 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
         
         if (!id.Trim().Equals(""))
         {
-            currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
+            currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault();
             IList<Exemplaire> lstExemp = exemDao.FindAll().Where(v => v.NoUtilisateurProprietaire == currentUser.NoUtilisateur).ToList();
             creerAffichage(sender, e);
         }
