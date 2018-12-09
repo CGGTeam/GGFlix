@@ -5,12 +5,12 @@ using System.Text;
 namespace LibrairieBD.Entites
 {
     [TableMapping("Langues")]
-    public class Langue
+    public class Langues
     {
         [Id]
         [ColumnMapping]
         public int? NoLangue { get; set; }
-        [ColumnMapping("Langue")]
-        public string DescLangue { get; set; }
+        [ColumnMapping]
+        public string Langue { get; set; }
     }
 }

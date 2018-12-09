@@ -7,9 +7,11 @@ namespace LibrairieBD.Entites
     [TableMapping("FilmsLangues")]
     public class FilmsLangue
     {
+        [Id]
         [ColumnMapping]
-        public int NoFilm { get; set; }
+        public int? NoFilm { get; set; }
+        [Id]
         [ColumnMapping]
-        public int NoLangue { get; set; }
+        public int? NoLangue { get; set; }
     }
 }
