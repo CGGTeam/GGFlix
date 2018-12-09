@@ -111,7 +111,35 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         lblErreur.Visible = false;
         lblGood.Text = "";
         lblGood.Visible = false;
-        tb1.Text = "SPECIFIQUE";
+
+        string strErreur = "";
+        string strAjoutable = "";
+
+        if (TitreFrancais.Text.Trim() == "")
+        {
+            strErreur += "<br />Le titre français ne peut pas être laissé vide;";
+        }
+        if ((NomActeurs1.SelectedValue == NomActeurs2.SelectedValue && NomActeurs1.SelectedValue != "") || (NomActeurs2.SelectedValue == NomActeurs3.SelectedValue && NomActeurs2.SelectedValue != "")|| (NomActeurs1.SelectedValue == NomActeurs3.SelectedValue && NomActeurs1.SelectedValue != "") )
+        {
+            strErreur += "<br />Le même acteur ne peut pas être choisi deux fois;";
+        }
+        if (DescriptionSupplementDispo1.SelectedValue == DescriptionSupplementDispo2.SelectedValue || DescriptionSupplementDispo2.SelectedValue == DescriptionSupplementDispo3.SelectedValue || DescriptionSupplementDispo1.SelectedValue == DescriptionSupplementDispo3.SelectedValue)
+        {
+            strErreur += "<br />Les mêmes suppléments ne peuvent pas être choisi deux fois;";
+        }
+        if (SousTitre1.SelectedValue == SousTitre2.SelectedValue || SousTitre2.SelectedValue == SousTitre3.SelectedValue || SousTitre1.SelectedValue == SousTitre3.SelectedValue)
+        {
+            strErreur += "<br />Les mêmes sous-titres ne peuvent pas être choisi deux fois;";
+        }
+        if (ddlLangue1.SelectedValue == ddlLangue2.SelectedValue || ddlLangue2.SelectedValue == ddlLangue3.SelectedValue || ddlLangue1.SelectedValue == ddlLangue3.SelectedValue)
+        {
+            strErreur += "<br />La même langue ne peut pas être choisi deux fois;";
+        }
+        if(strErreur != "")
+        {
+            lblErreur.Text = "Erreur : " + filmEnChaine(strErreur);
+            lblErreur.Visible = true;
+        }
     }
 
     //Fou méthode qui te donne la suite de film placé prêt-à-emporter
@@ -165,6 +193,8 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
 
     public void LoadAjoutSpecifique()
     {
+        ListItem itemVide = new ListItem();
+
         NomActeurs1.Items.Clear();
         NomActeurs2.Items.Clear();
         NomActeurs3.Items.Clear();
@@ -179,7 +209,23 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         DescriptionSupplementDispo1.Items.Clear();
         DescriptionSupplementDispo2.Items.Clear();
         DescriptionSupplementDispo3.Items.Clear();
-        foreach(Supplement suppl in supplDao.FindAll().ToList())
+
+        NomActeurs1.Items.Add(itemVide);
+        NomActeurs2.Items.Add(itemVide);
+        NomActeurs3.Items.Add(itemVide);
+        SousTitre1.Items.Add(itemVide);
+        SousTitre2.Items.Add(itemVide);
+        SousTitre3.Items.Add(itemVide);
+        ddlLangue1.Items.Add(itemVide);
+        ddlLangue2.Items.Add(itemVide);
+        ddlLangue3.Items.Add(itemVide);
+        categorieddl.Items.Add(itemVide);
+        ddlFormat.Items.Add(itemVide);
+        DescriptionSupplementDispo1.Items.Add(itemVide);
+        DescriptionSupplementDispo2.Items.Add(itemVide);
+        DescriptionSupplementDispo3.Items.Add(itemVide);
+
+        foreach (Supplement suppl in supplDao.FindAll().ToList())
         {
             ListItem item = new ListItem();
             item.Value = suppl.NoSupplement.ToString();

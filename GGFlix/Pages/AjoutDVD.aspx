@@ -98,9 +98,9 @@
                                         <asp:TextBox ID="NomRealisateur" Text="" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
                                         <asp:TextBox ID="AnneeSortie" runat="server" TextMode="Number" Width="100%" CssClass="row" Height="26px" /><br />
                                         <asp:DropDownList ID="categorieddl" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:TextBox ID="DureeFilm" TextMode="Number" Text="200" CssClass="row" runat="server" Height="26px" min="0" max="400" step="1" MaxLength="3" Width="100%" /><br />
+                                        <asp:TextBox ID="DureeFilm" TextMode="Number"  CssClass="row" runat="server" Height="26px" min="0" max="400" step="1" MaxLength="3" Width="100%" /><br />
                                         <asp:DropDownList ID="ddlFormat" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
-                                        <asp:TextBox ID="tbNbDisques" TextMode="Number" Width="100%" Text="2" CssClass="row" Height="26px" runat="server" min="0" max="15" step="1" MaxLength="2" /><br />
+                                        <asp:TextBox ID="tbNbDisques" TextMode="Number" Width="100%" CssClass="row" Height="26px" runat="server" min="1" max="99" step="1" MaxLength="2" /><br />
                                         <asp:TextBox ID="tbXtra" runat="server" Width="100%" CssClass="row" Height="26px" /><br />
                                         <div style="overflow: auto;">
                                             <asp:TextBox TextMode="multiline" runat="server" Style="width: 100%; height: 200px;" CssClass="row" ID="Resume"></asp:TextBox>
@@ -130,7 +130,6 @@
                                         <br />
                                         <br />
                                         <asp:Label ID="lblLangue" Text="Langue" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
-                                        <br />
                                         <br />
                                         <br />
                                         <br />
@@ -169,12 +168,13 @@
                             </div>
                         </div>
                     </div>
+                    <asp:Label ID="lblErreur" runat="server" Visible="false" style="color:red"/><br />
+        <asp:Label ID="lblGood" runat="server" Visible="false" style="color:green" /><br />
+        <asp:Button ID="btnAjouter" Text="Ajouter" runat="server" />
                 </div>
-                <asp:Label ID="lblErreur" runat="server" Visible="false" /><br />
-                <asp:Label ID="lblGood" runat="server" Visible="false" /><br />
 
-                <asp:Button ID="btnAjouter" Text="Ajouter" runat="server" />
             </div>
+
         </div>
     </div>
 </asp:Content>
