@@ -6,15 +6,20 @@
     <table class="table table-striped table-bordered" style="padding-left:10%;padding-right:10%;">
       <thead class="black white-text">
         <tr>
+          <th scope="col">No d'utilisateur</th>
           <th scope="col">Type d'utilisateur</th>
-          <th scope="col">Prénom</th>
-          <th scope="col">Nom de famille</th>
+          <th scope="col">Nom utilisateur</th>
+          <th scope="col">Courriel </th>
             <th scope="col">Modifier</th>
             <th scope="col">Supprimer</th>
         </tr>
       </thead>
       <tbody>
+        <asp:PlaceHolder ID="phUtilisateurs" runat="server">
+
+        </asp:PlaceHolder>
         <tr>
+          <th scope="row">SuperUtilisateur</th>
           <th scope="row">SuperUtilisateur</th>
           <td>Mark</td>
           <td>Otto</td>

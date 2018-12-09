@@ -13,7 +13,7 @@
             new Route("MesDVDSRoute", "MesDVD/{id}", "~/Pages/affichageDVDEnMain.aspx"),
             new Route("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx"),
             new Route("MessagerieRoute", "Messagerie/{id}", "~/Pages/EnvoiCourriel.aspx"),
-            new Route("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx"),
+            new Route("GestionUtilisateur", "Admin/GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx"),
             new Route("MonCompte", "MonCompte", "~/Pages/PersonnalisationEnv.aspx"),
             new Route("ModifDVD", "modifDVD/{id}", "~/Pages/ModificationDVD.aspx"),
         };
