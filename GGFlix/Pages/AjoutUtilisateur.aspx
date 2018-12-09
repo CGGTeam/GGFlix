@@ -12,7 +12,7 @@
                         <h2 class="text-center">Ajout d'un utilisateur</h2>
                     </div>
                     <div class="form-group ">
-                        <label for="tbPrenom">Prénom : </label>
+                        <label for="tbPrenom">Nom d'utilisateur : </label>
                         <asp:TextBox ID="tbPrenom" runat="server" class="form-control"/>
                         <br />
                         <br />
@@ -20,7 +20,7 @@
                         <asp:TextBox ID="tbCourriel1" runat="server" class="form-control"/>
                         <br />
                         <br />
-                        <label for="tbCourriel2">Répeter le courriel : </label>
+                        <label for="tbCourriel2">Confirmer le courriel : </label>
                         <asp:TextBox ID="tbCourriel2" runat="server" class="form-control" />
                         <br />
                         <br />
@@ -29,11 +29,17 @@
                         <asp:CheckBox ID="chMdeP1" runat="server" Text="Afficher le mot de passe" />
                         <br />
                         <br />
-                        <label for="tbMdeP2">Répeter le mot de passe : </label>
+                        <label for="tbMdeP2">Confirmer le mot de passe : </label>
                         <asp:TextBox ID="tbMdeP2" runat="server" TextMode="Password" class="form-control"/>
                         <asp:CheckBox ID="chMdeP2" runat="server" Text="Afficher le mot de passe" />
                         <br />
                         <br />
+                        <asp:Panel ID="pnOptionsAdmin" Visible="false" runat="server">
+                            <label for="ddlTypeUtilisateur" runat="server" TextMode="Password" class="form-control"/>
+                            <asp:DropDownList ID="ddlTypeUtilisateur" runat="server"/>
+                            <br />
+                            <br />
+                        </asp:Panel>
                         <div class="text-center">
                             <asp:Button ID="btnAjouter" runat="server" Text="Ajouter" class="text-center"/>
                         </div>

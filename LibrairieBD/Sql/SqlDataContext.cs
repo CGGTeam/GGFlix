@@ -26,22 +26,30 @@ namespace LibrairieBD.Sql
 
         public int ExecuteNonQuery(SqlCommand command)
         {
-            PrepareCommandForExecute(command);
+            try
+            {
+                PrepareCommandForExecute(command);
 
-            int affectedRows = command.ExecuteNonQuery();
-            connection.Close();
-
-            return affectedRows;
+                return command.ExecuteNonQuery();
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public object ExecuteScalar(SqlCommand command)
         {
-            PrepareCommandForExecute(command);
+            try
+            {
+                PrepareCommandForExecute(command);
 
-            object scalar = command.ExecuteScalar();
-            connection.Close();
-
-            return scalar;
+                return command.ExecuteScalar();
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         private void PrepareCommandForExecute(SqlCommand command)

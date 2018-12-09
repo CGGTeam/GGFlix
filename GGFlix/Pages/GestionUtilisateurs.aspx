@@ -22,6 +22,6 @@
     </table>
     <br />
     <div align="center">
-        <a href="/Pages/AjoutUtilisateur.aspx" class="btn btn-success">Ajout d'un utilisateur</a>
+        <a href="/Utilisateur/Ajout" class="btn btn-success">Ajout d'un utilisateur</a>
     </div>
 </asp:Content>
