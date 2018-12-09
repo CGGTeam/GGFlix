@@ -8,15 +8,16 @@
     function confirmerAppropriation() {
         var Result = confirm("Êtes-vous certain de vouloir vous appropriez ce dvd?");
         if (Result == true) {
-            var txtConfirmResult = document.getElementById('valConfirm');
-            txtConfirmResult.value = Result;//assigning to hidden text box 
-            //alert("YES"+txtConfirmresult.value); //displaying for debug purposes*/
+            alert(Result);
+            //document.getElementById('valConfirm').value = Result.value;
+
+             //displaying for debug purposes
             __doPostBack( 'txtConfirmRetour', Result ); //sending back to server.
         return true;
         }
     else 
-        {
-        document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
+    {
+        //document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
          return false;
         }
         }
@@ -31,7 +32,7 @@
 
 
 </head>
-    <asp:HiddenField ID="valConfirm" runat="server" />
+    <asp:HiddenField ID="valConfirm" runat="server" Value="true"/>
 	<div class="card">
 		<div class="card-body">
 		    <div class="row" style="margin-left: 15%">
