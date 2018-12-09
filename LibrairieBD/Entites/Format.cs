@@ -4,6 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
+    [TableMapping("Formats")]
     public class Format
     {
         [Id]

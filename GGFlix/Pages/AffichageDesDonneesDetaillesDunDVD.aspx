@@ -79,9 +79,9 @@
                 <h4><small><asp:Label id="lblVersionEtendue" AssociatedControlId="VersionEtendue" Text="Version étendue ?" runat="server"/><asp:CheckBox id="VersionEtendue" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblVisibleTous" AssociatedControlId="VisibleTous" Text="Visible à tous ?" runat="server"/><asp:CheckBox id="VisibleTous" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblFormat" AssociatedControlId="txtFormat" Text="Format" runat="server"/>
-                    <asp:DropDownList id="txtFormat" runat="server"/></small></h4>        
+                    <asp:TextBox id="txtFormat" runat="server"/></small></h4>        
                 <h4><small><asp:Label id="lblLangue" AssociatedControlId="txtLangue" Text="Langue" runat="server"/>
-                     <asp:DropDownList id="txtLangue" runat="server"/></small></h4>                    
+                     <asp:TextBox id="txtLangue" runat="server"/></small></h4>                    
                 <h4><small><asp:Label id="lblNbDisques" AssociatedControlId="tbNbDisques" Text="Nombre de disques" runat="server"/>
                 <asp:TextBox id="tbNbDisques" TextMode="Number" Text="2"  runat="server" min="0" max="15" step="1" MaxLength="2"/></small></h4>
 		        </div>

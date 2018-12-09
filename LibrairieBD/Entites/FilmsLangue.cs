@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibrairieBD.Entites
 {
-    [TableMapping("FilmsLangue")]
+    [TableMapping("FilmsLangues")]
     public class FilmsLangue
     {
         [Id]
