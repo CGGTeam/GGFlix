@@ -245,6 +245,5 @@ namespace LibrairieBD.Sql
 
             return entity;
         }
-
     }
 }

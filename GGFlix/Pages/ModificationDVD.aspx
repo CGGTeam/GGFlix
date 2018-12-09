@@ -32,8 +32,6 @@
                              <asp:ListItem Text="Criminel" Value="2" />
                          </asp:DropDownList></small>
 		            </h4>
-                    <h4><small><asp:Label id="lblDerniereMiseJourLe" AssociatedControlId="DerniereMiseJourLe" Text="Dernière mise à jour le" runat="server"/><asp:TextBox id="DerniereMiseJourLe" Text="2018-11-14" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblDerniereMiseJourPar" AssociatedControlId="DerniereMiseJourPar" Text="Dernière mise à jour par" runat="server"/><asp:TextBox id="DerniereMiseJourPar" Text="Nikola Jouanik" runat="server" /></small></h4>
                     <h4><small><asp:Label id="lblDescriptionSupplementDispo" AssociatedControlId="DescriptionSupplementDispo" Text="Description de trois suppléments disponibles" runat="server"/>
                         <asp:DropDownList id="DescriptionSupplementDispo" runat="server">
                              <asp:ListItem Text="Bande-annonce (Trailer)" Value="0" />
@@ -68,17 +66,9 @@
                 <h4><small><asp:Label id="lblVersionEtendue" AssociatedControlId="VersionEtendue" Text="Version étendue ?" runat="server"/><asp:CheckBox id="VersionEtendue" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblVisibleTous" AssociatedControlId="VisibleTous" Text="Visible à tous ?" runat="server"/><asp:CheckBox id="VisibleTous" runat="server" /></small></h4>
                 <h4><small><asp:Label id="lblFormat" AssociatedControlId="txtFormat" Text="Format" runat="server"/>
-                    <asp:DropDownList id="txtFormat" runat="server">
-                             <asp:ListItem Text="Panoramique" Value="0" />
-                             <asp:ListItem Text="Blu-Ray" Value="1" />
-                             <asp:ListItem Text="Normal" Value="2" />
-                         </asp:DropDownList></small></h4>        
+                    <asp:DropDownList id="ddlFormat" runat="server" /></small></h4>        
                 <h4><small><asp:Label id="lblLangue" AssociatedControlId="txtLangue" Text="Langue" runat="server"/>
-                     <asp:DropDownList id="txtLangue" runat="server">
-                             <asp:ListItem Text="Français" Value="0" />
-                             <asp:ListItem Text="Anglais" Value="1" />
-                             <asp:ListItem Text="Espagnol" Value="2" />
-                         </asp:DropDownList></small></h4>                    
+                     <asp:DropDownList id="ddlLangue" runat="server" /></small></h4>                    
                 <h4><small><asp:Label id="lblNbDisques" AssociatedControlId="tbNbDisques" Text="Nombre de disques" runat="server"/>
                 <asp:TextBox id="tbNbDisques" TextMode="Number" Text="2"  runat="server" min="0" max="15" step="1" MaxLength="2"/></small></h4>
 		        </div>
