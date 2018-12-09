@@ -23,6 +23,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
     private GenericDao<FilmActeur> filmActeurDao = Persistance.GetDao<FilmActeur>();
     private GenericDao<FilmsLangue> filmLangueDao = Persistance.GetDao<FilmsLangue>();
     private GenericDao<FilmsSousTitres> filmSousTitreDao = Persistance.GetDao<FilmsSousTitres>();
+    private GenericDao<EmpruntFilm> empFilmDao = Persistance.GetDao<EmpruntFilm>();
     private GenericDao<FilmsSupplements> filmSupplementDao = Persistance.GetDao<FilmsSupplements>();
     private List<Film> lstFilm = new List<Film>();
 
@@ -32,7 +33,24 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
     {
         id = HttpContext.Current.User.Identity.Name;
         currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
+        if(currentUser.TypeUtilisateur == "S")
+        {
+            AjoutPour.Items.Clear();
+            ListItem itemVide = new ListItem();
+            itemVide.Text = "Ajouter pour un autre utilisateur";
+            itemVide.Value = "";
+            AjoutPour.Items.Add(itemVide);
+            foreach(Utilisateur util in utilDao.FindAll().Where(v=> v.TypeUtilisateur != "A" && v.NoUtilisateur != currentUser.NoUtilisateur))
+            {
+                ListItem item = new ListItem();
+                item.Value = util.NoUtilisateur.ToString();
+                item.Text = util.NomUtilisateur;
+                AjoutPour.Items.Add(item);
+            }
+            AjoutPour.Visible = true;
+        }
         afficheDIV(sender, e);
+        AnneeSortie.Attributes["max"] = DateTime.Now.Year.ToString();
     }
 
     protected void afficheDIV(object sender, EventArgs e)
@@ -89,7 +107,23 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
                     film.TitreFrancais = tbEnCours.Text.Trim();
                     film.DateMAJ = DateTime.Now;
                     film.NoUtilisateurMAJ = currentUser.NoUtilisateur;
-                    filmDao.Save(film);
+                    Film filmAjout = filmDao.Save(film);
+                    int intExmp = int.Parse(filmAjout.NoFilm + "01");
+                    if (AjoutPour.SelectedValue != "")
+                    {
+                        int noAjout = int.Parse(AjoutPour.SelectedValue);
+                        Exemplaire exmp = new Exemplaire { NoExemplaire = intExmp, NoUtilisateurProprietaire = noAjout };
+                        exempDao.Save(exmp);
+                        EmpruntFilm empruntFilm = new EmpruntFilm { NoExemplaire = intExmp, NoUtilisateur = noAjout, DateEmprunt = DateTime.Now };
+                        empFilmDao.Save(empruntFilm);
+                    }
+                    else
+                    {
+                        Exemplaire exmp = new Exemplaire { NoExemplaire = intExmp, NoUtilisateurProprietaire = currentUser.NoUtilisateur };
+                        exempDao.Save(exmp);
+                        EmpruntFilm empruntFilm = new EmpruntFilm { NoExemplaire = intExmp, NoUtilisateur = currentUser.NoUtilisateur, DateEmprunt = DateTime.Now };
+                        empFilmDao.Save(empruntFilm);
+                    }
                     tbEnCours.Text = "";
                 }
             }
@@ -120,7 +154,6 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         lblGood.Visible = false;
 
         string strErreur = "";
-        string strAjoutable = "";
 
         if (TitreFrancais.Text.Trim() == "")
         {
@@ -145,6 +178,10 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         if ((tbLangue1.Text.Trim() == tbLangue2.Text.Trim() && tbLangue1.Text.Trim() != "") || (tbLangue1.Text.Trim() == tbLangue3.Text.Trim() && tbLangue1.Text.Trim() != "") || (tbLangue2.Text.Trim() == tbLangue3.Text.Trim() && tbLangue2.Text.Trim() != ""))
         {
             strErreur += "<br />Une langue ne peut pas être ajouté deux fois au même film;";
+        }
+        if(FileUpload.FileName.Trim().Length > 50)
+        {
+            strErreur += "<br />L'URL de l'image du film ne peut pas être de plus de 50 caractères";
         }
         if (strErreur != "")
         {
@@ -408,8 +445,22 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
             filmLangueDao.Save(new FilmsLangue { NoFilm = film.NoFilm, NoLangue = lang.NoLangue });
         }
         // Peut-être boucle pour plusieurs? Faudrait aussi modifier pour le type d'utilisateur (superuser je crois que c'est le NoUtilisateur choisi)
-        int intExemp = int.Parse(film.NoFilm + "01");
-        Exemplaire exmp = new Exemplaire { NoExemplaire = intExemp, NoUtilisateurProprietaire = currentUser.NoUtilisateur };
-        exempDao.Save(exmp);
+        int intExmp = int.Parse(film.NoFilm + "01");
+        if (AjoutPour.SelectedValue != "")
+        {
+            int noAjout = int.Parse(AjoutPour.SelectedValue);
+            Exemplaire exmp = new Exemplaire { NoExemplaire = intExmp, NoUtilisateurProprietaire = noAjout };
+            exempDao.Save(exmp);
+            EmpruntFilm empruntFilm = new EmpruntFilm { NoExemplaire = intExmp, NoUtilisateur = noAjout, DateEmprunt = DateTime.Now };
+            empFilmDao.Save(empruntFilm);
+        }
+        else
+        {
+            Exemplaire exmp = new Exemplaire { NoExemplaire = intExmp, NoUtilisateurProprietaire = currentUser.NoUtilisateur };
+            exempDao.Save(exmp);
+            EmpruntFilm empruntFilm = new EmpruntFilm { NoExemplaire = intExmp, NoUtilisateur = currentUser.NoUtilisateur, DateEmprunt = DateTime.Now };
+            empFilmDao.Save(empruntFilm);
+        }
+        messageLblGood(film.TitreFrancais + ";", 1);
     }
 }
