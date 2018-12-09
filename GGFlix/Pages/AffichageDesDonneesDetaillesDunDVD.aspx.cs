@@ -117,7 +117,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
             }
         }
         
-        foreach (FilmsLangue filmLangue in filmLangueDao.FindAll().Where(exempl => exempl.NoFilm.Equals(intExemplaire)).ToList())
+        foreach (FilmsLangue filmLangue in filmLangueDao.FindAll().Where(exempl => exempl.NoFilm.Equals(intDVD)).ToList())
         {
             if (filmLangue != null)
             txtLangue.Text = langueDao.Find(new Langue { NoLangue = filmLangue.NoLangue })[0].DescLangue;
