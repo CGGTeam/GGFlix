@@ -23,6 +23,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
+        ClientScript.GetPostBackEventReference(this, string.Empty);
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
         if(Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("")&& !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0,2).Equals("N-")))
         {
@@ -36,9 +37,14 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
+
+
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation", "confirmerAppropriation()", true);
+                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
                 noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation","confirmerAppropriation()", true);
             }
+
+            System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
         }
         Film currentFilm = filmDao.Find(new Film { NoFilm = intDVD })[0];
 
