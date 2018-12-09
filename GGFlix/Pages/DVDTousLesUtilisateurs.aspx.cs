@@ -125,8 +125,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex.ToString());
-            Response.Write(ex);
+            System.Diagnostics.Debug.WriteLine(ex.ToString());            
         }
     }
     //Utilisateur utilSelect = utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(ddlUtilisateur.SelectedValue), NomUtilisateur = ddlUtilisateur.Text })[0];
@@ -314,7 +313,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         Button btnSupprimer = new Button();
                         btnSupprimer.CssClass = "btn btn-danger btn-primary";
                         btnSupprimer.Text = "Supprimer";
-                        //btnSupprimer.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + id + "/" + lstRechercher[j].NoExemplaire;
+                        btnSupprimer.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
                         panBouton.Controls.Add(btnSupprimer);
                         panRow.Controls.Add(panBouton);
                         panel.Controls.Add(panRow);
@@ -333,8 +332,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex.ToString());
-            Response.Write(ex);
+            System.Diagnostics.Debug.WriteLine(ex.ToString());           
         }
     }
 
