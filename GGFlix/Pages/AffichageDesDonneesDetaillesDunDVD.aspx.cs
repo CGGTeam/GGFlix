@@ -143,6 +143,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
          if (currentFilm.VersionEtendue != null) {
             VersionEtendue.Checked = currentFilm.VersionEtendue.Value;
         }
+        //tbNbDisques.Text = currentFilm */
 
     }
 }
