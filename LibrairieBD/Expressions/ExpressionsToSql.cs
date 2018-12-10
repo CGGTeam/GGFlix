@@ -27,6 +27,7 @@ namespace LibrairieBD.Sql
         {
             {@"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} ([AP]M)", "yyyy-MM-dd h:mm:ss tt"},
             {@"\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2}", "dd/MM/yyyy HH:mm:ss"},
+            {@"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", "yyyy-MM-dd HH:mm:ss"}
         };
 
         public static string ToWhereClause<T>(this Expression<Func<T, bool>> predicate)

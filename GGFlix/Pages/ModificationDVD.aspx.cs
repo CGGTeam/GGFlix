@@ -200,20 +200,9 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
 
     public void messageLblGood(string strText, int nbFilms)
     {
-        if (nbFilms >= 1)
-        {
-            if (nbFilms > 1)
-            {
-                lblGood.Text = "Les films : " + filmEnChaine(strText) + " sont ajoutés";
-                lblGood.Visible = true;
-            }
-            else if (nbFilms == 1)
-            {
-                lblGood.Text = "Le film : " + filmEnChaine(strText) + "a été ajouté";
-                lblGood.Visible = true;
-            }
-            Response.Redirect("/Messagerie/0/lstDVD=" + strText);
-        }
+        lblGood.Text = "Le film : " + filmEnChaine(strText) + " a été modifié";
+        lblGood.Visible = true;
+
     }
 
     protected void afficherImage_Click(object sender, EventArgs e)
@@ -228,7 +217,7 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
     public void ajouteFilm()
     {
         Film filmAdd = new Film();
-        filmAdd.NoFilm = currentFilm.NoFilm;
+        filmAdd = currentFilm;
         Producteur prodAjouter = null;
         Realisateur realAjouter = null;
         Format formAjouter = null;
@@ -402,18 +391,28 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
         filmAdd.VersionEtendue = VersionEtendue.Checked;
         filmAdd.FilmOriginal = DVDOriginal.Checked;
         Film film = filmDao.Save(filmAdd);
+        List<FilmActeur> lstFlmActeurs = filmActeurDao.FindAll().Where(v => v.NoFilm == film.NoFilm).ToList();
+        foreach (FilmActeur fa in lstFlmActeurs) filmActeurDao.Delete(fa);
         foreach (Acteur act in lstAct)
         {
-            filmActeurDao.Save(new FilmActeur { NoFilm = film.NoFilm, NoActeur = act.NoActeur });
+            FilmActeur fa = new FilmActeur { NoFilm = film.NoFilm, NoActeur = act.NoActeur };
+            filmActeurDao.Save(fa);
         }
+        List<FilmsSupplements> lstFlmSupplements = filmSupplementDao.FindAll().Where(v => v.NoFilm == film.NoFilm).ToList();
+        foreach (FilmsSupplements fs in lstFlmSupplements) filmSupplementDao.Delete(fs);
         foreach (Supplement suppl in lstSuppl)
         {
-            filmSupplementDao.Save(new FilmsSupplements { NoFilm = film.NoFilm, NoSupplement = suppl.NoSupplement });
+            FilmsSupplements fs = new FilmsSupplements { NoFilm = film.NoFilm, NoSupplement = suppl.NoSupplement };
+            filmSupplementDao.Save(fs);
         }
+        List<FilmsSousTitres> lstFlmSousTitre = filmSousTitreDao.FindAll().Where(v => v.NoFilm == film.NoFilm).ToList();
+        foreach (FilmsSousTitres fst in lstFlmSousTitre) filmSousTitreDao.Delete(fst);
         foreach (SousTitre sTitre in lstSousTitre)
         {
             filmSousTitreDao.Save(new FilmsSousTitres { NoFilm = film.NoFilm, NoSousTitre = sTitre.NoSousTitre });
         }
+        List<FilmsLangue> lstFlmLangue = filmLangueDao.FindAll().Where(v => v.NoFilm == film.NoFilm).ToList();
+        foreach (FilmsLangue fl in lstFlmLangue) filmLangueDao.Delete(fl);
         foreach (Langues lang in lstLangue)
         {
             filmLangueDao.Save(new FilmsLangue { NoFilm = film.NoFilm, NoLangue = lang.NoLangue });

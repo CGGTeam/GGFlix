@@ -53,8 +53,7 @@
                                         <asp:TextBox ID="tbFormat" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></><br />
                                         <asp:TextBox ID="tbNbDisques" TextMode="Number" Width="100%" CssClass="row" Height="26px" runat="server" min="1" max="9999" step="1" MaxLength="4" /><br />
                                         <asp:TextBox ID="tbXtra" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="255"/></><br />
-
-                                            <asp:TextBox TextMode="multiline" runat="server" Style="width:100%;text-wrap:normal;font-size:initial;height: 200px;" CssClass="row" ID="Resume"></asp:TextBox>
+                                        <asp:TextBox TextMode="multiline" runat="server" Style="width:100%;text-wrap:normal;font-size:initial;height: 200px;" CssClass="row" ID="Resume"></asp:TextBox>
 
                                     </div>
 
