@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
 {
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
+    private GenericDao<ValeurPreference> valeurPrefDao = Persistance.GetDao<ValeurPreference>();
     private GenericDao<Exemplaire> exemDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<Film> filmDao = Persistance.GetDao<Film>();
     private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
@@ -21,7 +22,8 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
     int nbPage = -1;
     int ddlSelect = -1;
     int ddlSelectedValue = -1;
-   
+    int maxPage = 10;
+
     string strTitreRechercher = "";
     protected void Page_Load(object sender, EventArgs e)
     {  
@@ -49,8 +51,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             TextBox txtRerchercher = (TextBox)panelSideBar.FindControl("tbRechercher");
             if (txtRerchercher != null)
             {
-                txtRerchercher.Text = Session["recherche"].ToString();
-                Response.Write(" LE TXTBOX = " + Session["recherche"].ToString());
+                txtRerchercher.Text = Session["recherche"].ToString();               
             }            
         }
 
@@ -125,7 +126,8 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex.ToString());            
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+           
         }
     }
     //Utilisateur utilSelect = utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(ddlUtilisateur.SelectedValue), NomUtilisateur = ddlUtilisateur.Text })[0];
@@ -164,7 +166,8 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                 if (ddlListeRecherche != null)
                 {                      
                     ddlSelect = ddlListeRecherche.SelectedIndex;
-                    ddlSelectedValue = int.Parse(ddlListeRecherche.SelectedValue);                                        
+                    ddlSelectedValue = int.Parse(ddlListeRecherche.SelectedValue);  
+                    //ddlListeRecherche.
                     Session["ddlTrier"] = ddlListeRecherche.SelectedIndex;                              
                 }
             }
@@ -204,9 +207,13 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                 {
                     lstRechercher.Add(lstExemp[j]);                   
                 }             
-            }            
-
-            int maxPage = 10;
+            }
+            List<ValeurPreference> lesValeursPrefs = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(7)).ToList();
+           
+            if (lesValeursPrefs.Count > 0)
+            {
+                maxPage = int.Parse(lesValeursPrefs.First().Valeur);
+            }           
             int nbPagePrec = numPage - 1;                        
             decimal page = decimal.Parse(lstRechercher.Count().ToString()) / decimal.Parse(maxPage.ToString());
             nbPage = int.Parse(Math.Ceiling(page).ToString());
@@ -217,9 +224,9 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                    
                     int noExemp = int.Parse(lstRechercher[j].NoExemplaire.ToString());      
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstRechercher[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                    List<EmpruntFilm> lesEmprunts = empruntFilmDao.FindAll().Where(c => c.NoExemplaire.Equals(lstRechercher[j].NoExemplaire)).OrderByDescending(c=>c.DateEmprunt).ToList();
+                    List<EmpruntFilm> lesEmprunts = empruntFilmDao.FindAll().Where(c => c.NoExemplaire.Equals(lstRechercher[j].NoExemplaire)).OrderByDescending(c=>c.DateEmprunt).ToList();                   
                     Utilisateur util = utilDao.Find(new Utilisateur { NoUtilisateur = lesEmprunts.First().NoUtilisateur })[0];
-                    
+                  
                         //Premier DIV
                         Panel panRow = new Panel();
                         panRow.CssClass = "row";
@@ -332,7 +339,8 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex.ToString());           
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          
         }
     }
 
@@ -348,16 +356,16 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         //btnPrec
         panBasDePage.Controls.Add(creationBtnPrec());
 
-        //Première page
-        if (numPage == 1)
-        {
-            //btnPage
-            for (int i = 1; i < 6; i++)
+    
+
+        int intNbPages =  (numPage - 2) > 0 ? (numPage - 2) : 1 ;
+        
+        for (int i = intNbPages; i < (numPage + 3) && i<=nbPage; i++)
             {
                 Button btnPage = new Button();
                 btnPage.ID = "btnPage" + i;
 
-                if (i == 1 || i > nbPage)
+                if (i == numPage || i > nbPage)
                 {
                     btnPage.Enabled = false;
                     btnPage.CssClass = "btn btn-success page-item active";
@@ -369,107 +377,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                 }
                 btnPage.Text = "Page " + i;
                 panBasDePage.Controls.Add(btnPage);
-            }
-        }
-        //Deuxième page
-        else if (numPage == 2)
-        {
-            //btnPage
-            for (int i = 1; i < 6; i++)
-            {
-                Button btnPage = new Button();
-                btnPage.ID = "btnPage" + i;
-                if (i == 2 || i > nbPage)
-                {
-                    btnPage.Enabled = false;
-                    btnPage.CssClass = "btn btn-success page-item active";
-                }
-                else
-                {
-                    btnPage.PostBackUrl = "~/Catalogue/" + i;
-                    btnPage.CssClass = "btn btn-success";
-                }
-                btnPage.Text = "Page " + i;
-                panBasDePage.Controls.Add(btnPage);
-            }
-        }
-        //Dernière page
-        else if (numPage == nbPage)
-        {
-            //btnPage
-            if (nbPage < 5)
-            {
-                for (int i = 1; i < 6; i++)
-                {
-                    Button btnPage = new Button();
-                    btnPage.ID = "btnPage" + i;
-                    if (i == numPage || i > nbPage)
-                    {
-                        btnPage.Enabled = false;
-                        btnPage.CssClass = "btn btn-success page-item active";
-                    }
-                    else
-                    {
-                        btnPage.PostBackUrl = "~/Catalogue/" + i ;
-                        btnPage.CssClass = "btn btn-success";
-                    }
-                    btnPage.Text = "Page " + i;
-                    panBasDePage.Controls.Add(btnPage);
-                }
-            }
-            else
-            {
-                for (int i = nbPage; i > nbPage - 5; i--)
-                {
-                    Button btnPage = new Button();
-                    btnPage.ID = "btnPage" + i;
-                    if (i == numPage || i > nbPage)
-                    {
-                        btnPage.Enabled = false;
-                        btnPage.CssClass = "btn btn-success page-item active";
-                    }
-                    else
-                    {
-                        btnPage.PostBackUrl = "~/Catalogue/" + i; 
-                        btnPage.CssClass = "btn btn-success";
-                    }
-                    btnPage.Text = "Page " + i;
-                    panBasDePage.Controls.Add(btnPage);
-                }
-            }
-        }
-        //Le reste
-        else
-        {
-            if (numPage > nbPage)
-            {
-                Response.Redirect("~/Catalogue/" + (nbPage));
-            }
-            else
-            {
-                //btnPage
-                for (int i = nbPage - 2; i < nbPage + 2; i++)
-                {
-                    Button btnPage = new Button();
-                    btnPage.ID = "btnPage" + i;
-                    btnPage.PostBackUrl = "~/Catalogue/" + i;
-                    if (i == numPage || i > nbPage)
-                    {
-                        btnPage.Enabled = false;
-                        btnPage.CssClass = "btn btn-success page-item active";
-                    }
-                    else
-                    {
-                        btnPage.PostBackUrl = "~/Catalogue/" + i;
-                        btnPage.CssClass = "btn btn-success";
-                    }
-                    btnPage.Text = "Page " + i;
-                    panBasDePage.Controls.Add(btnPage);
-                }
-            }
-
-        }
-
+            } 
         //btnNext
         panBasDePage.Controls.Add(creationBtnNext());
         //btnLast
@@ -511,7 +419,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         }
         else
         {
-            btnNext.PostBackUrl = "~/Catalogue/" + (nbPage +1); 
+            btnNext.PostBackUrl = "~/Catalogue/" + (numPage +1); 
             btnNext.CssClass = "btn btn-success";
         }
         btnNext.Text = ">";
@@ -529,7 +437,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         }
         else
         {
-            btnPrec.PostBackUrl = "~/Catalogue/" + (nbPage - 1);
+            btnPrec.PostBackUrl = "~/Catalogue/" + (numPage - 1);
             btnPrec.CssClass = "btn btn-success";
         }
         btnPrec.Text = "<";

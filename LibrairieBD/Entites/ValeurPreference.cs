@@ -13,5 +13,7 @@ namespace LibrairieBD.Entites
         [Id]
         [ColumnMapping]
         public int? NoPreference { get; set; }
+        [ColumnMapping]
+        public string Valeur { get; set; }
     }
 }
