@@ -16,8 +16,9 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
     private GenericDao<SousTitre> soustitreDao = Persistance.GetDao<SousTitre>();
     private GenericDao<Acteur> actDao = Persistance.GetDao<Acteur>();
     private GenericDao<Langues> langDao = Persistance.GetDao<Langues>();
-    private GenericDao<Format> formatDao = Persistance.GetDao<Format>();
     private GenericDao<Supplement> supplDao = Persistance.GetDao<Supplement>();
+    private GenericDao<Format> formatDao = Persistance.GetDao<Format>();
+
 
     private GenericDao<Exemplaire> exempDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<FilmActeur> filmActeurDao = Persistance.GetDao<FilmActeur>();
