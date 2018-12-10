@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="AffichageDesDonneesDetaillesDunDVD.aspx.cs" Inherits="AffichageDesDonneesDetaillesDunDVD" Culture="fr-FR" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="SuppressionDunDVD.aspx.cs" Inherits="SuppressionDunDVD" Culture="fr-FR" %>
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" href="/Static/css/main.css" />
     <meta charset="UTF-8">
@@ -6,15 +6,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     
     <script type="text/javascript">
-    function confirmerAppropriation() {
-        var Result = confirm("Êtes-vous certain de vouloir vous appropriez ce dvd?");
+    function confirmerRetrait() {
+        var Result = confirm("Êtes-vous certain de vouloir supprimer ce dvd?");
         if (Result == true) {
-            __doPostBack('txtConfirmRetour', "Approprier"); //sending back to server.
+            __doPostBack('txtConfirmRetour', "Retrait"); //sending back to server.
             return true;
         }
         else 
         {
-
+            //document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
              return false;
         }
     }

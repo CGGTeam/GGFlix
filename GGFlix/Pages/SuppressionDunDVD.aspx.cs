@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
+public partial class SuppressionDunDVD : System.Web.UI.Page
 {
     int intDVD = 0;
     int intExemplaire = 0;
@@ -37,37 +37,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
         intExemplaire = Convert.ToInt32(Page.RouteData.Values["noExemp"]);
         Film currentFilm = filmDao.Find(new Film { NoFilm = intDVD })[0];
-        if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("") && !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0, 2).Equals("N-")))
-        {
-            string target = Request["__EVENTTARGET"].ToString();
-            string argument = Request["__EVENTARGUMENT"].ToString();
-            String id = HttpContext.Current.User.Identity.Name;
-            if (target != null && argument.Split(':')[0].Equals("Approprier"))
-            {
-                EmpruntFilm empF = empruntFilmDao.FindAll().Where(exem => (exem.NoExemplaire == intExemplaire) && (exem.NoUtilisateur ==
-                    utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur)).FirstOrDefault();
-                // On lui donnera le dvd dans BDD
-                if (empF != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("entre");
-                    empF.DateEmprunt = DateTime.Now;
-                    empruntFilmDao.Save(empF);
-                }
-                else {
-                    empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur = utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur, DateEmprunt = DateTime.Now });
-                    
-                }
-
-            }
-            else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
-            {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation", "confirmerAppropriation()", true);
-                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
-                noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
-            }
-
-            System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
-        }
+        
         
         // Colonne 1
         if (currentFilm.ImagePochette.ToString().Trim().Length == 0 || currentFilm.ImagePochette == null)
@@ -141,7 +111,48 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
          if (currentFilm.VersionEtendue != null) {
             VersionEtendue.Checked = currentFilm.VersionEtendue.Value;
         }
-        //tbNbDisques.Text = currentFilm */
+        tbNbDisques.Text = currentFilm.NbDisques.ToString();
+        if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("") && !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0, 2).Equals("N-")))
+        {
+            string target = Request["__EVENTTARGET"].ToString();
+            string argument = Request["__EVENTARGUMENT"].ToString();
+            String id = HttpContext.Current.User.Identity.Name;
+            if (target != null && argument.Split(':')[0].Equals("Retrait"))
+            {
+                foreach (FilmsLangue filmL in filmLangueDao.Find(new FilmsLangue { NoFilm = intDVD }))
+                {
+                    filmLangueDao.Delete(filmL);
+                }
+                foreach (FilmsSousTitres filmS in filmSousTitreDao.Find(new FilmsSousTitres { NoFilm = intDVD }))
+                {
+                    filmSousTitreDao.Delete(filmS);
+                }
+                foreach (FilmsSupplements filmSS in filmSupplementDao.Find(new FilmsSupplements { NoFilm = intDVD }))
+                {
+                    filmSupplementDao.Delete(filmSS);
+                }
+                foreach (FilmActeur actF in filmActeurDao.Find(new FilmActeur { NoFilm = intDVD }))
+                {
+                    filmActeurDao.Delete(actF);
+                }
+                filmDao.Delete(currentFilm);
 
+
+                foreach (EmpruntFilm empF in empruntFilmDao.Find(new EmpruntFilm {NoExemplaire=intExemplaire}))
+                {
+                    empruntFilmDao.Delete(empF);
+                }
+                exemDao.Delete(exemDao.Find(new Exemplaire { NoExemplaire = intExemplaire }).First());
+
+            }
+            else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "suppression", "confirmerRetrait()", true);
+                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
+                noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
+            }
+
+            System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
+        }
     }
 }

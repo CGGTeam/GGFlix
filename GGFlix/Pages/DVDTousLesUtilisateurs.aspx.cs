@@ -167,7 +167,6 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                 {                      
                     ddlSelect = ddlListeRecherche.SelectedIndex;
                     ddlSelectedValue = int.Parse(ddlListeRecherche.SelectedValue);  
-                    //ddlListeRecherche.
                     Session["ddlTrier"] = ddlListeRecherche.SelectedIndex;                              
                 }
             }
@@ -307,6 +306,15 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         panRow.Controls.Add(panBouton);
                         panel.Controls.Add(panRow);
                         panel.Controls.Add(new LiteralControl("<hr />"));
+
+                        if (currentUser.TypeUtilisateur.Equals("S")) {
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
+                            Button btnSupprimer = new Button();
+                            btnSupprimer.CssClass = "btn btn-danger btn-primary";
+                            btnSupprimer.Text = "Supprimer";
+                            btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
+                            panBouton.Controls.Add(btnSupprimer);
+                        }
                     }
                     else
                     {
@@ -320,7 +328,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         Button btnSupprimer = new Button();
                         btnSupprimer.CssClass = "btn btn-danger btn-primary";
                         btnSupprimer.Text = "Supprimer";
-                        btnSupprimer.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
+                        btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
                         panBouton.Controls.Add(btnSupprimer);
                         panRow.Controls.Add(panBouton);
                         panel.Controls.Add(panRow);
