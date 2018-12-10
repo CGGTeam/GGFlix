@@ -239,7 +239,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
                 lblGood.Text = "Le film : " + filmEnChaine(strText) + "a été ajouté";
                 lblGood.Visible = true;
             }
-            // Un courriel doit être envoyé ici
+            Response.Redirect("/Messagerie/0/lstDVD=" + strText);
         }
     }
 

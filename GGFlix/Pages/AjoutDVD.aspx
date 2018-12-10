@@ -3,6 +3,21 @@
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" href="/Static/css/main.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script>
+        function envoyerMessage(idFilm) {
+            var test = document.createElement('formMess');
+            document.body.appendChild(test);
+            test.method = 'post';
+            test.action = '';
+            var apasser = document.createElement('lstDvd');
+            apasser.Type = 'hidden';
+            apasser.name = 'uneListe';
+            apasser.value = idFilm;
+            test.appendChild(apasser)
+            test.submit();
+
+        }
+    </script>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
     <div class="mt-3">
