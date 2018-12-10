@@ -159,7 +159,8 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                       List<Film> film = filmDao.FindAll()
                           .Where(v => v.NoFilm.Value  int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)));*/
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                    Utilisateur util = utilDao.Find(new Utilisateur { NoUtilisateur = int.Parse(lstExemp[j].NoUtilisateurProprietaire.ToString()) })[0];
+                    Utilisateur util = utilDao.Find(new Utilisateur { NoUtilisateur = empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = lstExemp[j].NoExemplaire }).OrderByDescending(v => v.DateEmprunt).First().NoUtilisateur })[0];
+
 
                     if (film.TitreFrancais.Contains(strTitreRechercher))
                     {

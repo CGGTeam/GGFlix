@@ -122,7 +122,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
             if (filmLangue != null)
             txtLangue.Text = langueDao.Find(new Langues { NoLangue = filmLangue.NoLangue })[0].Langue;
         }
-        //tbNbDisques.Text = currentFilm */
+        tbNbDisques.Text = currentFilm.NbDisques.ToString();
 
     }
 }
