@@ -1,8 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="AffichageDesDonneesDetaillesDunDVD.aspx.cs" Inherits="AffichageDesDonneesDetaillesDunDVD" Culture="fr-FR" %>
 <asp:Content runat="server" ContentPlaceHolderID="Head">
-    <link rel="stylesheet" href="/Static/css/main.css"/>
-</asp:Content>
-<asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+    <link rel="stylesheet" href="/Static/css/main.css" />
+    <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     
     <script type="text/javascript">
     function confirmerAppropriation() {
@@ -33,64 +34,127 @@
              return false;
         }
     }
-    </script>  
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </script> 
+</asp:Content>
 
-	<div class="card">
-		<div class="card-body">
-		    <div class="row" style="margin-left: 15%">
-		        <div class="col-xs-2 col-md-3 d-flex flex-wrap align-items-center">
-		            <asp:image id="imageFilm" cssClass="img-responsive " width="75%" height="60%" alt="prewiew" runat="server"/>
-		        </div>
-		        <div class="col-xs-4 col-md-4">
-		            <h4 class="product-name"></h4>
-		            <h4><small><asp:Label id="lblAnneeSortie" AssociatedControlId="AnneeSortie" Text="Année de sortie" runat="server"/>
-                        <asp:TextBox id="AnneeSortie" Text="2007" runat="server" /></small></h4>
-		            <h4><small><asp:Label id="lblCategorieFilm" Text="Catégorie" AssociatedControlId="categorieddl" runat="server"/>
-                        <asp:DropDownList id="categorieddl" runat="server" /></small>
-		            </h4>
-                    <h4><small><asp:Label id="lblDerniereMiseJourLe" AssociatedControlId="DerniereMiseJourLe" Text="Dernière mise à jour le" runat="server"/><asp:TextBox id="DerniereMiseJourLe" Text="2018-11-14" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblDerniereMiseJourPar" AssociatedControlId="DerniereMiseJourPar" Text="Dernière mise à jour par" runat="server"/><asp:TextBox id="DerniereMiseJourPar" Text="Nikola Jouanik" runat="server" /></small></h4>
-                    <h4><small><asp:Label id="lblDescriptionSupplementDispo" AssociatedControlId="DescriptionSupplementDispo" Text="Description de trois suppléments disponibles" runat="server"/>
-                        <asp:DropDownList id="DescriptionSupplementDispo" runat="server"/>
-                            </small></h4>
-                    <h4><small><asp:Label id="lblDureeFilm" AssociatedControlId="DureeFilm" Text="Durée du film" runat="server"/>
-                        <asp:TextBox id="DureeFilm" TextMode="Number" Text="200"  runat="server" min="0" max="400" step="1" MaxLength="3"/></small></h4>
-                    <h4><small><asp:Label id="lblDVDOriginal" AssociatedControlId="DVDOriginal" Text="Est-ce un dvd original" runat="server"/><asp:CheckBox id="DVDOriginal" runat="server" /></small></h4>
-                        <asp:Label id="lblResume" AssociatedControlId="Resume" Text="Résumé du film" runat="server"/>
-                    <div style="overflow: auto;">
-                     <asp:TextBox textmode="multiline" runat="server" style="width:400px; height:200px;" ID="Resume" Text="Une histoire d'amour qui se déroule au milieu des années 60 et des manifestations anti-guerre, de la lutte pour la liberté d'expression et les droits civiques, l'exploration des esprits et le rock'n roll. Le film nous fait voyager des Universités du Massachussetts et de l'Ohio, aux émeutes de Détroit et aux champs de batailles du Vietnam, en passant par les docks de Liverpool. Les amants Jude (Jim Sturgess) et Lucy (Evan Rachel Wood) se retrouvent, en compagnie d'une bande de musiciens et d'amis"></asp:TextBox>
+ 
 
+<asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+    <asp:Panel ID="unBloc" CssClass="mt-3" runat="server">
+        <div class="container-fluid">
+            <div class="row flex-column h-100 justify-content-center align-items-center">
+                <div class="col text-center">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row" style="margin-left: 10%">
+                                    <div class="col-xs-2 col-md-2" style="align-items: center;">
+                                        <asp:Image ID="imageFilm" CssClass="img-responsive" Style="margin:auto;display:block;" AlternateText="imagePlaceHolder" Width="140px" Height="208px" runat="server" />
+                                        <br />
+                                        <asp:Label ID="lblProprio" runat="server" Width="100%" Style="font-size: initial" /><br />
+                                        <asp:Label ID="lblEmprunteur" runat="server" Width="100%" Style="font-size: initial" /><br />
+                                        <asp:Label ID="lblUtilisateurMAJ" runat="server" Width="100%" Style="font-size: initial" /><br />
+                                        <asp:Label ID="lblDateMAJ" runat="server" Width="100%" Style="font-size: initial" /><br />
+                                            <br />
+                                    </div>
+                                    <div class="col-xs-1 col-md-2">
+                                        <asp:Label ID="lblTitreFrancais" Text="Titre français" runat="server" Style="font-size: initial" CssClass="row" Height="26px"/><br />
+                                        <br />
+                                        <asp:Label ID="lblTitreOriginal" Text="Titre original" Style="font-size: initial" runat="server" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <asp:Label ID="lblNomProducteur" Text="Producteur" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+
+                                        <asp:Label ID="lblNomRealisateur" Text="Réalisateur" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <asp:Label ID="lblAnneeSortie" Text="Année de sortie" Style="font-size: initial" runat="server" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <asp:Label ID="lblCategorieFilm" Text="Catégorie" Style="font-size: initial" runat="server" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <asp:Label ID="lblDureeFilm" Text="Durée du film" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <asp:Label ID="lblFormat" Text="Format" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />                                        
+                                        <asp:Label ID="lblNbDisques" Text="Nombre de disques" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <asp:Label ID="lblResume" Text="Résumé du film" runat="server" Style="font-size: initial" CssClass="row" Height="26px" />
+                                    </div>
+                                    <div class="col-xs-2 col-md-2">
+                                        <asp:Label ID="TitreFrancais" Style="font-size: initial" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50" /><br /><br />
+                                        <asp:Label ID="TitreOriginal" Style="font-size: initial" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/><br /><br />
+                                        <asp:Label ID="NomProducteur" Style="font-size: initial" Text="" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></><br /><br />
+                                        <asp:Label ID="NomRealisateur" Style="font-size: initial" Text="" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></><br /><br />
+                                        <asp:Label ID="AnneeSortie" Style="font-size: initial" runat="server" TextMode="Number" Width="100%" CssClass="row" Height="26px" min="1895" MaxLength="4" /><br /><br />
+                                        <asp:Label ID="tbCategorie" Style="font-size: initial" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/> <br /><br />
+                                        <asp:Label ID="DureeFilm" Style="font-size: initial" TextMode="Number"  CssClass="row" runat="server" Height="26px" min="0" max="9999" step="1" MaxLength="4" Width="100%" /><br /><br />
+                                        <asp:Label ID="tbFormat" Style="font-size: initial" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></><br /><br />
+                                        <asp:Label ID="tbNbDisques" Style="font-size: initial" TextMode="Number" Width="100%" CssClass="row" Height="26px" runat="server" min="1" max="9999" step="1" MaxLength="4" /><br /><br />
+                                            <asp:Label TextMode="multiline" runat="server" Style="width:100%;text-wrap:normal;font-size:initial" CssClass="row" ID="Resume"></asp:Label>
+
+                                    </div>
+
+                                    <div class="col-xs-1 col-md-2">
+                                        <asp:Label ID="lblNomActeurs" Text="Acteur/Actrice" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <asp:Label ID="lblDescriptionSupplementDispo" Style="font-size: initial" Text="Suppléments" runat="server" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <asp:Label ID="lblSousTitre" Text="Sous-titres" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <asp:Label ID="lblLangue" Text="Langue" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <asp:Label ID="lblDVDOriginal" Text="DVD Original" runat="server" Style="font-size: initial" CssClass="row" Height="26px" /><br />
+                                        <br />
+                                        <asp:Label ID="lblVersionEtendue" Text="Version étendue" Style="font-size: initial" CssClass="row" Height="26px" runat="server" /><br />
+                                        <br />
+                                    </div>
+
+                                    <div class="col-xs-2 col-md-2">
+                                        <asp:Label ID="tbNomActeur1" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="50"/><br /> est une femme <asp:CheckBox Enabled="false" ID="estFemme1" runat="server" /><br />
+                                        <asp:Label ID="tbNomActeur2" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="50"/><br /> est une femme <asp:CheckBox Enabled="false" ID="estFemme2" runat="server" /><br />
+                                        <asp:Label ID="tbNomActeur3" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="50"/><br /> est une femme <asp:CheckBox Enabled="false" ID="estFemme3" runat="server" /><br /><br />
+                                        <asp:Label ID="tbSupplement1" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="50"/><br /><br />
+                                        <asp:Label ID="tbSupplement2" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="50"/><br /><br />
+                                        <asp:Label ID="tbSupplement3" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="50"/><br /><br />
+                                        <asp:Label ID="tbSousTitre1" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="10"/><br /><br />
+                                        <asp:Label ID="tbSousTitre2" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="10"/><br /><br />
+                                        <asp:Label ID="tbSousTitre3" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="10"/><br /><br />
+                                        <asp:Label ID="tbLangue1" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="10"/><br /><br />
+                                        <asp:Label ID="tbLangue2" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="10"/><br /><br />
+                                        <asp:Label ID="tbLangue3" runat="server" Width="100%" Style="font-size: initial" CssClass="row" Height="26px" MaxLength="10"/><br /><br /><br />
+                                        <asp:CheckBox ID="DVDOriginal" runat="server" CssClass="row" Height="26px" Enabled="false"/><br /><br />
+                                        <asp:CheckBox ID="VersionEtendue" runat="server" CssClass="row" Height="26px" Enabled="false"/><br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <br />
+                        <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"
+                        OnClientClick="JavaScript:window.history.back(1);return false;"></asp:button>
                     </div>
-                  
-		        </div>
-		         <div class="col-xs-6 col-md-4">
-                	<h4><small><asp:Label id="lblNomProducteur" AssociatedControlId="NomProducteur" Text="Nom du producteur" runat="server"/><asp:TextBox id="NomProducteur" Text="Edward S. Feldman" runat="server" /></small></h4>
-		            <h4><small><asp:Label id="lblNomRealisateur" AssociatedControlId="NomRealisateur" Text="Nom du réalisateur" runat="server"/><asp:TextBox id="NomRealisateur" Text="Francis Ford Coppola" runat="server" /></small></h4>
-                <h4><small><asp:Label id="lblNomActeurs" AssociatedControlId="NomActeurs" Text="Nom des trois princiaux acteurs/actrices" runat="server"/><asp:DropDownList id="NomActeurs" runat="server" /></small></h4>               
-                <h4><small><asp:Label id="lblSousTitre" AssociatedControlId="SousTitre" Text="Sous-Titres" runat="server"/>
-                    <asp:DropDownList id="SousTitre" runat="server" /></small></h4>
-                <h4><small><asp:Label id="lblTitreFrancais" AssociatedControlId="TitreFrancais" Text="Titre-français" runat="server"/><asp:TextBox id="TitreFrancais" Text="À travers l'univers" runat="server" /></small></h4>
-                <h4><small><asp:Label id="lblTitreOriginal" AssociatedControlId="TitreOriginal" Text="Titre original" runat="server"/><asp:TextBox id="TitreOriginal" Text="Across the Universe" runat="server" /></small></h4>
-                <h4><small><asp:Label id="lblProprietaire" AssociatedControlId="Proprietaire" Text="Utilisateur ayant acheté le DVD (propriétaire)" runat="server"/><asp:TextBox id="Proprietaire" runat="server" Text="Francis Perro" /></small></h4>
-                <h4><small><asp:Label id="lblEmprunteur" AssociatedControlId="Emprunteur" Text="Utilisateur ayant le DVD en main (emprunteur)" runat="server"/><asp:TextBox id="Emprunteur" runat="server" Text="Raphael Plèbois" /></small></h4>
-                <h4><small><asp:Label id="lblVersionEtendue" AssociatedControlId="VersionEtendue" Text="Version étendue ?" runat="server"/><asp:CheckBox id="VersionEtendue" runat="server" /></small></h4>
-                <h4><small><asp:Label id="lblVisibleTous" AssociatedControlId="VisibleTous" Text="Visible à tous ?" runat="server"/><asp:CheckBox id="VisibleTous" runat="server" /></small></h4>
-                <h4><small><asp:Label id="lblFormat" AssociatedControlId="txtFormat" Text="Format" runat="server"/>
-                    <asp:TextBox id="txtFormat" runat="server"/></small></h4>        
-                <h4><small><asp:Label id="lblLangue" AssociatedControlId="txtLangue" Text="Langue" runat="server"/>
-                     <asp:TextBox id="txtLangue" runat="server"/></small></h4>                    
-                <h4><small><asp:Label id="lblNbDisques" AssociatedControlId="tbNbDisques" Text="Nombre de disques" runat="server"/>
-                <asp:TextBox id="tbNbDisques" TextMode="Number" Text="2"  runat="server" min="0" max="15" step="1" MaxLength="2"/></small></h4>
-		        </div>
-		    </div>
-		</div>
-	</div>
-	<br/>
-	 <div align="center">
-		<a href="/MesDVD/1" class="btn btn-success">Afficher liste de DVD</a>
-	</div>
 
+            </div>
+
+        </div>
+</asp:Panel>
 </asp:Content>
