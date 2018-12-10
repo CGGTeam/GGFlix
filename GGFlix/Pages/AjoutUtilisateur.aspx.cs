@@ -28,11 +28,13 @@ public partial class Pages_AjoutUtilisateur : System.Web.UI.Page
         {
             id = int.Parse(Page.RouteData.Values["id"].ToString());
             utilModifie = daoUtil.Find(new Utilisateur {NoUtilisateur = id}).Premier();
-            
+
             if (utilModifie == null)
             {
                 throw new HttpException((int)HttpStatusCode.NotFound, "Utilisateur introuvable");
             }
+
+            Page.Title = "Modification du compte de " + utilModifie.NomUtilisateur;
 
             if (IsPostBack) return;
             
@@ -47,6 +49,8 @@ public partial class Pages_AjoutUtilisateur : System.Web.UI.Page
         }
         else if (!IsPostBack)
         {
+            Page.Title = "Ajout d'un utilisateur";
+            
             litMode.Text = "Ajout";
             ddlTypeUtilisateur.SelectedValue = "U";
         }

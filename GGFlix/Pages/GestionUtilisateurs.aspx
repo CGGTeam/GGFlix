@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="GestionUtilisateurs.aspx.cs" Inherits="GestionUtilisateurs" Culture="fr-FR" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" Title="Gestion des utilisateurs" AutoEventWireup="true" CodeFile="GestionUtilisateurs.aspx.cs" Inherits="GestionUtilisateurs" Culture="fr-FR" %>
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
