@@ -57,6 +57,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
                     empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur = utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur, DateEmprunt = DateTime.Now });
                     
                 }
+                backButton.OnClientClick = "JavaScript:window.history.back(2);return false;";
 
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
