@@ -231,40 +231,40 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
         List<SousTitre> lstSousTitre = new List<SousTitre>();
         List<Langues> lstLangue = new List<Langues>();
         //Langues
-        if (NomProducteur.Text.Trim() != "" && prodDao.Find(new Producteur { Nom = NomProducteur.Text.Trim() }).Count > 0)
+        if (NomProducteur.Text.Trim() != "" && prodDao.Find(new Producteur { Nom = NomProducteur.Text.Trim().Replace("'","''") }).Count > 0)
         {
-            prodAjouter = prodDao.Find(new Producteur { Nom = NomProducteur.Text.Trim() }).First();
+            prodAjouter = prodDao.Find(new Producteur { Nom = NomProducteur.Text.Trim().Replace("'", "''") }).First();
         }
         else if (NomProducteur.Text.Trim() != "")
         {
-            prodAjouter = prodDao.Save(new Producteur { Nom = NomProducteur.Text.Trim() });
+            prodAjouter = prodDao.Save(new Producteur { Nom = NomProducteur.Text.Trim().Replace("'", "''") });
         }
         //Realisateur
-        if (NomRealisateur.Text.Trim() != "" && realDao.Find(new Realisateur { Nom = NomRealisateur.Text.Trim() }).Count > 0)
+        if (NomRealisateur.Text.Trim() != "" && realDao.Find(new Realisateur { Nom = NomRealisateur.Text.Trim().Replace("'", "''") }).Count > 0)
         {
-            realAjouter = realDao.Find(new Realisateur { Nom = NomRealisateur.Text.Trim() }).First();
+            realAjouter = realDao.Find(new Realisateur { Nom = NomRealisateur.Text.Trim().Replace("'", "''") }).First();
         }
         else if (NomRealisateur.Text.Trim() != "")
         {
-            realAjouter = realDao.Save(new Realisateur { Nom = NomRealisateur.Text.Trim() });
+            realAjouter = realDao.Save(new Realisateur { Nom = NomRealisateur.Text.Trim().Replace("'", "''") });
         }
         //Catégorie
-        if (tbCategorie.Text.Trim() != "" && catDao.Find(new Categorie { Description = tbCategorie.Text.Trim() }).Count > 0)
+        if (tbCategorie.Text.Trim() != "" && catDao.Find(new Categorie { Description = tbCategorie.Text.Trim().Replace("'", "''") }).Count > 0)
         {
-            catAjouter = catDao.Find(new Categorie { Description = tbCategorie.Text.Trim() }).First();
+            catAjouter = catDao.Find(new Categorie { Description = tbCategorie.Text.Trim().Replace("'", "''") }).First();
         }
         else if (tbCategorie.Text.Trim() != "")
         {
-            catAjouter = catDao.Save(new Categorie { Description = tbCategorie.Text.Trim() });
+            catAjouter = catDao.Save(new Categorie { Description = tbCategorie.Text.Trim().Replace("'", "''") });
         }
         //Format
-        if (tbFormat.Text.Trim() != "" && formatDao.Find(new Format { Description = tbFormat.Text.Trim() }).Count > 0)
+        if (tbFormat.Text.Trim() != "" && formatDao.Find(new Format { Description = tbFormat.Text.Trim().Replace("'", "''") }).Count > 0)
         {
-            formAjouter = formatDao.Find(new Format { Description = tbFormat.Text.Trim() }).First();
+            formAjouter = formatDao.Find(new Format { Description = tbFormat.Text.Trim().Replace("'", "''") }).First();
         }
         else if (tbFormat.Text.Trim() != "")
         {
-            formAjouter = formatDao.Save(new Format { Description = tbFormat.Text.Trim() });
+            formAjouter = formatDao.Save(new Format { Description = tbFormat.Text.Trim().Replace("'", "''") });
         }
         // Acteurs
         for (int i = 1; i <= 3; i++)
@@ -273,9 +273,9 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
             CheckBox cbFemme = (CheckBox)unBloc.FindControl("estFemme" + i);
             if (tbActeur.Text.Trim() != "")
             {
-                if (actDao.Find(new Acteur { Nom = tbActeur.Text.Trim() }).Count > 0)
+                if (actDao.Find(new Acteur { Nom = tbActeur.Text.Trim().Replace("'", "''") }).Count > 0)
                 {
-                    Acteur act = actDao.Find(new Acteur { Nom = tbActeur.Text.Trim() }).First();
+                    Acteur act = actDao.Find(new Acteur { Nom = tbActeur.Text.Trim().Replace("'", "''") }).First();
                     lstAct.Add(act);
                 }
                 else
@@ -285,7 +285,7 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
                     {
                         sexe = 'F';
                     }
-                    Acteur act = actDao.Save(new Acteur { Nom = tbActeur.Text.Trim(), Sexe = sexe.ToString() });
+                    Acteur act = actDao.Save(new Acteur { Nom = tbActeur.Text.Trim().Replace("'", "''"), Sexe = sexe.ToString() });
                     lstAct.Add(act);
                 }
             }
@@ -296,14 +296,14 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
             TextBox tbSuppl = (TextBox)unBloc.FindControl("tbSupplement" + i);
             if (tbSuppl.Text.Trim() != "")
             {
-                if (supplDao.Find(new Supplement { Description = tbSuppl.Text.Trim() }).Count > 0)
+                if (supplDao.Find(new Supplement { Description = tbSuppl.Text.Trim().Replace("'", "''") }).Count > 0)
                 {
-                    Supplement suppl = supplDao.Find(new Supplement { Description = tbSuppl.Text.Trim() }).First();
+                    Supplement suppl = supplDao.Find(new Supplement { Description = tbSuppl.Text.Trim().Replace("'", "''") }).First();
                     lstSuppl.Add(suppl);
                 }
                 else
                 {
-                    Supplement suppl = supplDao.Save(new Supplement { Description = tbSuppl.Text.Trim() });
+                    Supplement suppl = supplDao.Save(new Supplement { Description = tbSuppl.Text.Trim().Replace("'", "''") });
                     lstSuppl.Add(suppl);
                 }
             }
@@ -314,14 +314,14 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
             TextBox tbSousTitre = (TextBox)unBloc.FindControl("tbSousTitre" + i);
             if (tbSousTitre.Text.Trim() != "")
             {
-                if (soustitreDao.Find(new SousTitre { LangueSousTitre = tbSousTitre.Text.Trim() }).Count > 0)
+                if (soustitreDao.Find(new SousTitre { LangueSousTitre = tbSousTitre.Text.Trim().Replace("'", "''") }).Count > 0)
                 {
-                    SousTitre sous = soustitreDao.Find(new SousTitre { LangueSousTitre = tbSousTitre.Text.Trim() }).First();
+                    SousTitre sous = soustitreDao.Find(new SousTitre { LangueSousTitre = tbSousTitre.Text.Trim().Replace("'", "''") }).First();
                     lstSousTitre.Add(sous);
                 }
                 else
                 {
-                    SousTitre sous = soustitreDao.Save(new SousTitre { LangueSousTitre = tbSousTitre.Text.Trim() });
+                    SousTitre sous = soustitreDao.Save(new SousTitre { LangueSousTitre = tbSousTitre.Text.Trim().Replace("'", "''") });
                     lstSousTitre.Add(sous);
                 }
             }
@@ -334,12 +334,12 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
             {
                 if (langDao.Find(new Langues { Langue = tbLangue.Text.Trim() }).Count > 0)
                 {
-                    Langues lang = langDao.Find(new Langues { Langue = tbLangue.Text.Trim() }).First();
+                    Langues lang = langDao.Find(new Langues { Langue = tbLangue.Text.Trim().Replace("'", "''") }).First();
                     lstLangue.Add(lang);
                 }
                 else
                 {
-                    Langues lang = langDao.Save(new Langues { Langue = tbLangue.Text.Trim() });
+                    Langues lang = langDao.Save(new Langues { Langue = tbLangue.Text.Trim().Replace("'", "''") });
                     lstLangue.Add(lang);
                 }
             }
