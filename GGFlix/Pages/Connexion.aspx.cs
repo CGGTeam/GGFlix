@@ -58,7 +58,7 @@ public partial class Pages_Connexion : System.Web.UI.Page
         catch (FormatException)
         {
             divErreurs.Visible = true;
-            lblErreur.Text = "Mot de passe doit être un nombre";
+            lblErreur.Text = "Nom d'utilisateur ou mot de passe invalide.";
 
             return false;
         }

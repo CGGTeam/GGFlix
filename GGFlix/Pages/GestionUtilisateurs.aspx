@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="GestionUtilisateurs.aspx.cs" Inherits="GestionUtilisateurs" Culture="fr-FR" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" Title="Gestion des utilisateurs" AutoEventWireup="true" CodeFile="GestionUtilisateurs.aspx.cs" Inherits="GestionUtilisateurs" Culture="fr-FR" %>
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
@@ -22,6 +22,6 @@
     </table>
     <br />
     <div align="center">
-        <a href="/Utilisateur/Ajout" class="btn btn-success">Ajout d'un utilisateur</a>
+        <a href="/Admin/Utilisateur/Ajout" class="btn btn-success">Ajout d'un utilisateur</a>
     </div>
 </asp:Content>

@@ -14,8 +14,8 @@
             new Route("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx"),
             new Route("MessagerieRoute", "Messagerie/{id}/{action}", "~/Pages/EnvoiCourriel.aspx"),
             new Route("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx"),
-            new Route("AjoutUtilisateur", "Utilisateur/Ajout", "~/Pages/GestionUtilisateurs.aspx"),
-            new Route("ModifUtilisateur", "Utilisateur/Modifier/{id}", "~/Pages/GestionUtilisateurs.aspx"),
+            new Route("AjoutUtilisateur", "Admin/Utilisateur/Ajout", "~/Pages/AjoutUtilisateur.aspx"),
+            new Route("ModifUtilisateur", "Admin/Utilisateur/Modifier/{id}", "~/Pages/AjoutUtilisateur.aspx"),
             new Route("MonCompte", "MonCompte", "~/Pages/PersonnalisationEnv.aspx"),
             new Route("ModifDVD", "modifDVD/{id}", "~/Pages/ModificationDVD.aspx"),
         };

@@ -23,7 +23,7 @@ namespace LibrairieBD.Sql
             { "\"", "\'" },
         };
 
-        private static readonly Dictionary<string, string> supportedDateTimePatterns = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> SupportedDateTimePatterns = new Dictionary<string, string>
         {
             {@"\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} ([AP]M)", "yyyy-MM-dd h:mm:ss tt"},
             {@"\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2}", "dd/MM/yyyy HH:mm:ss"},
@@ -40,7 +40,7 @@ namespace LibrairieBD.Sql
             string pattern = $@"\b{paramName}\b";
             Regex rexp = new Regex(pattern);
 
-            foreach (var combo in supportedDateTimePatterns)
+            foreach (var combo in SupportedDateTimePatterns)
             {
                 string regex = combo.Key;
                 string correspondingFormat = combo.Value;

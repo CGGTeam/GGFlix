@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/Static/css/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/Static/css/pageMaitre.css"/>
     
+    <link rel="shortcut icon" type="image/x-icon" href="/Static/img/favicon.ico" />
 
     <asp:ContentPlaceHolder id="Head" runat="server">
     </asp:ContentPlaceHolder>
