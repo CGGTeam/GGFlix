@@ -12,7 +12,7 @@
             new Route("UtilRoute", "Utilisateur/{page}/{indexDdl}", "~/Pages/DVDAutreUtil.aspx"),
             new Route("MesDVDSRoute", "MesDVD/{id}", "~/Pages/affichageDVDEnMain.aspx"),
             new Route("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx"),
-            new Route("MessagerieRoute", "Messagerie/{id}", "~/Pages/EnvoiCourriel.aspx"),
+            new Route("MessagerieRoute", "Messagerie/{id}/{action}", "~/Pages/EnvoiCourriel.aspx"),
             new Route("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx"),
             new Route("AjoutUtilisateur", "Admin/Utilisateur/Ajout", "~/Pages/AjoutUtilisateur.aspx"),
             new Route("ModifUtilisateur", "Admin/Utilisateur/Modifier/{id}", "~/Pages/AjoutUtilisateur.aspx"),
