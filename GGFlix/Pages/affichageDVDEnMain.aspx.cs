@@ -55,29 +55,23 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
                 {
                     lstEmpruntsCurrent.Add(lesEmprunts.First());
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lesEmprunts.First().NoExemplaire.ToString().Substring(0, 6)) })[0];
-                    Response.Write(" LE FILM " + film.TitreFrancais + "NOEXEMPLAIRE ==== " + lesEmprunts.First().NoExemplaire + " NOUTIL ==== " + currentUser.NoUtilisateur + "<br>");
+                   //Response.Write(" LE FILM " + film.TitreFrancais + "NOEXEMPLAIRE ==== " + lesEmprunts.First().NoExemplaire + " NOUTIL ==== " + currentUser.NoUtilisateur + "<br>");
                 }
             }
 
-            Response.Write(lstEmpruntsCurrent.Count());
+            //Response.Write(lstEmpruntsCurrent.Count());
 
             //IList<EmpruntFilm> lstExemp = empruntFilmDao.FindAll().Where(v => (v.NoUtilisateur == currentUser.NoUtilisateur)).OrderBy(v=> filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais ).ToList();
             int maxPage = 10;
             int nbPagePrec = numPage - 1;
+            //Response.Write(" LA PAGE " + nbPagePrec);
             decimal page = decimal.Parse(lstEmpruntsCurrent.Count().ToString()) / decimal.Parse(maxPage.ToString());
             nbPage = int.Parse(Math.Ceiling(page).ToString());
             if (nbPagePrec * maxPage < lstEmpruntsCurrent.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
             {
-                for (int j = nbPagePrec; j < lstEmpruntsCurrent.Count() && i < maxPage; j++, i++)
-                {
-                    System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE ==== " + lstEmpruntsCurrent[j].NoExemplaire + " NOUTIL ==== " + currentUser.NoUtilisateur);
-                    //EmpruntFilm empruntFilm = empruntFilmDao.Find(new EmpruntFilm { NoUtilisateur = ddlSelect, NoExemplaire = lstExemp[j].NoExemplaire })[0];
-                    
+                for (int j = nbPagePrec * maxPage; j < lstEmpruntsCurrent.Count() && i < maxPage; j++, i++)
+                {                  
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstEmpruntsCurrent[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                    //Response.Write(" LE FILM " + film.TitreFrancais + "NOEXEMPLAIRE ==== " + lstEmpruntsCurrent[j].NoExemplaire + " NOUTIL ==== " + currentUser.NoUtilisateur + "<br>");
-                  
-                   // Utilisateur util = utilDao.Find(new Utilisateur { NoUtilisateur = lesEmprunts.First().NoUtilisateur })[0];
-
 
                     //Premier DIV
                     Panel panRow = new Panel();
@@ -177,8 +171,6 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
 
         //btnPrec
         panBasDePage.Controls.Add(creationBtnPrec());
-
-
 
         int intNbPages = (numPage - 2) > 0 ? (numPage - 2) : 1;
 
