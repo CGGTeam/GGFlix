@@ -3,21 +3,6 @@
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" href="/Static/css/main.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script>
-        function envoyerMessage(idFilm) {
-            var test = document.createElement('formMess');
-            document.body.appendChild(test);
-            test.method = 'post';
-            test.action = '';
-            var apasser = document.createElement('lstDvd');
-            apasser.Type = 'hidden';
-            apasser.name = 'uneListe';
-            apasser.value = idFilm;
-            test.appendChild(apasser)
-            test.submit();
-
-        }
-    </script>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
     <div class="mt-3">
@@ -80,10 +65,10 @@
                             <div class="card-body">
                                 <div class="row" style="margin-left: 10%">
                                     <div class="col-xs-2 col-md-2" style="align-items: center;">
-                                        <asp:Image ID="imageFilm" CssClass="img-responsive" ImageUrl="/Static/img/block.jpg" AlternateText="imagePlaceHolder" Width="140px" Height="208px" runat="server" />
+                                        <asp:Image ID="imageFilm" Style="margin:auto;display:block;" CssClass="img-responsive" ImageUrl="/Static/img/block.jpg" AlternateText="imagePlaceHolder" Width="140px" Height="208px" runat="server" />
                                         <br />
                                         <asp:FileUpload ID="FileUpload" runat="server"/><br />
-                                       <asp:Button ID="btnUpload" runat="server" Text="Afficher l'image"  OnClick="afficherImage_Click"  /><br />
+                                       <asp:Button ID="btnUpload" CssClass="btn btn-primary" runat="server" Text="Afficher l'image"  OnClick="afficherImage_Click"  /><br />
                                     </div>
                                     <div class="col-xs-1 col-md-2">
                                         <asp:Label ID="lblTitreFrancais" Text="Titre français" runat="server" Style="font-size: initial" CssClass="row" Height="26px"/><br />
@@ -158,28 +143,25 @@
                                         <br />
                                         <asp:Label ID="lblVersionEtendue" Text="Version étendue" Style="font-size: initial" CssClass="row" Height="26px" runat="server" /><br />
                                         <br />
-                                        <asp:Label ID="lblVisibleTous" Text="Visible à tous" Style="font-size: initial" CssClass="row" Height="26px" runat="server" /><br />
-                                        <br />
                                     </div>
 
                                     <div class="col-xs-2 col-md-2">
-                                        <asp:TextBox ID="tbNomActeur1" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/>< /> est une femme <asp:CheckBox ID="estFemme1" runat="server" /><br />
-                                        <asp:TextBox ID="tbNomActeur2" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></> est une femme <asp:CheckBox ID="estFemme2" runat="server" /><br />
-                                        <asp:TextBox ID="tbNomActeur3" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></> est une femme <asp:CheckBox ID="estFemme3" runat="server" /><br />
-                                        <asp:TextBox ID="tbSupplement1" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></><br />
-                                        <asp:TextBox ID="tbSupplement2" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></><br />
-                                        <asp:TextBox ID="tbSupplement3" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="50"/></><br />
-                                        <asp:TextBox ID="tbSousTitre1" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="10"/></><br />
-                                        <asp:TextBox ID="tbSousTitre2" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
-                                        <asp:TextBox ID="tbSousTitre3" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
-                                        <asp:TextBox ID="tbLangue1" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
-                                        <asp:TextBox ID="tbLangue2" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
-                                        <asp:TextBox ID="tbLangue3" runat="server" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
+                                        <asp:TextBox ID="tbNomActeur1" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="50"/> est une femme <asp:CheckBox ID="estFemme1" runat="server" /><br />
+                                        <asp:TextBox ID="tbNomActeur2" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="50"/> est une femme <asp:CheckBox ID="estFemme2" runat="server" /><br />
+                                        <asp:TextBox ID="tbNomActeur3" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="50"/> est une femme <asp:CheckBox ID="estFemme3" runat="server" /><br />
+                                        <asp:TextBox ID="tbSupplement1" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="50"/><br />
+                                        <asp:TextBox ID="tbSupplement2" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="50"/><br />
+                                        <asp:TextBox ID="tbSupplement3" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="50"/><br />
+                                        <asp:TextBox ID="tbSousTitre1" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
+                                        <asp:TextBox ID="tbSousTitre2" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
+                                        <asp:TextBox ID="tbSousTitre3" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
+                                        <asp:TextBox ID="tbLangue1" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
+                                        <asp:TextBox ID="tbLangue2" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
+                                        <asp:TextBox ID="tbLangue3" runat="server" Style="font-size: initial" Width="100%" CssClass="row" Height="26px" MaxLength="10"/><br />
                                         <asp:CheckBox ID="DVDOriginal" runat="server" CssClass="row" Height="26px" /><br />
                                         <br />
                                         <asp:CheckBox ID="VersionEtendue" runat="server" CssClass="row" Height="26px" /><br />
-                                        <br />
-                                        <asp:CheckBox ID="VisibleATous" runat="server" CssClass="row" Height="26px" /><br />
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +169,9 @@
                     </div>
                     <asp:Label ID="lblErreur" runat="server" Visible="false" style="color:red"/><br />
         <asp:Label ID="lblGood" runat="server" Visible="false" style="color:green" /><br />
-        <asp:Button ID="btnAjouter" Text="Ajouter" runat="server" />
+        <asp:Button ID="btnAjouter" CssClass="btn btn-primary" Text="Ajouter" runat="server" />          
+                        <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"
+                        OnClientClick="JavaScript:window.history.back(1);return false;"></asp:button>
                 </div>
 
             </div>
