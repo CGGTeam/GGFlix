@@ -231,128 +231,28 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         //btnPrec
         panBasDePage.Controls.Add(creationBtnPrec());
 
-        //Première page
-        if (numPage == 1)
-        {
-            //btnPage
-            for (int i = 1; i < 6; i++)
-            {
-                Button btnPage = new Button();
-                btnPage.ID = "btnPage" + i;
-                
-                if (i == 1||i>nbPage)
-                {
-                    btnPage.Enabled = false;
-                    btnPage.CssClass = "btn btn-success page-item active";
-                }
-                else
-                {
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
-                    btnPage.CssClass = "btn btn-success";
-                }
-                btnPage.Text = "Page " + i;
-                panBasDePage.Controls.Add(btnPage);
-            }
-        }
-        //Deuxième page
-        else if(numPage == 2)
-        {
-            //btnPage
-            for (int i = 1; i < 6; i++)
-            {
-                Button btnPage = new Button();
-                btnPage.ID = "btnPage" + i;
-                if (i == 2 || i > nbPage)
-                {
-                    btnPage.Enabled = false;
-                    btnPage.CssClass = "btn btn-success page-item active";
-                }
-                else
-                {
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
-                    btnPage.CssClass = "btn btn-success";
-                }
-                btnPage.Text = "Page " + i;
-                panBasDePage.Controls.Add(btnPage);
-            }
-        }
-        //Dernière page
-        else if(numPage == nbPage)
-        {
-            //btnPage
-            if(nbPage < 5)
-            {
-                for (int i =0; i < 6; i++)
-                {
-                    Button btnPage = new Button();
-                    btnPage.ID = "btnPage" + i;
-                    if (i == numPage || i > nbPage)
-                    {
-                        btnPage.Enabled = false;
-                        btnPage.CssClass = "btn btn-success page-item active";
-                    }
-                    else
-                    {
-                        btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
-                        btnPage.CssClass = "btn btn-success";
-                    }
-                    btnPage.Text = "Page " + i;
-                    panBasDePage.Controls.Add(btnPage);
-                }
-            }
-            else
-            {
-                for (int i = nbPage; i > nbPage-5; i--)
-                {
-                    Button btnPage = new Button();
-                    btnPage.ID = "btnPage" + i;
-                    if (i == numPage || i > nbPage)
-                    {
-                        btnPage.Enabled = false;
-                        btnPage.CssClass = "btn btn-success page-item active";
-                    }
-                    else
-                    {
-                        btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
-                        btnPage.CssClass = "btn btn-success";
-                    }
-                    btnPage.Text = "Page " + i;
-                    panBasDePage.Controls.Add(btnPage);
-                }
-            }
-        }
-        //Le reste
-        else
-        {
-            if (numPage > nbPage)
-            {
-                Response.Redirect("~/Utilisateur/" + nbPage + "/" + ddlSelect);
-            }
-            else
-            {
-                //btnPage
-                for (int i = nbPage - 2; i < nbPage + 2; i++)
-                {
-                    Button btnPage = new Button();
-                    btnPage.ID = "btnPage" + i;
-                    btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
-                    if (i == numPage || i > nbPage)
-                    {
-                        btnPage.Enabled = false;
-                        btnPage.CssClass = "btn btn-success page-item active";
-                    }
-                    else
-                    {
-                        btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
-                        btnPage.CssClass = "btn btn-success";
-                    }
-                    btnPage.Text = "Page " + i;
-                    panBasDePage.Controls.Add(btnPage);
-                }
-            }
 
+
+        int intNbPages = (numPage - 2) > 0 ? (numPage - 2) : 1;
+
+        for (int i = intNbPages; i < (numPage + 3) && i <= nbPage; i++)
+        {
+            Button btnPage = new Button();
+            btnPage.ID = "btnPage" + i;
+
+            if (i == numPage || i > nbPage)
+            {
+                btnPage.Enabled = false;
+                btnPage.CssClass = "btn btn-success page-item active";
+            }
+            else
+            {
+                btnPage.PostBackUrl = "~/Utilisateur/" + i + "/" + ddlSelect;
+                btnPage.CssClass = "btn btn-success";
+            }
+            btnPage.Text = "Page " + i;
+            panBasDePage.Controls.Add(btnPage);
         }
-  
         //btnNext
         panBasDePage.Controls.Add(creationBtnNext());
         //btnLast

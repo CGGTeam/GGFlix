@@ -147,7 +147,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                     TextBox txtRerchercher = (TextBox)panelSideBar.FindControl("tbRechercher");
                     if (txtRerchercher != null)
                     {
-                        Session["recherche"] = txtRerchercher.Text;                       
+                        Session["recherche"] = txtRerchercher.Text;  
                     }                    
                 }
             }
@@ -390,6 +390,21 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         panBasDePage.Controls.Add(creationBtnNext());
         //btnLast
         panBasDePage.Controls.Add(creationBtnLast());
+        panBasDePage.Controls.Add(new LiteralControl("<br />"));
+        Button btnRetourPagePrec = new Button();
+        btnRetourPagePrec.ID = "backButton";
+        btnRetourPagePrec.CssClass = "btn btn-danger";
+        btnRetourPagePrec.Text = "Retour";
+        btnRetourPagePrec.OnClientClick = "JavaScript:window.history.back(1);return false;";
+        if(strTitreRechercher != "")
+        {
+            btnRetourPagePrec.Visible = true;
+        }
+        else
+        {
+            btnRetourPagePrec.Visible = false;
+        }
+        panBasDePage.Controls.Add(btnRetourPagePrec);
     }
 
     private Button creationBtnLast()
