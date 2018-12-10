@@ -43,4 +43,17 @@ public static class PasLinq
 
         return resultat;
     }
+
+    public static bool Quelconque<T>(this IEnumerable<T> liste, Func<T, bool> condition)
+    {
+        foreach (var item in liste)
+        {
+            if (condition(item))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
