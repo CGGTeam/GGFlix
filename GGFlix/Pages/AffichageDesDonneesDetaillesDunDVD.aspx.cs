@@ -59,7 +59,6 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
                     AppropriationPour.Items.Add(item);
                     pnApercuCourriel.Visible = true;
                 }
-                AppropriationPour.Visible = true;
             }
 
         }
@@ -176,12 +175,14 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
                 }
                 btnConfirmerAppropriation.Visible = false;
                 AppropriationPour.Visible = false;
-                backButton.OnClientClick = "JavaScript:window.history.back(4);return false;";
+                lblAppropriation.Visible = false;
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
                 //Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation", "confirmerAppropriation()", true);
                 btnConfirmerAppropriation.Visible = true;
+                lblAppropriation.Visible = true;
+                AppropriationPour.Visible = true;
                 System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
                 noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
             }

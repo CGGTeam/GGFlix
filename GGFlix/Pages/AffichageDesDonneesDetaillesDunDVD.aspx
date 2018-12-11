@@ -37,7 +37,7 @@
                                 <div class="row" style="margin-left: 10%">
                                     <div class="col-xs-2 col-md-2" style="align-items: center;">
                                         <div class="form-group ">
-                                            <asp:Label ID="lblAppropriation" Text="Appropriation pour : " runat="server" />
+                                            <asp:Label ID="lblAppropriation" Text="Appropriation pour : " runat="server" Visible="false"/>
                                             <asp:DropDownList ID="AppropriationPour" runat="server" Visible="false" />
                                         </div>
                                         <asp:Image ID="imageFilm" CssClass="img-responsive" Style="margin:auto;display:block;" AlternateText="imagePlaceHolder" Width="140px" Height="208px" runat="server" />
