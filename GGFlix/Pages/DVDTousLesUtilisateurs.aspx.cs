@@ -155,10 +155,6 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
     {
         try
         {
-
-         
-     
-
             if (sender.GetType().Name.Equals("ImageButton"))
             {
                 ImageButton imgLoupe = (ImageButton)sender;
@@ -219,10 +215,11 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             }
           
             List<Exemplaire> lstRechercher = new List<Exemplaire>();
-            for (int j = 0 ; j < lstExemp.Count()-1; j++)
+            for (int j = 0 ; j < lstExemp.Count(); j++)
             {
                 Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                if (film.TitreFrancais.ToString().Contains(strTitreRechercher) || film.TitreOriginal.ToString().Contains(strTitreRechercher))
+                
+                if (film.TitreFrancais.ToString().Contains(strTitreRechercher) || (film.TitreOriginal!=null &&film.TitreOriginal.ToString().Contains(strTitreRechercher)))
                 {
                     lstRechercher.Add(lstExemp[j]);                   
                 }             
@@ -232,15 +229,14 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
             if (lesValeursPrefs.Count > 0)
             {
                 maxPage = int.Parse(lesValeursPrefs.First().Valeur);
-            }           
+            }
             int nbPagePrec = numPage - 1;                        
             decimal page = decimal.Parse(lstRechercher.Count().ToString()) / decimal.Parse(maxPage.ToString());
             nbPage = int.Parse(Math.Ceiling(page).ToString());
             if (nbPagePrec * maxPage < lstRechercher.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
-            {              
+            {
                 for (int j = nbPagePrec * maxPage; j < lstRechercher.Count() && i < maxPage; j++, i++)
                 {
-                   
                     int noExemp = int.Parse(lstRechercher[j].NoExemplaire.ToString());      
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstRechercher[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
                     List<EmpruntFilm> lesEmprunts = empruntFilmDao.FindAll().Where(c => c.NoExemplaire.Equals(lstRechercher[j].NoExemplaire)).OrderByDescending(c=>c.DateEmprunt).ToList();                   
