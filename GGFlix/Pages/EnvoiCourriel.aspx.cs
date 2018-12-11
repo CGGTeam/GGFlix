@@ -57,6 +57,8 @@ public partial class Pages_EnvoiCourriel : System.Web.UI.Page
 
     protected void VerifierA(object source, ServerValidateEventArgs args)
     {
+        if (chTous.Checked) return;
+
         string[] courriels = tbA.Text.Split(new []{';'});
 
         try
