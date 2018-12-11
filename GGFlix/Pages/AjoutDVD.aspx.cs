@@ -473,7 +473,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
 
     protected void ApercuCourriel(object sender, EventArgs args)
     {
-        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(4, "Oui");
+        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(4, "true");
         string courriels = "";
         for (int i = 0; i < utils.Count; i++)
         {

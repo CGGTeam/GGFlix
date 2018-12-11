@@ -31,6 +31,10 @@ public partial class Pages_EnvoiCourriel : System.Web.UI.Page
                     }
                 }
             }
+            else
+            {
+                tbA.Text = a;
+            }
 
             tbDe.Text = de;
             tbObjet.Text = objet;
