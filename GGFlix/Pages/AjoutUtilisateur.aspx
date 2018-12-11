@@ -30,7 +30,7 @@
                         <label for="tbCourriel1">Courriel : </label>
                         <asp:TextBox ID="tbCourriel1" runat="server" class="form-control"/>
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="Ce champs est requis" ControlToValidate="tbCourriel1" CssClass="text-danger"/>
-                        <asp:RegularExpressionValidator runat="server" ControlToValidate="tbCourriel1" ErrorMessage="L'adresse saisie est invalide" CssClass="text-danger"/>
+                        <asp:RegularExpressionValidator ValidationExpression="[a-z0-9]+([._-][a-z0-9]+)*@\w+([._-][a-z0-9]+)*(.[a-z]{2,})" runat="server" ControlToValidate="tbCourriel1" ErrorMessage="L'adresse saisie est invalide" CssClass="text-danger"/>
                         <br />
                         <br />
                         <label for="tbCourriel2">Confirmer le courriel : </label>
