@@ -167,7 +167,7 @@ public partial class SuppressionDunDVD : System.Web.UI.Page
     }
     protected void ApercuCourriel(object sender, EventArgs e)
     {
-        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(5, "true");
+        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(5, "1");
         string courriels = "";
         for (int i = 0; i < utils.Count; i++)
         {
