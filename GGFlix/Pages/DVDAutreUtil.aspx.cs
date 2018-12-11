@@ -50,23 +50,6 @@ public partial class DVDAutreUtil : System.Web.UI.Page
         {
             panelSideBar.Controls.Clear();
             panelSideBar.Attributes.Add("margin-left","10px");
-            /*Label lblRecherche = new Label();
-            lblRecherche.Text = "Rechercher DVD:";
-            panelSideBar.Controls.Add(lblRecherche);
-            panelSideBar.Controls.Add(new LiteralControl("<br />"));
-            panelSideBar.Controls.Add(new LiteralControl("<br />"));
-            TextBox tbRecherche = new TextBox();
-            tbRecherche.Width = 260;
-            tbRecherche.Height = 20;
-            panelSideBar.Controls.Add(tbRecherche);
-            ImageButton imgLoupe = new ImageButton();
-            imgLoupe.Width = 20;
-            imgLoupe.Height = 20;
-            imgLoupe.ImageAlign = ImageAlign.AbsMiddle;
-            imgLoupe.ImageUrl = "/Static/img/loupe.png";
-            panelSideBar.Controls.Add(imgLoupe);
-            panelSideBar.Controls.Add(new LiteralControl("<br />"));
-            panelSideBar.Controls.Add(new LiteralControl("<br />"));*/
             Label lblDdl = new Label();
             lblDdl.Text = "DVD de l'utilisateur";
             panelSideBar.Controls.Add(lblDdl);
@@ -217,7 +200,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
 
                         if (currentUser.TypeUtilisateur.Equals("S"))
                         {
-
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
                             Button btnMod = new Button();
                             btnMod.CssClass = "btn btn-warning btn-primary";
                             btnMod.Text = "Modification des données existantes";
@@ -225,7 +208,6 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                             panBouton.Controls.Add(btnMod);
                             panBouton.Controls.Add(new LiteralControl("<br />"));
 
-                            panBouton.Controls.Add(new LiteralControl("<br />"));
                             Button btnSupprimer = new Button();
                             btnSupprimer.CssClass = "btn btn-danger btn-primary";
                             btnSupprimer.Text = "Supprimer";
@@ -236,6 +218,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     }
                     else
                     {
+                        panBouton.Controls.Add(new LiteralControl("<br />"));
                         Button btnMod = new Button();
                         btnMod.CssClass = "btn btn-warning btn-primary";
                         btnMod.Text = "Modification des données existantes";
