@@ -36,7 +36,7 @@ public partial class Pages_EnvoiCourriel : System.Web.UI.Page
             tbObjet.Text = objet;
             tbTexte.Text = contenu;
         }
-        catch (Exception)
+        catch (Exception err)
         {
             Response.RedirectToRoute("MessagerieRoute");
         }

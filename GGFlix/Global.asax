@@ -14,6 +14,7 @@
             new Route("MesDVDSRoute", "MesDVD/{id}", "~/Pages/affichageDVDEnMain.aspx"),
             new Route("AjoutDVDRoute", "DVDAjout/Ajouter", "~/Pages/AjoutDVD.aspx"),
             new Route("MessagerieRoute", "Messagerie", "~/Pages/EnvoiCourriel.aspx"),
+            new Route("MessagerieRouteId", "Messagerie/{id}", "~/Pages/EnvoiCourriel.aspx"),
             new Route("ApercuMessageRoute", "Messagerie/Apercu", "~/Pages/ApercuCourriel.aspx"),
             new Route("GestionUtilisateur", "GestionUtilisateur", "~/Pages/GestionUtilisateurs.aspx"),
             new Route("AjoutUtilisateur", "Admin/Utilisateur/Ajout", "~/Pages/AjoutUtilisateur.aspx"),

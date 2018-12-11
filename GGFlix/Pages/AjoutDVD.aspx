@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+    <asp:Panel ID="pnApercu" Visible="False" CssClass="alert alert-info" runat="server">
+        <asp:LinkButton ID="btnApercu" OnClick="ApercuCourriel" Text="Voir l'apercu du courriel envoyé" runat="server"/>
+    </asp:Panel>
     <div class="mt-3">
         <div class="container-fluid">
             <div class="row flex-column h-100 justify-content-center align-items-center">
@@ -168,10 +171,9 @@
                     <asp:Label ID="lblErreur" runat="server" Visible="false" style="color:red"/><br />
         <asp:Label ID="lblGood" runat="server" Visible="false" style="color:green" /><br />
         <asp:Button ID="btnAjouter" CssClass="btn btn-primary" Text="Ajouter" runat="server" />          
-                        <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"
-                        OnClientClick="JavaScript:window.history.back(1);return false;"></asp:button>
+                        <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"></asp:button>
                 </div>
-
+                <asp:HiddenField ID="hidFilms" runat="server"/>
             </div>
 
         </div>

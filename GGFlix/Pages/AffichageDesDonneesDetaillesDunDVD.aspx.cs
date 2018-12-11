@@ -33,6 +33,8 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
+        pnApercuCourriel.Visible = false;
+
         ClientScript.GetPostBackEventReference(this, string.Empty);
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
         intExemplaire = Convert.ToInt32(Page.RouteData.Values["noExemp"]);
@@ -52,6 +54,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
                     System.Diagnostics.Debug.WriteLine("entre");
                     empF.DateEmprunt = DateTime.Now;
                     empruntFilmDao.Save(empF);
+                    pnApercuCourriel.Visible = true;
                 }
                 else {
                     empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur = utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur, DateEmprunt = DateTime.Now });
@@ -144,5 +147,25 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         }
         //tbNbDisques.Text = currentFilm */
 
+    }
+
+    protected void ApercuCourriel(object sender, EventArgs e)
+    {
+        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(4, "Oui");
+        string courriels = "";
+        for (int i = 0; i < utils.Count; i++)
+        {
+            courriels += utils[i].Courriel;
+            if (i < utils.Count - 1)
+            {
+                courriels += ";";
+            }
+        }
+        Context.Items.Add("A", courriels == "" ? "Personne" : courriels);
+        Context.Items.Add("De", Securite.UtilisateurCourant.Courriel);
+        Context.Items.Add("Objet", string.Format("{0} a changé de mains", TitreOriginal.Text));
+        Context.Items.Add("Contenu", string.Format("Le DVD intitulé {0} a été approprié par {1}", TitreOriginal.Text, Securite.UtilisateurCourant.NomUtilisateur));
+
+        Server.Transfer("~/Pages/ApercuCourriel.aspx", true);
     }
 }

@@ -28,6 +28,8 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
     private GenericDao<FilmsSupplements> filmSupplementDao = Persistance.GetDao<FilmsSupplements>();
     private List<Film> lstFilm = new List<Film>();
 
+    private List<Film> filmAjoute = new List<Film>();
+
     Utilisateur currentUser = null;
     String id = "";
     protected void Page_Load(object sender, EventArgs e)
@@ -126,6 +128,9 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
                         empFilmDao.Save(empruntFilm);
                     }
                     tbEnCours.Text = "";
+
+                    pnApercu.Visible = true;
+                    hidFilms.Value += filmAjout.TitreOriginal + ",";
                 }
             }
         }
@@ -240,7 +245,6 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
                 lblGood.Text = "Le film : " + filmEnChaine(strText) + "a été ajouté";
                 lblGood.Visible = true;
             }
-            Response.Redirect("/Messagerie/0/lstDVD=" + strText);
         }
     }
 
@@ -463,5 +467,26 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
             empFilmDao.Save(empruntFilm);
         }
         messageLblGood(film.TitreFrancais + ";", 1);
+    }
+
+    protected void ApercuCourriel(object sender, EventArgs args)
+    {
+        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(3, "Oui");
+        string courriels = "";
+        for (int i = 0; i < utils.Count; i++)
+        {
+            courriels += utils[i].Courriel;
+            if (i < utils.Count - 1)
+            {
+                courriels += ";";
+            }
+        }
+
+        Context.Items.Add("A", courriels == "" ? "Personne" : courriels);
+        Context.Items.Add("De", Securite.UtilisateurCourant.Courriel);
+        Context.Items.Add("Objet", "Création de DVD(s)");
+        Context.Items.Add("Contenu", "Les DVD(s) suivant(s) ont été ajouté(s) par " + Securite.UtilisateurCourant.NomUtilisateur + ": " + hidFilms.Value);
+
+        Server.Transfer("~/Pages/ApercuCourriel.aspx", true);
     }
 }
