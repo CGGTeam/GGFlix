@@ -20,6 +20,7 @@ public partial class Fragments_MasterPage : System.Web.UI.MasterPage
             optAdminGestion.Visible = true;
             menuDVDAdmin.Visible = true;
             menuDVD.Visible = false;
+            lienPersonnaliser.Visible = false;
         }
     }
 }
