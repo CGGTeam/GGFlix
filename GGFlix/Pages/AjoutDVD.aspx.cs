@@ -240,7 +240,8 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
                 lblGood.Text = "Le film : " + filmEnChaine(strText) + "a été ajouté";
                 lblGood.Visible = true;
             }
-            Response.Redirect("/Messagerie/0/lstDVD=" + strText);
+            Response.Redirect("/Messagerie/0/lstDVD=" + strText);
+
         }
     }
 

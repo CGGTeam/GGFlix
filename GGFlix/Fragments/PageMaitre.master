@@ -21,28 +21,34 @@
                     <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Afficher les  DVDs
                     </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="/Catalogue/1">Tous les DVDs</a>
-                        <a class="dropdown-item" href="/MesDvd/1">Mes DVDs en main </a>
-                        <a class="dropdown-item" href="/Utilisateur/1/0">DVDs d'un utilisateur</a>
-                    </div>
+                    <asp:Panel id="menuDVD" runat="server">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="/Catalogue/1">Tous les DVDs</a>
+                            <a class="dropdown-item" href="/MesDvd/1">Mes DVDs en main </a>
+                            <a class="dropdown-item" href="/Utilisateur/1/0">DVDs d'un utilisateur</a>
+                        </div>
+                    </asp:Panel>
+                    <asp:Panel id="menuDVDAdmin" runat="server" Visible="false">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="/Catalogue/1">Tous les DVDs</a>
+                            <a class="dropdown-item" href="/Utilisateur/1/0">DVDs d'un utilisateur</a>
+                        </div>
+                    </asp:Panel>
                 </div>
             </div>
+            <asp:Panel ID="utilNommal" runat="server">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Catalogue/1">Notre catalogue</a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/Messagerie/0">Envoyer un message</a>
                 </li>
-                <li class="nav-item active">
+                <li runat="server" ID="optDVD" class="nav-item active">
                     <a class="nav-link" href="/DVDAjout/Ajouter">Ajouter un DVD</a>
                 </li>
-                <li runat="server" ID="optAdmin" Visible="False" class="nav-item active">
+                <li runat="server" ID="optAdminGestion" Visible="False" class="nav-item active">
                     <a class="nav-link" href="/GestionUtilisateur">Gestion utilisateur</a>
                 </li>
             </ul>
+            </asp:Panel>
             <div class="text-light d-inline-block">
                 <div class="dropdown show">
                     <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
