@@ -33,14 +33,21 @@ public partial class SuppressionDunDVD : System.Web.UI.Page
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
-        ClientScript.GetPostBackEventReference(this, string.Empty);
+
+        if (!FilmRetrait.Value.Equals(""))
+        {
+
+        }
+        else {
+            pnApercuCourriel.Visible = false;
+            ClientScript.GetPostBackEventReference(this, string.Empty);
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
         intExemplaire = Convert.ToInt32(Page.RouteData.Values["noExemp"]);
         Film currentFilm = filmDao.Find(new Film { NoFilm = intDVD })[0];
         
         
         // Colonne 1
-        if (currentFilm.ImagePochette.ToString().Trim().Length == 0 || currentFilm.ImagePochette == null)
+        if (currentFilm.ImagePochette == null ||currentFilm.ImagePochette.ToString().Trim().Length == 0)
         {
 
             if (currentFilm.XTra != null) imageFilm.Attributes.Add("href", currentFilm.XTra);
@@ -112,47 +119,69 @@ public partial class SuppressionDunDVD : System.Web.UI.Page
             VersionEtendue.Checked = currentFilm.VersionEtendue.Value;
         }
 
-        if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("") && !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0, 2).Equals("N-")))
-        {
-            string target = Request["__EVENTTARGET"].ToString();
-            string argument = Request["__EVENTARGUMENT"].ToString();
-            String id = HttpContext.Current.User.Identity.Name;
-            if (target != null && argument.Split(':')[0].Equals("Retrait"))
+            if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("") && !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0, 2).Equals("N-")))
             {
-                foreach (FilmsLangue filmL in filmLangueDao.Find(new FilmsLangue { NoFilm = intDVD }))
+                string target = Request["__EVENTTARGET"].ToString();
+                string argument = Request["__EVENTARGUMENT"].ToString();
+                String id = HttpContext.Current.User.Identity.Name;
+                if (target != null && argument.Split(':')[0].Equals("Retrait"))
                 {
-                    filmLangueDao.Delete(filmL);
-                }
-                foreach (FilmsSousTitres filmS in filmSousTitreDao.Find(new FilmsSousTitres { NoFilm = intDVD }))
-                {
-                    filmSousTitreDao.Delete(filmS);
-                }
-                foreach (FilmsSupplements filmSS in filmSupplementDao.Find(new FilmsSupplements { NoFilm = intDVD }))
-                {
-                    filmSupplementDao.Delete(filmSS);
-                }
-                foreach (FilmActeur actF in filmActeurDao.Find(new FilmActeur { NoFilm = intDVD }))
-                {
-                    filmActeurDao.Delete(actF);
-                }
-                filmDao.Delete(currentFilm);
+                    foreach (FilmsLangue filmL in filmLangueDao.Find(new FilmsLangue { NoFilm = intDVD }))
+                    {
+                        filmLangueDao.Delete(filmL);
+                    }
+                    foreach (FilmsSousTitres filmS in filmSousTitreDao.Find(new FilmsSousTitres { NoFilm = intDVD }))
+                    {
+                        filmSousTitreDao.Delete(filmS);
+                    }
+                    foreach (FilmsSupplements filmSS in filmSupplementDao.Find(new FilmsSupplements { NoFilm = intDVD }))
+                    {
+                        filmSupplementDao.Delete(filmSS);
+                    }
+                    foreach (FilmActeur actF in filmActeurDao.Find(new FilmActeur { NoFilm = intDVD }))
+                    {
+                        filmActeurDao.Delete(actF);
+                    }
+                    filmDao.Delete(currentFilm);
 
 
-                foreach (EmpruntFilm empF in empruntFilmDao.Find(new EmpruntFilm {NoExemplaire=intExemplaire}))
-                {
-                    empruntFilmDao.Delete(empF);
-                }
-                exemDao.Delete(exemDao.Find(new Exemplaire { NoExemplaire = intExemplaire }).First());
-                btnConfirmerSuppression.Visible = false;
+                    foreach (EmpruntFilm empF in empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = intExemplaire }))
+                    {
+                        empruntFilmDao.Delete(empF);
+                    }
+                    exemDao.Delete(exemDao.Find(new Exemplaire { NoExemplaire = intExemplaire }).First());
+                    btnConfirmerSuppression.Visible = false;
+                    pnApercuCourriel.Visible = true;
+                    FilmRetrait.Value = TitreFrancais.Text;
 
-            }
-            else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
-            {
-                //Page.ClientScript.RegisterStartupScript(this.GetType(), "suppression", "confirmerRetrait()", true);
-                btnConfirmerSuppression.Visible = true;
-                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
-                noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
+                }
+                else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
+                {
+                    //Page.ClientScript.RegisterStartupScript(this.GetType(), "suppression", "confirmerRetrait()", true);
+                    btnConfirmerSuppression.Visible = true;
+                    System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
+                    noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
+                }
             }
         }
+    }
+    protected void ApercuCourriel(object sender, EventArgs e)
+    {
+        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(5, "true");
+        string courriels = "";
+        for (int i = 0; i < utils.Count; i++)
+        {
+            courriels += utils[i].Courriel;
+            if (i < utils.Count - 1)
+            {
+                courriels += ";";
+            }
+        }
+        Context.Items.Add("A", courriels == "" ? "Personne" : courriels);
+        Context.Items.Add("De", Securite.UtilisateurCourant.Courriel);
+        Context.Items.Add("Objet", string.Format("{0} a été supprimé", FilmRetrait.Value));
+        Context.Items.Add("Contenu", string.Format("Le DVD intitulé {0} a été supprimé par {1}", FilmRetrait.Value, Securite.UtilisateurCourant.NomUtilisateur));
+
+        Server.Transfer("~/Pages/ApercuCourriel.aspx", true);
     }
 }

@@ -46,7 +46,7 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
         if (!IsPostBack)
         {
             // Colonne 1
-            if (currentFilm.ImagePochette.ToString().Trim().Length == 0 || currentFilm.ImagePochette == null)
+            if (currentFilm.ImagePochette == null||currentFilm.ImagePochette.ToString().Trim().Length == 0)
             {
 
                 if (currentFilm.XTra != null) imageFilm.Attributes.Add("href", currentFilm.XTra);

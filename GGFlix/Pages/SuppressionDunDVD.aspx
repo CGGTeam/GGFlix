@@ -24,6 +24,10 @@
  
 
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+    <asp:Panel ID="pnApercuCourriel" CssClass="alert alert-info" Visible="False" runat="server">
+        <asp:LinkButton CssClass="text-center" Text="Voir un apercu du courriel envoyé" runat="server" OnClick="ApercuCourriel"/>
+    </asp:Panel>
+    <asp:HiddenField ID="FilmRetrait" runat="server"/>
     <asp:Panel ID="unBloc" CssClass="mt-3" runat="server">
         <div class="container-fluid">
             <div class="row flex-column h-100 justify-content-center align-items-center">

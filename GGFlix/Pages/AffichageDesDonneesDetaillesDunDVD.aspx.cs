@@ -46,7 +46,8 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
             string target = Request["__EVENTTARGET"].ToString();
             string argument = Request["__EVENTARGUMENT"].ToString();
             if (target != null && argument.Equals("Approprier"))
-            { }
+            {
+            }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
                 AppropriationPour.Items.Clear();
@@ -63,7 +64,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
 
         }
         // Colonne 1
-        if (currentFilm.ImagePochette.ToString().Trim().Length == 0 || currentFilm.ImagePochette == null)
+        if (currentFilm.ImagePochette == null||currentFilm.ImagePochette.ToString().Trim().Length == 0)
         {
 
             if (currentFilm.XTra != null) imageFilm.Attributes.Add("href", currentFilm.XTra);
@@ -191,7 +192,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
 
     protected void ApercuCourriel(object sender, EventArgs e)
     {
-        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(4, "Oui");
+        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(4, "true");
         string courriels = "";
         for (int i = 0; i < utils.Count; i++)
         {
@@ -203,8 +204,8 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         }
         Context.Items.Add("A", courriels == "" ? "Personne" : courriels);
         Context.Items.Add("De", Securite.UtilisateurCourant.Courriel);
-        Context.Items.Add("Objet", string.Format("{0} a changé de mains", TitreOriginal.Text));
-        Context.Items.Add("Contenu", string.Format("Le DVD intitulé {0} a été approprié par {1}", TitreOriginal.Text, Securite.UtilisateurCourant.NomUtilisateur));
+        Context.Items.Add("Objet", string.Format("{0} a changé de mains", TitreFrancais.Text));
+        Context.Items.Add("Contenu", string.Format("Le DVD intitulé {0} a été approprié par {1}", TitreFrancais.Text, Securite.UtilisateurCourant.NomUtilisateur));
 
         Server.Transfer("~/Pages/ApercuCourriel.aspx", true);
     }
