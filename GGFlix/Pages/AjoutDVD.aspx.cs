@@ -34,6 +34,8 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
     String id = "";
     protected void Page_Load(object sender, EventArgs e)
     {
+        pnApercu.Visible = false;
+
         id = HttpContext.Current.User.Identity.Name;
         currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
         if(currentUser.TypeUtilisateur == "S")
@@ -130,7 +132,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
                     tbEnCours.Text = "";
 
                     pnApercu.Visible = true;
-                    hidFilms.Value += filmAjout.TitreOriginal + ",";
+                    hidFilms.Value += filmAjout.TitreFrancais + ", ";
                 }
             }
         }
@@ -471,7 +473,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
 
     protected void ApercuCourriel(object sender, EventArgs args)
     {
-        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(3, "Oui");
+        IList<Utilisateur> utils = Persistance.RecupererUtilisateursAyantPreferences(4, "true");
         string courriels = "";
         for (int i = 0; i < utils.Count; i++)
         {
@@ -485,7 +487,9 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         Context.Items.Add("A", courriels == "" ? "Personne" : courriels);
         Context.Items.Add("De", Securite.UtilisateurCourant.Courriel);
         Context.Items.Add("Objet", "Création de DVD(s)");
-        Context.Items.Add("Contenu", "Les DVD(s) suivant(s) ont été ajouté(s) par " + Securite.UtilisateurCourant.NomUtilisateur + ": " + hidFilms.Value);
+        Context.Items.Add("Contenu", "Les DVD(s) suivant(s) ont été ajouté(s) par " + Securite.UtilisateurCourant.NomUtilisateur + ": " + hidFilms.Value.Remove(hidFilms.Value.Length - 2));
+
+        hidFilms.Value = "";
 
         Server.Transfer("~/Pages/ApercuCourriel.aspx", true);
     }
