@@ -13,12 +13,15 @@ public partial class DVDAutreUtil : System.Web.UI.Page
     private GenericDao<Exemplaire> exemDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<Film> filmDao = Persistance.GetDao<Film>();
     private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
+    private GenericDao<ValeurPreference> valeurPrefDao = Persistance.GetDao<ValeurPreference>();
     private String id = "";
     Utilisateur currentUser = null;
     int numPage = -1;
     int nbPage = -1;
     int ddlSelect = -1;
     int ddlSelectedValue = -1;
+    int maxPage = 10;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         numPage = Convert.ToInt32(Page.RouteData.Values["page"]);
@@ -118,23 +121,27 @@ public partial class DVDAutreUtil : System.Web.UI.Page
             panelAffichage.Controls.Clear();
             Panel panel = panelAffichage;                                                                               // Panneau où j'affiche l'info
             List<Exemplaire> lstExemp = exemDao.FindAll().Where(v => v.NoUtilisateurProprietaire == ddlSelectedValue).OrderBy(v => filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais).ToList();
-            int maxPage = 10;
+            List<ValeurPreference> lesValeursPrefs = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(7)).ToList();
+
+            if (lesValeursPrefs.Count > 0)
+            {
+                maxPage = int.Parse(lesValeursPrefs.First().Valeur);
+            }
             int nbPagePrec = numPage - 1;
             decimal page = decimal.Parse(lstExemp.Count().ToString()) / decimal.Parse(maxPage.ToString());
             nbPage = int.Parse(Math.Ceiling(page).ToString());
             if (nbPagePrec * maxPage < lstExemp.Count())                                                                   // On vérifie que la page devrait exister (Pas dépasser le max de DVD)
             {
-                for (int j = nbPagePrec * maxPage; j < lstExemp.Count() && i < maxPage; j++,i++)
+                for (int j = nbPagePrec * maxPage; j < lstExemp.Count() && i < maxPage; j++, i++)
                 {
+
                     int noExemp = int.Parse(lstExemp[j].NoExemplaire.ToString());
                     Film film = filmDao.Find(new Film { NoFilm = int.Parse(lstExemp[j].NoExemplaire.ToString().Substring(0, 6)) })[0];
-                    // System.Diagnostics.Debug.WriteLine("NOEXEMPLAIRE " + noExemp);
-                   // 
-                EmpruntFilm empFilm = empruntFilmDao.Find(new EmpruntFilm { NoExemplaire = lstExemp[j].NoExemplaire }).OrderByDescending(v => v.DateEmprunt).First();
+                    List<EmpruntFilm> lesEmprunts = empruntFilmDao.FindAll().Where(c => c.NoExemplaire.Equals(lstExemp[j].NoExemplaire)).OrderByDescending(c => c.DateEmprunt).ToList();
+                    Utilisateur util = utilDao.Find(new Utilisateur { NoUtilisateur = lesEmprunts.First().NoUtilisateur })[0];
 
-                    //System.Diagnostics.Debug.WriteLine("NOUTIL :" + empFilm.NoUtilisateur);
-                            //Premier DIV
-                            Panel panRow = new Panel();
+                    //Premier DIV
+                    Panel panRow = new Panel();
                     panRow.CssClass = "row";
                     panRow.Attributes.Add("margin-left", "5%");
                     panRow.Attributes.Add("margin-right", "5%");
@@ -144,7 +151,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     panPoster.CssClass = "col-xs-2 col-md-2";
 
                     ImageButton imagePoster = new ImageButton();
-                    if (!film.ImagePochette.Trim().Equals(""))
+                    if (film.ImagePochette != null && !film.ImagePochette.Trim().Equals(""))
                     {
                         imagePoster.ImageUrl = "/Static/img/" + film.ImagePochette;
                     }
@@ -154,7 +161,7 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     }
                     imagePoster.Attributes.Add("href", film.XTra);
                     imagePoster.Attributes.Add("width", "140px");
-                    imagePoster.Attributes.Add("height", "208px" );
+                    imagePoster.Attributes.Add("height", "208px");
                     imagePoster.PostBackUrl = film.XTra;
                     imagePoster.CssClass = "img-responsive";
                     imagePoster.AlternateText = "Image du DVD affiché";
@@ -182,28 +189,71 @@ public partial class DVDAutreUtil : System.Web.UI.Page
                     panBouton.Attributes.Add("padding-top", "5px");
 
                     Button btnDonnees = new Button();
-                    btnDonnees.ID = "DONNEE"+film.NoFilm.ToString();
+                    btnDonnees.ID = "DONNEE" + film.NoFilm.ToString();
                     btnDonnees.CssClass = "btn btn-info btn-primary";
                     btnDonnees.Text = "Affichage des données détaillées";
                     btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstExemp[j].NoExemplaire; ;
                     panBouton.Controls.Add(btnDonnees);
                     panBouton.Controls.Add(new LiteralControl("<br />"));
 
-                    Button btnMessage = new Button();
-                    btnMessage.CssClass = "btn btn-warning btn-primary";
-                    btnMessage.Text = "Envoi un courriel à celui qui l'a en main";
-                    btnMessage.PostBackUrl = "~/Messagerie/"+empFilm.NoUtilisateur;
-                    panBouton.Controls.Add(btnMessage);
-                    panBouton.Controls.Add(new LiteralControl("<br />"));
+                    if (util.NoUtilisateur != currentUser.NoUtilisateur && currentUser.TypeUtilisateur != "A")
+                    {
 
-                    Button btnAppropriation = new Button();
-                    btnAppropriation.CssClass = "btn btn-danger btn-primary";
-                    btnAppropriation.Text = "S'approprier ce DVD";
-                    btnAppropriation.PostBackUrl = "~/DVD/" + film.NoFilm.ToString()+"/" + id +"/" + lstExemp[j].NoExemplaire;
-                    panBouton.Controls.Add(btnAppropriation);
-                    panRow.Controls.Add(panBouton);
-                    panel.Controls.Add(panRow);
-                    panel.Controls.Add(new LiteralControl("<hr />"));
+                        Button btnMessage = new Button();
+                        btnMessage.CssClass = "btn btn-warning btn-primary";
+                        btnMessage.Text = "Envoi un courriel à celui qui l'a en main";
+                        btnMessage.PostBackUrl = "~/Messagerie/" + util.NoUtilisateur+"/courrielEnMain";
+                        panBouton.Controls.Add(btnMessage);
+                        panBouton.Controls.Add(new LiteralControl("<br />"));
+
+                        Button btnAppropriation = new Button();
+                        btnAppropriation.CssClass = "btn btn-danger btn-primary";
+                        btnAppropriation.Text = "S'approprier ce DVD";
+                        btnAppropriation.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + id + "/" + lstExemp[j].NoExemplaire;
+                        panBouton.Controls.Add(btnAppropriation);
+                        panRow.Controls.Add(panBouton);
+                        panel.Controls.Add(panRow);
+                        panel.Controls.Add(new LiteralControl("<hr />"));
+
+                        if (currentUser.TypeUtilisateur.Equals("S"))
+                        {
+
+                            Button btnMod = new Button();
+                            btnMod.CssClass = "btn btn-warning btn-primary";
+                            btnMod.Text = "Modification des données existantes";
+                            btnMod.PostBackUrl = "~/modifDVD/" + film.NoFilm.ToString();
+                            panBouton.Controls.Add(btnMod);
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
+
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
+                            Button btnSupprimer = new Button();
+                            btnSupprimer.CssClass = "btn btn-danger btn-primary";
+                            btnSupprimer.Text = "Supprimer";
+                            btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
+                            panBouton.Controls.Add(btnSupprimer);
+
+                        }
+                    }
+                    else
+                    {
+                        Button btnMod = new Button();
+                        btnMod.CssClass = "btn btn-warning btn-primary";
+                        btnMod.Text = "Modification des données existantes";
+                        btnMod.PostBackUrl = "~/modifDVD/" + film.NoFilm.ToString();
+                        panBouton.Controls.Add(btnMod);
+                        panBouton.Controls.Add(new LiteralControl("<br />"));
+
+                        Button btnSupprimer = new Button();
+                        btnSupprimer.CssClass = "btn btn-danger btn-primary";
+                        btnSupprimer.Text = "Supprimer";
+                        btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
+                        panBouton.Controls.Add(btnSupprimer);
+                        panRow.Controls.Add(panBouton);
+                        panel.Controls.Add(panRow);
+                        panel.Controls.Add(new LiteralControl("<hr />"));
+                    }
+
+
                 }
             }
             else

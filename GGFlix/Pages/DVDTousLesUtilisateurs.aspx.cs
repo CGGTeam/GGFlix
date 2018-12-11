@@ -314,6 +314,13 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                             btnSupprimer.Text = "Supprimer";
                             btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
                             panBouton.Controls.Add(btnSupprimer);
+
+                            Button btnMod = new Button();
+                            btnMod.CssClass = "btn btn-warning btn-primary";
+                            btnMod.Text = "Modification des données existantes";
+                            btnMod.PostBackUrl = "~/modifDVD/" + film.NoFilm.ToString();
+                            panBouton.Controls.Add(btnMod);
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
                         }
                     }
                     else
