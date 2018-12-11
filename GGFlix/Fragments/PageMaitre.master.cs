@@ -16,7 +16,10 @@ public partial class Fragments_MasterPage : System.Web.UI.MasterPage
 
         if (utilisateurCourant.TypeUtilisateur == "A")
         {
-            optAdmin.Visible = true;
+            optDVD.Visible = false;
+            optAdminGestion.Visible = true;
+            menuDVDAdmin.Visible = true;
+            menuDVD.Visible = false;
         }
     }
 }

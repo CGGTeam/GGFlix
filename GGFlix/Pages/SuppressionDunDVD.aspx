@@ -133,8 +133,10 @@
                             </div>
                         </div>
                     <br />
+                        <asp:button id="btnConfirmerSuppression" runat="server" text="Confirmer le retrait"  CssClass="btn btn-info"
+                        OnClientClick="confirmerRetrait()" Visible="false"></asp:button>
                         <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"
-                        OnClientClick="JavaScript:window.history.back(1);return false;"></asp:button>
+                        PostBackUrl="~/Catalogue/1"></asp:button>
                     </div>
 
             </div>

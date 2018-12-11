@@ -36,6 +36,10 @@
                             <div class="card-body">
                                 <div class="row" style="margin-left: 10%">
                                     <div class="col-xs-2 col-md-2" style="align-items: center;">
+                                        <div class="form-group ">
+                                            <asp:Label ID="lblAppropriation" Text="Appropriation pour : " runat="server" />
+                                            <asp:DropDownList ID="AppropriationPour" runat="server" Visible="false" />
+                                        </div>
                                         <asp:Image ID="imageFilm" CssClass="img-responsive" Style="margin:auto;display:block;" AlternateText="imagePlaceHolder" Width="140px" Height="208px" runat="server" />
                                         <br />
                                         <asp:Label ID="lblProprio" runat="server" Width="100%" Style="font-size: initial" /><br />
@@ -136,9 +140,10 @@
                                 </div>
                             </div>
                         </div>
-                    <br />
+                    <br /><asp:button id="btnConfirmerAppropriation" runat="server" text="Confirmer l'appropriation"  CssClass="btn btn-info"
+                        OnClientClick="confirmerAppropriation()" Visible="false"></asp:button>
                         <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"
-                        OnClientClick="JavaScript:window.history.back(1);return false;"></asp:button>
+                        PostBackUrl="~/Catalogue/1"></asp:button>
                     </div>
 
             </div>

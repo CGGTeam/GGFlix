@@ -39,40 +39,29 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
         intDVD = Convert.ToInt32(Page.RouteData.Values["id"]);
         intExemplaire = Convert.ToInt32(Page.RouteData.Values["noExemp"]);
         Film currentFilm = filmDao.Find(new Film { NoFilm = intDVD })[0];
-        if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("") && !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0, 2).Equals("N-")))
+        String id = HttpContext.Current.User.Identity.Name;
+        Utilisateur currentUser = utilDao.Find(new Utilisateur { NomUtilisateur = id })[0];
+        if (currentUser.TypeUtilisateur == "S")
         {
             string target = Request["__EVENTTARGET"].ToString();
             string argument = Request["__EVENTARGUMENT"].ToString();
-            String id = HttpContext.Current.User.Identity.Name;
-            if (target != null && argument.Split(':')[0].Equals("Approprier"))
-            {
-                EmpruntFilm empF = empruntFilmDao.FindAll().Where(exem => (exem.NoExemplaire == intExemplaire) && (exem.NoUtilisateur ==
-                    utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur)).FirstOrDefault();
-                // On lui donnera le dvd dans BDD
-                if (empF != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("entre");
-                    empF.DateEmprunt = DateTime.Now;
-                    empruntFilmDao.Save(empF);
-                    pnApercuCourriel.Visible = true;
-                }
-                else {
-                    empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur = utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur, DateEmprunt = DateTime.Now });
-                    
-                }
-                backButton.OnClientClick = "JavaScript:window.history.back(2);return false;";
-
-            }
+            if (target != null && argument.Equals("Approprier"))
+            { }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation", "confirmerAppropriation()", true);
-                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
-                noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
+                AppropriationPour.Items.Clear();
+                foreach (Utilisateur util in utilDao.FindAll().Where(v => v.TypeUtilisateur != "A" && v.NoUtilisateur != currentUser.NoUtilisateur))
+                {
+                    ListItem item = new ListItem();
+                    item.Value = util.NoUtilisateur.ToString();
+                    item.Text = util.NomUtilisateur;
+                    AppropriationPour.Items.Add(item);
+                    pnApercuCourriel.Visible = true;
+                }
+                AppropriationPour.Visible = true;
             }
 
-            System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
         }
-        
         // Colonne 1
         if (currentFilm.ImagePochette.ToString().Trim().Length == 0 || currentFilm.ImagePochette == null)
         {
@@ -145,8 +134,59 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
          if (currentFilm.VersionEtendue != null) {
             VersionEtendue.Checked = currentFilm.VersionEtendue.Value;
         }
-        //tbNbDisques.Text = currentFilm */
+        if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("") && !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0, 2).Equals("N-")))
+        {
+            string target = Request["__EVENTTARGET"].ToString();
+            string argument = Request["__EVENTARGUMENT"].ToString();
+            if (target != null && argument.Equals("Approprier"))
+            {
+                
+                if (currentUser.TypeUtilisateur == "S")
+                {
+                    EmpruntFilm empF = empruntFilmDao.FindAll().Where(exem => (exem.NoExemplaire == intExemplaire) && (exem.NoUtilisateur ==utilDao.Find(new Utilisateur { NomUtilisateur = AppropriationPour.SelectedItem.Text }).FirstOrDefault().NoUtilisateur)).FirstOrDefault();
+                    // On lui donnera le dvd dans BDD
+                    if (empF != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("entre");
+                        empF.DateEmprunt = DateTime.Now;
+                        empruntFilmDao.Save(empF);
+                    }
+                    else
+                    {
+                        empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur = utilDao.Find(new Utilisateur { NomUtilisateur = AppropriationPour.SelectedItem.Text }).FirstOrDefault().NoUtilisateur, DateEmprunt = DateTime.Now });
+                    }
+                    System.Diagnostics.Debug.WriteLine(AppropriationPour.SelectedItem.Text);
+                }
+                else
+                {
+                    EmpruntFilm empF = empruntFilmDao.FindAll().Where(exem => (exem.NoExemplaire == intExemplaire) && (exem.NoUtilisateur ==
+                        utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur)).FirstOrDefault();
+                    // On lui donnera le dvd dans BDD
+                    if (empF != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("entre");
+                        empF.DateEmprunt = DateTime.Now;
+                        empruntFilmDao.Save(empF);
+                    }
+                    else
+                    {
+                        empruntFilmDao.Save(new EmpruntFilm { NoExemplaire = intExemplaire, NoUtilisateur = utilDao.Find(new Utilisateur { NomUtilisateur = id }).FirstOrDefault().NoUtilisateur, DateEmprunt = DateTime.Now });
+                    }
+                }
+                btnConfirmerAppropriation.Visible = false;
+                AppropriationPour.Visible = false;
+                backButton.OnClientClick = "JavaScript:window.history.back(4);return false;";
+            }
+            else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
+            {
+                //Page.ClientScript.RegisterStartupScript(this.GetType(), "appropriation", "confirmerAppropriation()", true);
+                btnConfirmerAppropriation.Visible = true;
+                System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
+                noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
+            }
 
+            
+        }
     }
 
     protected void ApercuCourriel(object sender, EventArgs e)

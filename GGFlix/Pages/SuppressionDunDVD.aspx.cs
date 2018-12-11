@@ -111,7 +111,7 @@ public partial class SuppressionDunDVD : System.Web.UI.Page
          if (currentFilm.VersionEtendue != null) {
             VersionEtendue.Checked = currentFilm.VersionEtendue.Value;
         }
-        tbNbDisques.Text = currentFilm.NbDisques.ToString();
+
         if (Page.RouteData.Values["idUtil"] != null && (!Page.RouteData.Values["idUtil"].ToString().Trim().Equals("") && !Page.RouteData.Values["idUtil"].ToString().Trim().Substring(0, 2).Equals("N-")))
         {
             string target = Request["__EVENTTARGET"].ToString();
@@ -143,16 +143,16 @@ public partial class SuppressionDunDVD : System.Web.UI.Page
                     empruntFilmDao.Delete(empF);
                 }
                 exemDao.Delete(exemDao.Find(new Exemplaire { NoExemplaire = intExemplaire }).First());
+                btnConfirmerSuppression.Visible = false;
 
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "suppression", "confirmerRetrait()", true);
+                //Page.ClientScript.RegisterStartupScript(this.GetType(), "suppression", "confirmerRetrait()", true);
+                btnConfirmerSuppression.Visible = true;
                 System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
                 noExemp = int.Parse(Page.RouteData.Values["noExemp"].ToString().Trim());
             }
-
-            System.Diagnostics.Debug.WriteLine("TARG : " + target.ToString() + " ARG : " + argument.ToString());
         }
     }
 }
