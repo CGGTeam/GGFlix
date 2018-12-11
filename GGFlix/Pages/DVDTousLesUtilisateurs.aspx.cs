@@ -288,7 +288,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         panBouton.Controls.Add(btnDonnees);
                         panBouton.Controls.Add(new LiteralControl("<br />"));
 
-                    if(util.NoUtilisateur != currentUser.NoUtilisateur)
+                    if(util.NoUtilisateur != currentUser.NoUtilisateur && currentUser.TypeUtilisateur != "A")
                     {
 
                         Button btnMessage = new Button();
