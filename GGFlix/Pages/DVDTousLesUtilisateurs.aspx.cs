@@ -284,7 +284,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         btnDonnees.ID = "DONNEE" + film.NoFilm.ToString();
                         btnDonnees.CssClass = "btn btn-info btn-primary";
                         btnDonnees.Text = "Affichage des données détaillées";
-                        btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstRechercher[j].NoExemplaire; ;
+                        btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstRechercher[j].NoExemplaire;
                         panBouton.Controls.Add(btnDonnees);
                         panBouton.Controls.Add(new LiteralControl("<br />"));
 
@@ -314,7 +314,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                             btnSupprimer.Text = "Supprimer";
                             btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
                             panBouton.Controls.Add(btnSupprimer);
-
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
                             Button btnMod = new Button();
                             btnMod.CssClass = "btn btn-warning btn-primary";
                             btnMod.Text = "Modification des données existantes";

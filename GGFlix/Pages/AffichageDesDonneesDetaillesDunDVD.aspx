@@ -139,7 +139,7 @@
                     <br /><asp:button id="btnConfirmerAppropriation" runat="server" text="Confirmer l'appropriation"  CssClass="btn btn-info"
                         OnClientClick="confirmerAppropriation()" Visible="false"></asp:button>
                         <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"
-                        OnClientClick="JavaScript:window.history.back(1);return false;"></asp:button>
+                        PostBackUrl="~/Catalogue/1"></asp:button>
                     </div>
 
             </div>

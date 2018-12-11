@@ -144,7 +144,6 @@ public partial class SuppressionDunDVD : System.Web.UI.Page
                 }
                 exemDao.Delete(exemDao.Find(new Exemplaire { NoExemplaire = intExemplaire }).First());
                 btnConfirmerSuppression.Visible = false;
-                backButton.OnClientClick = "JavaScript:window.history.back(3);return false;";
 
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))

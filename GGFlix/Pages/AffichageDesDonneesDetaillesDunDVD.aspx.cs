@@ -172,7 +172,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
                 }
                 btnConfirmerAppropriation.Visible = false;
                 AppropriationPour.Visible = false;
-                backButton.OnClientClick = "JavaScript:window.history.back(3);return false;";
+                backButton.OnClientClick = "JavaScript:window.history.back(4);return false;";
             }
             else if (Page.RouteData.Values["noExemp"] != null && !Page.RouteData.Values["noExemp"].ToString().Trim().Equals(""))
             {
