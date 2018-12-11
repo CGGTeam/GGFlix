@@ -13,15 +13,18 @@
                     <div class="form-group">
                        <Label for="tbA">À : </Label>
                         <asp:TextBox ID="tbA" runat="server" placeholder="abc@courriel.com;def@courriel.com" class="form-control"/>
-                        <asp:CheckBox ID="chTous" runat="server" Text="Envoyer à tous" OnCheckedChanged="chClicked" AutoPostBack="true"/>
+                        <asp:CheckBox ID="chTous" runat="server" Text="Envoyer à tous" OnCheckedChanged="chClicked" AutoPostBack="true"/><br/>
+                        <asp:CustomValidator runat="server" ControlToValidate="tbA" OnServerValidate="VerifierA" ErrorMessage="Doit être un ou plusieurs courriels délimités par des point-virgules" CssClass="text-danger"/>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbA" ErrorMessage="Ne peut pas être vide" CssClass="text-danger"/>
                         <br />
                         <br />
                          <Label for="tbDe">De : </Label>
-                        <asp:TextBox ID="tbDe" runat="server" placeholder="abc@courriel.com" class="form-control"/>
+                        <asp:TextBox ReadOnly="True" ID="tbDe" runat="server" placeholder="abc@courriel.com" class="form-control"/>
                         <br />
                         <br />
                          <label for="tbObjet">Objet : </label>
                         <asp:TextBox ID="tbObjet" runat="server" placeholder="Objet" class="form-control"/>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbObjet" ErrorMessage="Ne peut pas être vide" CssClass="text-danger"/>
                         <br />
                         <br />
                         <label for="tbTexte">Texte : </label>
@@ -29,7 +32,7 @@
                         <br />
                         <br />
                         <div class="text-right">
-                            <asp:Button ID="btnEnvoyer" runat="server" Text="Envoyer"/>
+                            <asp:Button ID="btnEnvoyer" OnClick="Envoyer" runat="server" Text="Envoyer"/>
                         </div>
                     </div>
                 </div>

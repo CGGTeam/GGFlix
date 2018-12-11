@@ -147,7 +147,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                     TextBox txtRerchercher = (TextBox)panelSideBar.FindControl("tbRechercher");
                     if (txtRerchercher != null)
                     {
-                        Session["recherche"] = txtRerchercher.Text;                       
+                        Session["recherche"] = txtRerchercher.Text;  
                     }                    
                 }
             }
@@ -167,7 +167,6 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                 {                      
                     ddlSelect = ddlListeRecherche.SelectedIndex;
                     ddlSelectedValue = int.Parse(ddlListeRecherche.SelectedValue);  
-                    //ddlListeRecherche.
                     Session["ddlTrier"] = ddlListeRecherche.SelectedIndex;                              
                 }
             }
@@ -285,11 +284,11 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         btnDonnees.ID = "DONNEE" + film.NoFilm.ToString();
                         btnDonnees.CssClass = "btn btn-info btn-primary";
                         btnDonnees.Text = "Affichage des données détaillées";
-                        btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstRechercher[j].NoExemplaire; ;
+                        btnDonnees.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/N-" + id + "/" + lstRechercher[j].NoExemplaire;
                         panBouton.Controls.Add(btnDonnees);
                         panBouton.Controls.Add(new LiteralControl("<br />"));
 
-                    if(util.NoUtilisateur != currentUser.NoUtilisateur)
+                    if(util.NoUtilisateur != currentUser.NoUtilisateur && currentUser.TypeUtilisateur != "A")
                     {
 
                         Button btnMessage = new Button();
@@ -307,6 +306,22 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         panRow.Controls.Add(panBouton);
                         panel.Controls.Add(panRow);
                         panel.Controls.Add(new LiteralControl("<hr />"));
+
+                        if (currentUser.TypeUtilisateur.Equals("S")) {
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
+                            Button btnSupprimer = new Button();
+                            btnSupprimer.CssClass = "btn btn-danger btn-primary";
+                            btnSupprimer.Text = "Supprimer";
+                            btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
+                            panBouton.Controls.Add(btnSupprimer);
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
+                            Button btnMod = new Button();
+                            btnMod.CssClass = "btn btn-warning btn-primary";
+                            btnMod.Text = "Modification des données existantes";
+                            btnMod.PostBackUrl = "~/modifDVD/" + film.NoFilm.ToString();
+                            panBouton.Controls.Add(btnMod);
+                            panBouton.Controls.Add(new LiteralControl("<br />"));
+                        }
                     }
                     else
                     {
@@ -320,7 +335,7 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
                         Button btnSupprimer = new Button();
                         btnSupprimer.CssClass = "btn btn-danger btn-primary";
                         btnSupprimer.Text = "Supprimer";
-                        btnSupprimer.PostBackUrl = "~/DVD/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
+                        btnSupprimer.PostBackUrl = "~/DVDSuppression/" + film.NoFilm.ToString() + "/" + currentUser.NomUtilisateur.ToString().Trim() + "/" + lstExemp[j].NoExemplaire.ToString();
                         panBouton.Controls.Add(btnSupprimer);
                         panRow.Controls.Add(panBouton);
                         panel.Controls.Add(panRow);
@@ -382,6 +397,21 @@ public partial class DVDTousLesUtilisateurs : System.Web.UI.Page
         panBasDePage.Controls.Add(creationBtnNext());
         //btnLast
         panBasDePage.Controls.Add(creationBtnLast());
+        panBasDePage.Controls.Add(new LiteralControl("<br />"));
+        Button btnRetourPagePrec = new Button();
+        btnRetourPagePrec.ID = "backButton";
+        btnRetourPagePrec.CssClass = "btn btn-danger";
+        btnRetourPagePrec.Text = "Retour";
+        btnRetourPagePrec.OnClientClick = "JavaScript:window.history.back(1);return false;";
+        if(strTitreRechercher != "")
+        {
+            btnRetourPagePrec.Visible = true;
+        }
+        else
+        {
+            btnRetourPagePrec.Visible = false;
+        }
+        panBasDePage.Controls.Add(btnRetourPagePrec);
     }
 
     private Button creationBtnLast()

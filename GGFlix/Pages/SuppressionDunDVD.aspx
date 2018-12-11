@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="AffichageDesDonneesDetaillesDunDVD.aspx.cs" Inherits="AffichageDesDonneesDetaillesDunDVD" Culture="fr-FR" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Fragments/PageMaitre.master" AutoEventWireup="true" CodeFile="SuppressionDunDVD.aspx.cs" Inherits="SuppressionDunDVD" Culture="fr-FR" %>
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link rel="stylesheet" href="/Static/css/main.css" />
     <meta charset="UTF-8">
@@ -6,15 +6,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     
     <script type="text/javascript">
-    function confirmerAppropriation() {
-        var Result = confirm("Êtes-vous certain de vouloir vous appropriez ce dvd?");
+    function confirmerRetrait() {
+        var Result = confirm("Êtes-vous certain de vouloir supprimer ce dvd?");
         if (Result == true) {
-            __doPostBack('txtConfirmRetour', "Approprier"); //sending back to server.
+            __doPostBack('txtConfirmRetour', "Retrait"); //sending back to server.
             return true;
         }
         else 
         {
-
+            //document.getElementById('valConfirm').value = Result;//assigning to hidden text box 
              return false;
         }
     }
@@ -27,7 +27,7 @@
     <asp:Panel ID="pnApercuCourriel" CssClass="alert alert-info" Visible="False" runat="server">
         <asp:LinkButton CssClass="text-center" Text="Voir un apercu du courriel envoyé" runat="server" OnClick="ApercuCourriel"/>
     </asp:Panel>
-
+    <asp:HiddenField ID="FilmRetrait" runat="server"/>
     <asp:Panel ID="unBloc" CssClass="mt-3" runat="server">
         <div class="container-fluid">
             <div class="row flex-column h-100 justify-content-center align-items-center">
@@ -36,10 +36,6 @@
                             <div class="card-body">
                                 <div class="row" style="margin-left: 10%">
                                     <div class="col-xs-2 col-md-2" style="align-items: center;">
-                                        <div class="form-group ">
-                                            <asp:Label ID="lblAppropriation" Text="Appropriation pour : " runat="server" Visible="false"/>
-                                            <asp:DropDownList ID="AppropriationPour" runat="server" Visible="false" />
-                                        </div>
                                         <asp:Image ID="imageFilm" CssClass="img-responsive" Style="margin:auto;display:block;" AlternateText="imagePlaceHolder" Width="140px" Height="208px" runat="server" />
                                         <br />
                                         <asp:Label ID="lblProprio" runat="server" Width="100%" Style="font-size: initial" /><br />
@@ -140,8 +136,9 @@
                                 </div>
                             </div>
                         </div>
-                    <br /><asp:button id="btnConfirmerAppropriation" runat="server" text="Confirmer l'appropriation"  CssClass="btn btn-info"
-                        OnClientClick="confirmerAppropriation()" Visible="false"></asp:button>
+                    <br />
+                        <asp:button id="btnConfirmerSuppression" runat="server" text="Confirmer le retrait"  CssClass="btn btn-info"
+                        OnClientClick="confirmerRetrait()" Visible="false"></asp:button>
                         <asp:button id="backButton" runat="server" text="Retour"  CssClass="btn btn-danger"
                         PostBackUrl="~/Catalogue/1"></asp:button>
                     </div>
