@@ -4,18 +4,7 @@
         <script language="javascript" type="text/ecmascript">
 
 
-       function confirmerAppropriation() {
-        var Result = confirm("Êtes-vous certain de vouloir vous appropriez ce dvd?");
-           if (Result == true) {
-               __doPostBack('txtConfirmRetour', "Approprier"); //sending back to server.
-            return true;
-        }
-        else 
-        {
-
-             return false;
-        }
-    }
+  
 
 
     </script>
@@ -31,13 +20,13 @@
                     <div class="form-group ">                      
                         <br />
                         <asp:Label for="tbMdeP">Mot de passe : </asp:Label>
-                        <asp:TextBox ID="tbMdeP" runat="server" TextMode="Password" Text="" class="form-control" />                        
+                        <asp:TextBox ID="tbMdeP" runat="server" MaxLength="5" TextMode="Password" Text="" class="form-control" />                        
                         <asp:RegularExpressionValidator Display = "Dynamic" ControlToValidate = "tbMdeP" ID="regLengthPass" 
                             ValidationExpression = "^\d{5}$" ForeColor="Red" 
                             runat="server" ErrorMessage="Le mot de passe est uniquement composé de 5 chiffres. <br> Entre 00000 et 99999. "></asp:RegularExpressionValidator>
                         <div class="text-center">
                               <br /> 
-                            <asp:Button ID="btnModifier" runat="server"  Text="Modifier mot de passe" class="text-center"/>
+                            <asp:Button ID="btnModifier" runat="server" Text="Modifier mot de passe" class="text-center"/>
                         </div>
                         <br />
                         <br />                             

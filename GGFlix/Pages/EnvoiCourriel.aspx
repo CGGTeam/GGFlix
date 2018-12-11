@@ -6,6 +6,7 @@
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+     <asp:Panel runat="server" ID="MainContent">
     <div class="vertical-center">
         <div class="container">
             <div class="row flex-column h-100 justify-content-center align-items-center">
@@ -39,4 +40,5 @@
             </div>
         </div>
     </div>
+         </asp:Panel>
 </asp:Content>

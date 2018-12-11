@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/Static/css/main.css"/>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+     <asp:Panel runat="server" ID="MainContent">
     <asp:Panel ID="unBloc" CssClass="mt-3" runat="server">
         <div class="container-fluid">
             <div class="row flex-column h-100 justify-content-center align-items-center">
@@ -122,4 +123,5 @@
             </div>
 
 </asp:Panel>
+         </asp:Panel>
 </asp:Content>

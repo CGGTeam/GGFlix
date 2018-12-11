@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+     <asp:Panel runat="server" ID="MainContent">
     <asp:Panel ID="pnApercu" Visible="False" CssClass="alert alert-info" runat="server">
         <asp:LinkButton ID="btnApercu" OnClick="ApercuCourriel" Text="Voir l'apercu du courriel envoyé" runat="server"/>
     </asp:Panel>
@@ -178,4 +179,6 @@
 
         </div>
     </div>
+
+         </asp:Panel>
 </asp:Content>

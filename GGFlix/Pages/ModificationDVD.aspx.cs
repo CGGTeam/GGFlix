@@ -31,6 +31,7 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
     private GenericDao<Supplement> supplementDao = Persistance.GetDao<Supplement>();
     private GenericDao<Langues> langDao = Persistance.GetDao<Langues>();
     private GenericDao<Supplement> supplDao = Persistance.GetDao<Supplement>();
+    private GenericDao<ValeurPreference> valeurPrefDao = Persistance.GetDao<ValeurPreference>();
     private List<Film> lstFilm = new List<Film>();
     Film currentFilm = null;
     Utilisateur currentUser = null;
@@ -119,7 +120,11 @@ public partial class Pages_ModificationDVD : System.Web.UI.Page
                 VersionEtendue.Checked = currentFilm.VersionEtendue.Value;
             }
         }
-        
+        List<ValeurPreference> laValeurCouleurTexte = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(2)).ToList();
+        if (laValeurCouleurTexte.Count > 0)
+        {
+            MainContent.Style.Add("color", laValeurCouleurTexte.First().Valeur);
+        }
     }
 
 

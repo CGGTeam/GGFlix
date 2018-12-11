@@ -26,6 +26,7 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
     private GenericDao<FilmsSousTitres> filmSousTitreDao = Persistance.GetDao<FilmsSousTitres>();
     private GenericDao<EmpruntFilm> empFilmDao = Persistance.GetDao<EmpruntFilm>();
     private GenericDao<FilmsSupplements> filmSupplementDao = Persistance.GetDao<FilmsSupplements>();
+    private GenericDao<ValeurPreference> valeurPrefDao = Persistance.GetDao<ValeurPreference>();
     private List<Film> lstFilm = new List<Film>();
 
     private List<Film> filmAjoute = new List<Film>();
@@ -56,6 +57,27 @@ public partial class Pages_AjoutDVD : System.Web.UI.Page
         }
         afficheDIV(sender, e);
         AnneeSortie.Attributes["max"] = DateTime.Now.Year.ToString();
+        List<ValeurPreference> laValeurImageBackground = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(6)).ToList();
+        List<ValeurPreference> laValeurCouleurFond = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(1)).ToList();
+        if (laValeurImageBackground.Count > 0 && laValeurImageBackground.First().Valeur != "")
+        {
+            MainContent.Attributes.Add("style", " background-image: url('" + "/Static/img/" + laValeurImageBackground.First().Valeur + "');");
+            MainContent.Style.Add("background-size", "contain");
+        }
+        else
+        {
+            if (laValeurCouleurFond.Count > 0)
+            {
+                MainContent.Attributes.Add("style", "background-color:" + laValeurCouleurFond.First().Valeur);
+            }
+
+        }
+
+        List<ValeurPreference> laValeurCouleurTexte = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(2)).ToList();
+        if (laValeurCouleurTexte.Count > 0)
+        {
+            MainContent.Style.Add("color", laValeurCouleurTexte.First().Valeur);
+        }
     }
 
     protected void afficheDIV(object sender, EventArgs e)

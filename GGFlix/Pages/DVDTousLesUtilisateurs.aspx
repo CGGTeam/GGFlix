@@ -5,6 +5,7 @@
 
 
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+    <asp:Panel runat="server" ID="MainContent">
     <div class="container" style="margin-bottom: 30px;">
         <a href="/">
             <img class="navbar navbar-expand-lg navbar-dark nav-bg rounded" src="/Static/img/banner.jpg" height="40%" width="100%">
@@ -23,4 +24,5 @@
     <br />
     <br />
     <br />
+        </asp:Panel>
 </asp:Content>

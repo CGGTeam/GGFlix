@@ -11,6 +11,7 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
 {
     private GenericDao<Utilisateur> utilDao = Persistance.GetDao<Utilisateur>();
     private GenericDao<ValeurPreference> valeurPrefDao = Persistance.GetDao<ValeurPreference>();
+    private GenericDao<UtilisateurPreference> utilPrefDao = Persistance.GetDao<UtilisateurPreference>();
     Utilisateur currentUser = null;
     private String id = "";
     private string strCBApprop = "";
@@ -29,7 +30,9 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
                 valeurPrefDao.Save(valeurPref);
             }
             else
-            {                    
+            {
+                UtilisateurPreference utilPref = new UtilisateurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 3 };
+                utilPrefDao.Save(utilPref);
                 ValeurPreference valeurPref = new ValeurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 3, Valeur = cbCourrielAjout.Checked.ToString() };
                 valeurPrefDao.Save(valeurPref);
             }
@@ -43,7 +46,9 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
                 valeurPrefDao.Save(valeurPref);               
             }
             else
-            {               
+            {
+                UtilisateurPreference utilPref = new UtilisateurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 4 };
+                utilPrefDao.Save(utilPref);
                 ValeurPreference valeurPref = new ValeurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 4, Valeur = cbCourrielApprop.Checked.ToString() };
                 valeurPrefDao.Save(valeurPref);                
             }
@@ -55,7 +60,9 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
                 valeurPrefDao.Save(valeurPref);
             }
             else
-            {                
+            {
+                UtilisateurPreference utilPref = new UtilisateurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 5 };
+                utilPrefDao.Save(utilPref);
                 ValeurPreference valeurPref = new ValeurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 5, Valeur = cbCourrielRetrait.Checked.ToString() };
                 valeurPrefDao.Save(valeurPref);
             }
@@ -81,6 +88,8 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
             }
             else
             {
+                UtilisateurPreference utilPref = new UtilisateurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 7 };
+                utilPrefDao.Save(utilPref);
                 ValeurPreference valeurPref = new ValeurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 7, Valeur = ddlNbDvdAffiche.SelectedValue };
                 valeurPrefDao.Save(valeurPref);
             }
@@ -95,6 +104,8 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
             }
             else
             {
+                UtilisateurPreference utilPref = new UtilisateurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 1 };
+                utilPrefDao.Save(utilPref);
                 ValeurPreference valeurPref = new ValeurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 1, Valeur = ddlCouleurFond.SelectedValue };
                 valeurPrefDao.Save(valeurPref);
             }
@@ -110,28 +121,27 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
             }
             else
             {
+                UtilisateurPreference utilPref = new UtilisateurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 2 };
+                utilPrefDao.Save(utilPref);
                 ValeurPreference valeurPref = new ValeurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 2, Valeur = ddlCouleurTexte.SelectedValue };
                 valeurPrefDao.Save(valeurPref);
             }
 
 
         }
-
-
         remplireDDLCouleur(ddlCouleurFond);
         remplireDDLCouleur(ddlCouleurTexte);
         remplirNbPages(ddlNbDvdAffiche);
         btnModifier.Click += new EventHandler(validationPreferences);
         btnUpload.Click += new EventHandler(afficherImage_Click);
         lesValeursEnvironnement();
-        
-
-     
     }  
 
     private void validationPreferences(object sender, EventArgs e)
     {
-       //if(btnModifier.Click)
+
+        currentUser.MotPasse = int.Parse(tbMdeP.Text);
+        utilDao.Save(currentUser);        
 
     }
     private void afficherImage_Click(object sender, EventArgs e)
@@ -148,6 +158,8 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
             }
             else
             {
+                UtilisateurPreference utilPref = new UtilisateurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 6 };
+                utilPrefDao.Save(utilPref);
                 ValeurPreference valeurPref = new ValeurPreference { NoUtilisateur = currentUser.NoUtilisateur, NoPreference = 6, Valeur = FileUpload.FileName };
                 valeurPrefDao.Save(valeurPref);
             }
@@ -182,7 +194,7 @@ public partial class Pages_PersonnalisationEnv : System.Web.UI.Page
             if (laValeurCouleurFond.Count > 0)
             {
                 ddlCouleurFond.SelectedValue = laValeurCouleurFond.First().Valeur;
-                MainContent.Attributes.Add("style","background-color:"+ ddlCouleurFond.SelectedValue);
+                MainContent.Attributes.Add("style","background-color:"+ laValeurCouleurFond.First().Valeur);
             }
             cbRetirerImg.Visible = false;
         }

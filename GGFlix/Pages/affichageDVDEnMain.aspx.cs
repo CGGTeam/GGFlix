@@ -13,10 +13,12 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
     private GenericDao<Exemplaire> exemDao = Persistance.GetDao<Exemplaire>();
     private GenericDao<Film> filmDao = Persistance.GetDao<Film>();
     private GenericDao<EmpruntFilm> empruntFilmDao = Persistance.GetDao<EmpruntFilm>();
+    private GenericDao<ValeurPreference> valeurPrefDao = Persistance.GetDao<ValeurPreference>();
     private String id = "";
     Utilisateur currentUser = null;
     int numPage = -1;
     int nbPage = -1;
+    int maxPage = 10;
     protected void Page_Load(object sender, EventArgs e)
     {
         numPage = Convert.ToInt32(Page.RouteData.Values["id"]);
@@ -31,6 +33,27 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
         else
         {
             // Page devrait crash
+        }
+        List<ValeurPreference> laValeurImageBackground = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(6)).ToList();
+        List<ValeurPreference> laValeurCouleurFond = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(1)).ToList();
+        if (laValeurImageBackground.Count > 0 && laValeurImageBackground.First().Valeur != "")
+        {
+            MainContent.Attributes.Add("style", " background-image: url('" + "/Static/img/" + laValeurImageBackground.First().Valeur + "');");
+            MainContent.Style.Add("background-size", "contain");
+        }
+        else
+        {
+            if (laValeurCouleurFond.Count > 0)
+            {
+                MainContent.Attributes.Add("style", "background-color:" + laValeurCouleurFond.First().Valeur);
+            }
+
+        }
+
+        List<ValeurPreference> laValeurCouleurTexte = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(2)).ToList();
+        if (laValeurCouleurTexte.Count > 0)
+        {
+            MainContent.Style.Add("color", laValeurCouleurTexte.First().Valeur);
         }
 
 
@@ -62,7 +85,13 @@ public partial class AffichageDVDEnMain : System.Web.UI.Page
             //Response.Write(lstEmpruntsCurrent.Count());
 
             //IList<EmpruntFilm> lstExemp = empruntFilmDao.FindAll().Where(v => (v.NoUtilisateur == currentUser.NoUtilisateur)).OrderBy(v=> filmDao.Find(new Film { NoFilm = int.Parse(v.NoExemplaire.ToString().Substring(0, 6)) })[0].TitreFrancais ).ToList();
-            int maxPage = 10;
+           
+            List<ValeurPreference> lesValeursPrefs = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(7)).ToList();
+
+            if (lesValeursPrefs.Count > 0)
+            {
+                maxPage = int.Parse(lesValeursPrefs.First().Valeur);
+            }
             int nbPagePrec = numPage - 1;
             //Response.Write(" LA PAGE " + nbPagePrec);
             decimal page = decimal.Parse(lstEmpruntsCurrent.Count().ToString()) / decimal.Parse(maxPage.ToString());

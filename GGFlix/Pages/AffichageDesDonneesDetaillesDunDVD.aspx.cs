@@ -30,6 +30,7 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
     private GenericDao<EmpruntFilm> empFilmDao = Persistance.GetDao<EmpruntFilm>();
     private GenericDao<FilmsSupplements> filmSupplementDao = Persistance.GetDao<FilmsSupplements>();
     private GenericDao<Supplement> supplementDao = Persistance.GetDao<Supplement>();
+    private GenericDao<ValeurPreference> valeurPrefDao = Persistance.GetDao<ValeurPreference>();
     int noExemp;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -188,6 +189,12 @@ public partial class AffichageDesDonneesDetaillesDunDVD : System.Web.UI.Page
             }
 
             
+        }
+
+        List<ValeurPreference> laValeurCouleurTexte = valeurPrefDao.FindAll().Where(v => v.NoUtilisateur.Equals(currentUser.NoUtilisateur) && v.NoPreference.Equals(2)).ToList();
+        if (laValeurCouleurTexte.Count > 0)
+        {
+            MainContent.Style.Add("color", laValeurCouleurTexte.First().Valeur);
         }
     }
 

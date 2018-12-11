@@ -24,6 +24,7 @@
  
 
 <asp:Content runat="server" ContentPlaceHolderID="ContenuPrincipal">
+     <asp:Panel runat="server" ID="MainContent">
     <asp:Panel ID="pnApercuCourriel" CssClass="alert alert-info" Visible="False" runat="server">
         <asp:LinkButton CssClass="text-center" Text="Voir un apercu du courriel envoyé" runat="server" OnClick="ApercuCourriel"/>
     </asp:Panel>
@@ -150,4 +151,5 @@
 
         </div>
 </asp:Panel>
+         </asp:Panel>
 </asp:Content>
